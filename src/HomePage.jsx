@@ -1,19 +1,7 @@
+import React from "react";
+import { Slide } from "react-slideshow-image";
+import "react-slideshow-image/dist/styles.css";
 
+function HomePage() {}
 
-export function HomePage (){
-    // return ( <div class="home">
-    //     {/* <div class= "Toolbar">
-    //         <Link to="HomePage">דף הבית</Link>
-    //         <Link to="HabitantProject">פרויקט דיור</Link>
-    //         <Link to="AssistanceProject">פרויקט הכוונה</Link>
-    //     </div> */}
-
-
-
-
-
-
-    // </div>);
-
-    return <div>Home</div>
-}
+export default HomePage;
