@@ -1,13 +1,9 @@
 import React from "react";
 import "react-slideshow-image/dist/styles.css";
-
+import slide2 from "./slide_2.jpg";
+import slide3 from "./slide_3.jfif";
+import slide4 from "./slide_4.jpg";
 import { Slide } from "react-slideshow-image";
-
-const slideImages = [
-  "images/slide_2.jpg",
-  "images/slide_3.jpg",
-  "images/slide_4.jpg",
-];
 
 const properties = {
   duration: 5000,
@@ -22,13 +18,13 @@ const HomePage = () => {
     <div>
       <Slide {...properties}>
         <div className="each-slide">
-          <div style={{ backgroundImage: `url(${slideImages[0]})` }}></div>
+          <div style={{ backgroundImage: `url(${slide2})` }}></div>
         </div>
         <div className="each-slide">
-          <div style={{ backgroundImage: `url(${slideImages[1]})` }}></div>
+          <div style={{ backgroundImage: `url(${slide3})` }}></div>
         </div>
         <div className="each-slide">
-          <div style={{ backgroundImage: `url(${slideImages[2]})` }}></div>
+          <div style={{ backgroundImage: `url(${slide4})` }}></div>
         </div>
       </Slide>
       <br />

@@ -6,6 +6,7 @@ import HabitantProject from "./HabitantProject";
 import AssistanceProject from "./AssistanceProject";
 import Registration from "./Registration";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import footer from "./footer.jpeg";
 import Footer from "./Footer";
 
 function App() {
