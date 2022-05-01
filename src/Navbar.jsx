@@ -4,13 +4,12 @@ export function Navbar() {
     <div class="topnav">
       <div class="topnav-right">
         <Link to="/"> דף הבית </Link>
-        <Link to="Habitant Project"> פרויקט דיור </Link>
-        <Link to="Assistance Project"> פרויקט הכוון </Link>
+        <Link to="HabitantProject"> פרויקט דיור </Link>
+        <Link to="AssistanceProject"> פרויקט הכוון </Link>
       </div>
       <div class="topnav-left">
-        <Link to="Registrarion" class="Registration-Button">
-          {" "}
-          התחבר{" "}
+        <Link to="Login" class="Registration-Button">
+          התחבר
         </Link>
       </div>
     </div>

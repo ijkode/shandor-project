@@ -4,6 +4,7 @@ import slide2 from "./slide_2.jpg";
 import slide3 from "./slide_3.jfif";
 import slide4 from "./slide_4.jpg";
 import { Slide } from "react-slideshow-image";
+import { useNavigate } from "react-router-dom";
 
 const properties = {
   duration: 5000,
@@ -14,6 +15,14 @@ const properties = {
 };
 
 const HomePage = () => {
+  const navigate = useNavigate();
+
+  const habitantPage = () => {
+    navigate("/HabitantProject");
+  };
+  const assistancePage = () => {
+    navigate("/AssistanceProject");
+  };
   return (
     <div>
       <Slide {...properties}>
@@ -54,7 +63,9 @@ const HomePage = () => {
             <br />
             <br />
             <br />
-            <button class="button-55">לפרטים נוספים והרשמה לפרויקט</button>
+            <button class="button-55" onClick={habitantPage}>
+              לפרטים נוספים והרשמה לפרויקט
+            </button>
           </div>
           <div class="Assistance">
             <h2>פרויקט הכוון</h2>
@@ -70,7 +81,9 @@ const HomePage = () => {
             המיטבית
             <br /> ביותר.
             <br />
-            <button class="button-55">לפרטים נוספים והרשמה לפרויקט</button>
+            <button class="button-55" onClick={assistancePage}>
+              לפרטים נוספים והרשמה לפרויקט
+            </button>
           </div>
         </div>
         <br />
