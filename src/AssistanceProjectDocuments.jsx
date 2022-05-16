@@ -16,82 +16,98 @@ export function AssistanceProjectDocuments() {
       <div class="titleOfPage">
         <h1>העלאת קבצים בפורמט JPG או PDF </h1>
       </div>
-      <label for="ID_photo"> צילום ת.ז וספח : </label>
-      <input type="file" id="ID_photo" name="ID_photo" /> <br />
-      <label for="application_note"> מכתב בקשה מהפונה הכולל רקע אישי : </label>
-      <input type="file" id="application_note" name="application_note" /> <br />
-      <label for="social_report"> דוח סוציאלי מגורם מפנה : </label>
-      <input type="file" id="social_report" name="social_report" /> <br />
-      <label for="release_papers">
-        {" "}
-        תעודת שחרור משירות צבאי/לאומי או תעודת פטור משירות :{" "}
-      </label>
-      <input type="file" id="release_papers" name="release_papers" /> <br />
-      <label for="bank_account_management_certificate">
-        {" "}
-        אישור ניהול חשבון :{" "}
-      </label>
-      <input
-        type="file"
-        id="bank_account_management_certificate"
-        name="bank_account_management_certificate"
-      />{" "}
-      <br />
-      <label for="bank_printout">תדפיסי חשבון בנק (3 חודשים) : </label>
-      <input type="file" id="bank_printout" name="bank_printout" /> <br />
-      <label for="housing_approval">
-        {" "}
-        אישור על תשלום משכנתא/שכ"ד/חובות/אחר:{" "}
-      </label>
-      <input type="file" id="housing_approval" name="housing_approval" /> <br />
-      <label for="other_incomes_approval"> אישורי הכנסות אחרות/קצבאות: </label>
-      <input
-        type="file"
-        id="other_incomes_approval"
-        name="other_incomes_approval"
-      />{" "}
-      <br />
-      <label for="grades_sheet">
-        {" "}
-        ציוני סמסטר קודמים במידה והינך סטודנט/ית ממשיך/ה- יש לצרף גיליון ציונים
-        ממוסד הלימודים:{" "}
-      </label>
-      <input type="file" id="grades_sheet" name="grades_sheet" /> <br />
-      <label for="diagnosis_of_learning_disabilities">
-        {" "}
-        אבחון לקויות למידה (במידה וקיים) :{" "}
-      </label>
-      <input
-        type="file"
-        id="diagnosis_of_learning_disabilities"
-        name="diagnosis_of_learning_disabilities"
-      />{" "}
-      <br />
-      <label for="drivind_license"> צילום רישיון רכב (במידה וקיים) : </label>
-      <input type="file" id="drivind_license" name="drivind_license" /> <br />
-      <label for="weapon_license">צילום רישיון נשק (במידה וקיים) : </label>
-      <input type="file" id="weapon_license" name="weapon_license" /> <br />
-      <div class="waiver_of_confidentiality">
-        {" "}
-        להורדת הטופס:
-        <a href="https://drive.google.com/file/d/1U2eN7XRYQB7CsBNsVpz_BZSur9ockUOD/view?usp=sharing" />
+      <br></br>
+      <div className="box">
+        <div className="generalDocuments">
+          <h3>מסמכים אישיים:</h3>
+          <div class="upload-btn-wrapper">
+            <button class="button-10">צילום ת"ז וספח</button>
+            <input type="file" name="ID_photo" />
+          </div>
+          <br />
+          <div class="upload-btn-wrapper">
+            <button class="button-10">מכתב בקשה מהפונה הכולל רקע אישי</button>
+            <input type="file" name="application_note" />
+          </div>
+          <br />
+          <div class="upload-btn-wrapper">
+            <button class="button-10">
+              תעודת שחרור משירות צבאי/לאומי או תעודת פטור משירות
+            </button>
+            <input type="file" name="release_papers" />
+          </div>
+          <br />
+          <div class="upload-btn-wrapper">
+            <button class="button-10">גיליון ציונים</button>
+            <input type="file" name="grade_sheet" />
+          </div>
+          <br />
+          <div class="upload-btn-wrapper">
+            <button class="button-10">צילום רישיון רכב (במידה וקיים)</button>
+            <input type="file" name="drivind_license" />
+          </div>
+          <br />
+          <div class="upload-btn-wrapper">
+            <button class="button-10">צילום רישיון נשק (במידה וקיים)</button>
+            <input type="file" name="weapon_license" />
+          </div>
+          <br />
+          <div class="upload-btn-wrapper">
+            <button class="button-10">טופס ויתור סודיות</button>
+            <input type="file" name="waiver_of_confidentiality" />
+          </div>
+          <br />
+          <div class="waiver_of_confidentiality">
+            {" "}
+            להורדת טופס ויתור סודיות:
+            <a href="https://drive.google.com/file/d/1U2eN7XRYQB7CsBNsVpz_BZSur9ockUOD/view?usp=sharing">
+              לחצו כאן{" "}
+            </a>
+          </div>
+        </div>
+        <div className="medicalDocuments">
+          <h3>מסמכים רפואיים:</h3>
+          <div class="upload-btn-wrapper">
+            <button class="button-10">דוח סוציאלי מגורם מפנה</button>
+            <input type="file" name="social_report" />
+          </div>
+          <br />
+          <div class="upload-btn-wrapper">
+            <button class="button-10">אבחון לקויות למידה</button>
+            <input type="file" name="diagnosis_of_learning_disabilities" />
+          </div>
+          <br />
+          <div class="upload-btn-wrapper">
+            <button class="button-10">הערכה פסיכולוגית</button>
+            <input type="file" name="psychological_assessment" id="demo-file" />
+          </div>
+          <br />
+        </div>
+        <div className="bankDocuments">
+          <h3>טפסי בנק:</h3>
+          <div class="upload-btn-wrapper">
+            <button class="button-10">אישור ניהול חשבון בנק</button>
+            <input type="file" name="bank_account_management_certificate" />
+          </div>
+          <br />
+          <div class="upload-btn-wrapper">
+            <button class="button-10">תדפיסי חשבון בנק (3 חודשים)</button>
+            <input type="file" name="bank_printout" />
+          </div>
+          <br />
+          <div class="upload-btn-wrapper">
+            <button class="button-10">
+              אישור על תשלום משכנתא/שכ"ד/חובות/אחר
+            </button>
+            <input type="file" name="housing_approval" />
+          </div>
+          <br />
+          <div class="upload-btn-wrapper">
+            <button class="button-10">אישורי הכנסות אחרות/קצבאות</button>
+            <input type="file" name="other_incomes_approval" />
+          </div>
+        </div>
       </div>
-      <label for="waiver_of_confidentiality_signed">
-        טופס ויתור סודיות חתום :{" "}
-      </label>
-      <input
-        type="file"
-        id="waiver_of_confidentiality_signed"
-        name="waiver_of_confidentiality_signed"
-      />{" "}
-      <br />
-      <label for="psychological_assessment">הערכה פסיכולוגית : </label>
-      <input
-        type="file"
-        id="psychological_assessment"
-        name="psychological_assessment"
-      />{" "}
-      <br />
       <br />
       <br />
       <button class="button-55" onClick={assistancePage}>

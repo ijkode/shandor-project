@@ -1,7 +1,7 @@
 import React from "react";
 import "react-slideshow-image/dist/styles.css";
 import slide2 from "./slide_2.jpg";
-import slide3 from "./slide_3.jfif";
+import slide3 from "./slide_3.jpg";
 import slide4 from "./slide_4.jpg";
 import { Slide } from "react-slideshow-image";
 import { useNavigate } from "react-router-dom";

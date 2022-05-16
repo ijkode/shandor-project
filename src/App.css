@@ -33,6 +33,10 @@ body {
   margin: 0;
   text-align: center;
   font-family: "Alef Hebrew", “Helvetica Neue”, Helvetica, Arial, sans-serif;
+  background-image: url("background.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center center;
 }
 
 .App {
@@ -40,10 +44,16 @@ body {
 }
 
 .App-logo {
-  height: 20vmin;
-  width: 70vmax;
+  height: 15vmin;
+  width: 20vmax;
   float: right;
   background-size: cover;
+}
+
+.topBackground {
+  background-color: white;
+  height: 15vmin;
+  width: 20vmax;
 }
 
 .bothProjects {
@@ -165,7 +175,7 @@ h3 {
   align-items: center;
   justify-content: center;
   background-size: cover;
-  height: 500px;
+  height: 300px;
 }
 
 .each-slide span {
@@ -243,12 +253,12 @@ h3 {
 }
 
 .footer {
-  text-align: center;
-  padding: 20px;
+  text-align: right;
+  padding: 90px;
   left: 0;
   bottom: 0;
   height: 60px;
-  width: 100%;
+  width: 120%;
 }
 
 *,
@@ -305,4 +315,251 @@ fieldset {
 .legendTitle {
   color: black;
   font-size: x-large;
+}
+
+/* CSS */
+.button-10 {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 6px 14px;
+  font-family: -apple-system, BlinkMacSystemFont, "Roboto", sans-serif;
+  border-radius: 6px;
+  border: none;
+
+  color: #fff;
+  background: linear-gradient(180deg, #4b91f7 0%, #367af6 100%);
+  background-origin: border-box;
+  box-shadow: 0px 0.5px 1.5px rgba(54, 122, 246, 0.25),
+    inset 0px 0.8px 0px -0.25px rgba(255, 255, 255, 0.2);
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+}
+
+.button-10:focus {
+  box-shadow: inset 0px 0.8px 0px -0.25px rgba(255, 255, 255, 0.2),
+    0px 0.5px 1.5px rgba(54, 122, 246, 0.25),
+    0px 0px 0px 3.5px rgba(58, 108, 217, 0.5);
+  outline: 0;
+}
+
+.file {
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+  height: 2.5rem;
+}
+.file input {
+  min-width: 14rem;
+  margin: 0;
+  filter: alpha(opacity=0);
+  opacity: 0;
+}
+.file-custom {
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  z-index: 5;
+  height: 2.5rem;
+  padding: 0.5rem 1rem;
+  line-height: 1.5;
+  color: #555;
+  background-color: #fff;
+  border: 0.075rem solid #ddd;
+  border-radius: 0.25rem;
+  box-shadow: inset 0 0.2rem 0.4rem rgba(0, 0, 0, 0.05);
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+.file-custom:after {
+  content: "Choose file...";
+}
+.file-custom:before {
+  position: absolute;
+  top: -0.075rem;
+  right: -0.075rem;
+  bottom: -0.075rem;
+  z-index: 6;
+  display: block;
+  content: "Browse";
+  height: 2.5rem;
+  padding: 0.5rem 1rem;
+  line-height: 1.5;
+  color: #555;
+  background-color: #eee;
+  border: 0.075rem solid #ddd;
+  border-radius: 0 0.25rem 0.25rem 0;
+}
+
+/* Focus */
+.file input:focus ~ .file-custom {
+  box-shadow: 0 0 0 0.075rem #fff, 0 0 0 0.2rem #0074d9;
+}
+
+h1 {
+  font-size: 60px;
+  background: -webkit-linear-gradient(rgb(4, 167, 255), rgb(173, 231, 231));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+h2 {
+  font-size: 30px;
+  background: -webkit-linear-gradient(rgb(4, 205, 255), rgb(173, 231, 231));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.upload-btn-wrapper {
+  position: relative;
+  overflow: hidden;
+  display: inline-block;
+}
+
+.btn {
+  border: 2px solid gray;
+  color: rgb(64, 120, 251);
+  background-color: rgba(255, 255, 255, 0);
+  padding: 2px 10px;
+  border-radius: 8px;
+  font-size: 15px;
+}
+
+.upload-btn-wrapper input[type="file"] {
+  font-size: 100px;
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+
+#demo-file::file-selector-button {
+  border: 2px solid #555555;
+  color: #555555;
+  padding: 8px;
+  border-radius: 4px;
+  background-color: #ffffff;
+}
+
+#demo-file::file-selector-button:hover {
+  background-color: #e9e9e9;
+}
+
+#demo-file::-webkit-file-upload-button {
+  border: 2px solid #555555;
+  color: #555555;
+  padding: 8px;
+  border-radius: 4px;
+  background-color: #ffffff;
+}
+
+#demo-file::-webkit-file-upload-button:hover {
+  background-color: #e9e9e9;
+}
+
+#upload-container {
+  text-align: center;
+}
+#upload-border {
+  height: 30px;
+  border: 1px solid #2077c9;
+  display: inline-block;
+  padding-left: 7px;
+  margin: 20px 0;
+}
+
+#upload-name {
+  height: 70%;
+  border: none;
+}
+
+#upload-button {
+  height: 100%;
+  padding: 0 20px;
+  border: none;
+  background: #2077c9;
+  color: white;
+  cursor: pointer;
+}
+
+#upload-name:focus,
+#upload-button:focus {
+  outline: none;
+}
+
+fieldset {
+  border: 2px solid #4102ff;
+  -moz-border-radius: 8px;
+  -webkit-border-radius: 8px;
+  border-radius: 8px;
+  padding: 16px;
+}
+
+.legendTitle {
+  /* color: black; */
+  font-size: x-large;
+  color: rgb(255, 255, 255);
+}
+
+fieldset {
+  font-family: sans-serif;
+  border: 1px solid #1f497d;
+  background: rgb(230, 242, 255);
+  border-radius: 1px;
+  padding: 15px;
+}
+
+fieldset legend {
+  color: black;
+  background: -webkit-linear-gradient(rgb(56, 166, 194), rgb(0, 100, 194));
+  padding: 5px 10px;
+  font-size: 32px;
+  border-radius: 2px;
+  margin-left: 20px;
+  border-radius: 15px 225px 255px 15px 15px 255px 225px 15px;
+  border-style: solid;
+  border-width: 2px;
+  border-bottom-left-radius: 15px 255px;
+  border-bottom-right-radius: 225px 15px;
+  border-top-left-radius: 255px 15px;
+  border-top-right-radius: 15px 225px;
+  border-color: black;
+}
+
+.input1 {
+  padding: 8px 12px;
+  margin: 8px 0 0 10px;
+  box-sizing: border-box;
+  border: 2px solid #1f497d;
+  border-radius: 16px;
+  width: 15%;
+}
+
+.select1 {
+  padding: 8px 12px;
+  margin: 8px 0 0 10px;
+  box-sizing: border-box;
+  border: 2px solid #1f497d;
+  border-radius: 16px;
+  width: 15%;
+}
+
+.generalDocuments {
+  float: center;
+}
+
+.medicalDocuments {
+  float: center;
+}
+
+.bankDocuments {
+  float: center;
+}
+.box {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  gap: 10%;
 }

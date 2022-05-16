@@ -1,13 +1,106 @@
-import React from "react";
+import React, { useState } from "react";
 import "react-slideshow-image/dist/styles.css";
 import { useNavigate } from "react-router-dom";
+import { collection, addDoc } from "firebase/firestore";
+import { db } from "./firebase";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { auth } from "./firebase";
 
 export function AssistanceProject() {
+  const [user, loggedIn] = useAuthState(auth);
+  const [formData, setFormData] = useState({
+    fname: "",
+    lname: "",
+    ID: "",
+    date_of_birth: "",
+    phone_number: "",
+    email: "",
+    address: "",
+    framework_field: "",
+    framework_name: "",
+    framework_years: "",
+    full: "",
+    partial: "",
+    graduation: "",
+    graduation_details: "",
+    insurance_institute_allowance: "",
+    insurance_institute_allowance_details: "",
+    other: "",
+    referrer_email: "",
+    referrer_name: "",
+    referrer_phone: "",
+    referrer_proffesion: "",
+    scholarship_details: "",
+    tuition: "",
+  });
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
   const navigate = useNavigate();
-
+  function nav() {
+    navigate("/Login");
+  }
   const docPage = () => {
+    const formRef = collection(db, "Candidates for habitant project");
+    addDoc(formRef, {
+      fname: formData.fname,
+      lname: formData.lname,
+      ID: formData.ID,
+      date_of_birth: formData.date_of_birth,
+      framework_name: formData.framework_name,
+      framework_field: formData.framework_field,
+      framework_years: formData.framework_years,
+      phone_number: formData.phone_number,
+      email: formData.email,
+      full: formData.full,
+      partial: formData.partial,
+      referrer_name: formData.referrer_name,
+      referrer_proffesion: formData.referrer_proffesion,
+      referrer_phone: formData.referrer_phone,
+      referrer_email: formData.referrer_email,
+      graduation: formData.graduation,
+      insurance_institute_allowance: formData.insurance_institute_allowance,
+      insurance_institute_allowance_details:
+        formData.insurance_institute_allowance_details,
+      graduation_details: formData.graduation_details,
+      other: formData.other,
+      scholarship_details: formData.scholarship_details,
+      tuition: formData.tuition,
+    })
+      .then(() => {
+        // alert("success");
+      })
+      .catch((err) => {
+        // alert("error");
+      });
     navigate("/AssistanceProject/documents");
   };
+  if (!user) {
+    return (
+      <div className="loggedIn">
+        <div class="allThePage">
+          <div class="AllDetails">
+            <br />
+            <div class="titleToAssistnceProject">
+              <h1>פרויקט הכוון </h1>
+            </div>
+            <div class="Details">
+              העמותה ע"ש אהרן שנדור מזמינה צעירים/ות המעוניינים/ות ללמוד
+              תואר/תעודה בראש שקט תוך כדי תרומה לקהילה.
+              <br />
+              <br />
+            </div>
+          </div>
+
+          <div class="SubmitRequest"></div>
+        </div>
+        <button className="button-55" onClick={nav}>
+          להתחברות לחץ כאן
+        </button>
+      </div>
+    );
+  }
+
   return (
     <div class="allThePage">
       <div class="AllDetails">
@@ -24,40 +117,88 @@ export function AssistanceProject() {
       </div>
 
       <div class="SubmitRequest">
+        <hr />
         <div class="title1">
-          <h1>הגשת בקשה לפרויקט הכוון</h1>
+          <h2>הגשת בקשה לפרויקט הכוון</h2>
         </div>
+
+        <br />
+        <hr />
         <br />
         <fieldset>
           <legend class="legendTitle">פרטים אישיים</legend>
           <form>
             <label for="fname">שם פרטי : </label>
-            <input type="text" id="fname" name="fname" requierd />
+            <input
+              className="input1"
+              type="text"
+              id="fname"
+              name="fname"
+              requierd
+              value={formData.fname}
+              onChange={(e) => handleChange(e)}
+            />
             <label for="lname">שם משפחה : </label>
-            <input type="text" id="lname" name="lname" required />
+            <input
+              className="input1"
+              type="text"
+              id="lname"
+              name="lname"
+              required
+              value={formData.lname}
+              onChange={(e) => handleChange(e)}
+            />
             <label for="ID">תעודת זהות : </label>
-            <input type="number" id="ID" name="ID" required />
+            <input
+              className="input1"
+              type="number"
+              id="ID"
+              name="ID"
+              required
+              value={formData.ID}
+              onChange={(e) => handleChange(e)}
+            />
             <label for="date_of_birth">תאריך לידה:</label>
             <input
+              className="input1"
               type="date"
               id="date_of_birth"
               name="date_of_birth"
               required
+              value={formData.date_of_birth}
+              onChange={(e) => handleChange(e)}
             />
             <br />
             <br />
 
             <label for="address"> כתובת: </label>
-            <input type="text" id="address" name="address" required />
+            <input
+              type="text"
+              id="address"
+              name="address"
+              required
+              className="input1"
+            />
             <label for="phone_number"> נייד: </label>
             <input
+              className="input1"
               type="number"
               id="phone_number"
               name="phone_number"
               required
+              value={formData.phone_number}
+              onChange={(e) => handleChange(e)}
             />
             <label for="email"> מייל : </label>
-            <input type="email" id="email" name="email" required />
+            <input
+              className="input1"
+              type="email"
+              id="email"
+              name="email"
+              required
+              value={formData.email}
+              onChange={(e) => handleChange(e)}
+            />
             <br />
             <br />
           </form>
@@ -70,31 +211,43 @@ export function AssistanceProject() {
           <form>
             <label for="referrer_name"> שם : </label>
             <input
+              className="input1"
               type="text"
               id="referrer_name"
               name="referrer_name"
               required
+              value={formData.referrer_name}
+              onChange={(e) => handleChange(e)}
             />
             <label for="referrer_proffesion"> תפקיד : </label>
             <input
+              className="input1"
               type="text"
               id="referrer_proffesion"
               name="referrer_proffesion"
               required
+              value={formData.referrer_proffesion}
+              onChange={(e) => handleChange(e)}
             />
             <label for="referrer_phone"> טלפון : </label>
             <input
+              className="input1"
               type="number"
               id="referrer_phone"
               name="referrer_phone"
               required
+              value={formData.referrer_phone}
+              onChange={(e) => handleChange(e)}
             />
             <label for="referrer_email"> מייל : </label>
             <input
+              className="input1"
               type="email"
               id="referrer_email"
               name="referrer_email"
               required
+              value={formData.referrer_email}
+              onChange={(e) => handleChange(e)}
             />
             <br />
             <br />
@@ -104,48 +257,66 @@ export function AssistanceProject() {
         <br />
 
         <fieldset>
-          <form>
-            <legend class="legendTitle">לימודים</legend>
-            <label for="framework_name"> מוסד לימודים : </label>
-            <input
-              type="text"
-              id="framework_name"
-              name="framework_name"
-              required
-            />
-            <label for="framework_field"> תחום לימודים : </label>
-            <input
-              type="text"
-              id="framework_field"
-              name="framework_field"
-              required
-            />
-            <label for="framework_years"> מספר שנות לימודים : </label>
-            <input
-              type="text"
-              id="framework_years"
-              name="framework_years"
-              required
-            />
-            <label for="tuition"> היקף שכר לימוד : </label>
-            <input type="text" id="tuition" name="tuition" required />
-            <br />
-            <br />
-            <label for="graduation"> סיום לימודים : </label>
-            <select id="graduation" required>
-              <option id="full">בגרות מלאה </option>
-              <option id="partial">בגרות חלקית </option>
-            </select>
-            <label for="graduation_details"> פירוט אודות הלימודים : </label>
-            <textarea
-              type="text"
-              id="graduation_details"
-              name="graduation_details"
-            />
+          <legend class="legendTitle">לימודים</legend>
+          <label for="framework_name"> מוסד לימודים : </label>
+          <input
+            className="input1"
+            type="text"
+            id="framework_name"
+            name="framework_name"
+            required
+            value={formData.framework_name}
+            onChange={(e) => handleChange(e)}
+          />
+          <label for="framework_field"> תחום לימודים : </label>
+          <input
+            className="input1"
+            type="text"
+            id="framework_field"
+            name="framework_field"
+            required
+            value={formData.framework_field}
+            onChange={(e) => handleChange(e)}
+          />
+          <label for="framework_years"> מספר שנות לימודים : </label>
+          <input
+            className="input1"
+            type="text"
+            id="framework_years"
+            name="framework_years"
+            required
+            value={formData.framework_years}
+            onChange={(e) => handleChange(e)}
+          />
+          <label for="tuition"> היקף שכר לימוד : </label>
+          <input
+            className="input1"
+            type="text"
+            id="tuition"
+            name="tuition"
+            required
+            value={formData.tuition}
+            onChange={(e) => handleChange(e)}
+          />
+          <br />
+          <br />
+          <label for="graduation"> סיום לימודים : </label>
+          <select id="graduation" required className="select1">
+            <option id="full">בגרות מלאה </option>
+            <option id="partial">בגרות חלקית </option>
+          </select>
+          <label for="graduation_details"> פירוט אודות הלימודים : </label>
+          <input
+            className="input1"
+            type="text"
+            id="graduation_details"
+            name="graduation_details"
+            value={formData.graduation_details}
+            onChange={(e) => handleChange(e)}
+          />
 
-            <br />
-            <br />
-          </form>
+          <br />
+          <br />
         </fieldset>
         <br />
         <br />
@@ -156,21 +327,25 @@ export function AssistanceProject() {
             {" "}
             האם הוגשו בקשות למלגות נוספות :{" "}
           </label>
-          <select id="other_schilarships">
+          <select id="other_schilarships" className="select1">
             <option id="other_schilarships">כן </option>
             <option id="not_other_schilarships">לא</option>
           </select>
-          <label for="schilarships_details"> פירוט אודות המלגות : </label>
-          <textarea
+          <label for="scholarships_details"> פירוט אודות המלגות : </label>
+          <input
+            className="input1"
             type="text"
-            id="schilarships_details"
-            name="schilarships_details"
+            id="scholarships_details"
+            name="scholarships_details"
+            value={formData.scholarship_details}
+            onChange={(e) => handleChange(e)}
           />
+          <br />
           <br />
           <label for="insurance_institute_allowance">
             האם מקבל/ת קצבאות מביטוח לאומי/משרד הביטחון? :{" "}
           </label>
-          <select id="insurance_institute_allowance">
+          <select id="insurance_institute_allowance" className="select1">
             <option id="insurance_institute_allowance">כן </option>
             <option id="not_insurance_institute_allowance">לא</option>
             <option id="other">אחר</option>
@@ -179,10 +354,13 @@ export function AssistanceProject() {
             {" "}
             פירוט אודות הקצבאות המתקבלות מביטוח לאומי :{" "}
           </label>
-          <textarea
+          <input
+            className="input1"
             type="text"
             id="insurance_institute_allowance_details"
             name="insurance_institute_allowance_details"
+            value={formData.insurance_institute_allowance_details}
+            onChange={(e) => handleChange(e)}
           />
 
           <br />
