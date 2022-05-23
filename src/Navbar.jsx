@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { onAuthStateChanged } from "firebase/auth";
 import { useEffect, useState } from "react";
 import { auth } from "./firebase";
+import logoSmall from "./logosmall.jpeg";
 export function Navbar() {
   const [loginStatus, setLoginStatus] = useState(0);
   useEffect(() => {
@@ -19,6 +20,7 @@ export function Navbar() {
     <div class="topnav">
       <div class="topnav-right">
         <Link to="/"> דף הבית </Link>
+        <img src={logoSmall} alt="logo" className="photosmall" />
         <Link to="HabitantProject"> פרויקט דיור </Link>
         <Link to="AssistanceProject"> פרויקט הכוון </Link>
       </div>

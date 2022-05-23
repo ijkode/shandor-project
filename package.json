@@ -18,6 +18,7 @@
     "react-slideshow-image": "^3.7.3",
     "save-dev": "^0.0.1-security",
     "sweetalert": "^2.1.2",
+    "sweetalert2": "^11.4.15",
     "web-vitals": "^2.1.4"
   },
   "scripts": {

@@ -1,5 +1,5 @@
 import "./App.css";
-import logo from "./logo.jpeg";
+import logo from "./logosmall.jpeg";
 import HomePage from "./HomePage";
 import Navbar from "./Navbar";
 import HabitantProject from "./HabitantProject";
@@ -16,7 +16,7 @@ import Footer from "./Footer";
 function App() {
   return (
     <Router>
-      <img src={logo} className="App-logo" alt="logo" />
+      {/* <img src={logo} className="App-logo" alt="logo" /> */}
       <Navbar />
       <Routes>
         <Route path="" element={<HomePage />} />

@@ -92,6 +92,7 @@ function Register() {
             <br />
             <br />
           </div>
+          <a href="/Registration">הרשמה</a>
         </div>
       </div>
     );

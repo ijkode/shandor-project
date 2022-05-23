@@ -1,8 +1,12 @@
 import React from "react";
 import "react-slideshow-image/dist/styles.css";
 import { useNavigate } from "react-router-dom";
-
+import { useState } from "react";
+import { storage } from "./firebase";
+import { ref, uploadBytes } from "firebase/storage";
+import Swal from "sweetalert2";
 export function AssistanceProjectDocuments() {
+  const [imageUpload, setImageUpload] = useState(null);
   const navigate = useNavigate();
 
   const assistancePage = () => {
@@ -11,50 +15,126 @@ export function AssistanceProjectDocuments() {
   const submitPage = () => {
     navigate("/SubmitionPage");
   };
+  const uploadImage = () => {
+    if (imageUpload == null) return;
+    const imageRef = ref(storage, `files/${imageUpload.name}`);
+    uploadBytes(imageRef, imageUpload).then(() => {
+      Swal.fire("הקובץ הועלה בהצלחה");
+    });
+  };
   return (
     <div class="allDocPage">
       <div class="titleOfPage">
         <h1>העלאת קבצים בפורמט JPG או PDF </h1>
+        <h5>
+          לאחר לחיצה על כפתור הגש יש להמתין כמה רגעים עד לקבלת הודעת שהקובץ
+          הועלה בהצלחה{" "}
+        </h5>
       </div>
       <br></br>
       <div className="box">
         <div className="generalDocuments">
           <h3>מסמכים אישיים:</h3>
-          <div class="upload-btn-wrapper">
-            <button class="button-10">צילום ת"ז וספח</button>
-            <input type="file" name="ID_photo" />
-          </div>
-          <br />
-          <div class="upload-btn-wrapper">
-            <button class="button-10">מכתב בקשה מהפונה הכולל רקע אישי</button>
-            <input type="file" name="application_note" />
-          </div>
-          <br />
-          <div class="upload-btn-wrapper">
-            <button class="button-10">
-              תעודת שחרור משירות צבאי/לאומי או תעודת פטור משירות
+          <br></br>
+          <label for="file"> צילום ת"ז וספח </label>
+          <div>
+            <input
+              type="file"
+              className="customfile"
+              onChange={(event) => {
+                setImageUpload(event.target.files[0]);
+              }}
+            />
+            <button class="button-84" onClick={uploadImage}>
+              הגש
             </button>
-            <input type="file" name="release_papers" />
           </div>
           <br />
-          <div class="upload-btn-wrapper">
-            <button class="button-10">גיליון ציונים</button>
-            <input type="file" name="grade_sheet" />
+          <label for="file"> מכתב בקשה מהפונה הכולל רקע אישי </label>
+          <div>
+            <input
+              type="file"
+              className="customfile"
+              onChange={(event) => {
+                setImageUpload(event.target.files[0]);
+              }}
+            />
+            <button class="button-84" onClick={uploadImage}>
+              הגש
+            </button>
           </div>
           <br />
-          <div class="upload-btn-wrapper">
-            <button class="button-10">צילום רישיון רכב (במידה וקיים)</button>
-            <input type="file" name="drivind_license" />
+          <label for="file">
+            {" "}
+            תעודת שחרור משירות צבאי/לאומי או תעודת פטור משירות{" "}
+          </label>
+          <div>
+            <input
+              type="file"
+              className="customfile"
+              onChange={(event) => {
+                setImageUpload(event.target.files[0]);
+              }}
+            />
+            <button class="button-84" onClick={uploadImage}>
+              הגש
+            </button>
           </div>
           <br />
-          <div class="upload-btn-wrapper">
-            <button class="button-10">צילום רישיון נשק (במידה וקיים)</button>
-            <input type="file" name="weapon_license" />
+          <label for="file"> גיליון ציונים </label>
+          <div>
+            <input
+              type="file"
+              className="customfile"
+              onChange={(event) => {
+                setImageUpload(event.target.files[0]);
+              }}
+            />
+            <button class="button-84" onClick={uploadImage}>
+              הגש
+            </button>
           </div>
           <br />
-          <div class="upload-btn-wrapper">
-            <button class="button-10">טופס ויתור סודיות</button>
-            <input type="file" name="waiver_of_confidentiality" />
+          <label for="file"> צילום רישיון רכב (במידה וקיים) </label>
+          <div>
+            <input
+              type="file"
+              className="customfile"
+              onChange={(event) => {
+                setImageUpload(event.target.files[0]);
+              }}
+            />
+            <button class="button-84" onClick={uploadImage}>
+              הגש
+            </button>
+          </div>
+          <br />
+          <label for="file"> צילום רישיון נשק (במידה וקיים) </label>
+          <div>
+            <input
+              type="file"
+              className="customfile"
+              onChange={(event) => {
+                setImageUpload(event.target.files[0]);
+              }}
+            />
+            <button class="button-84" onClick={uploadImage}>
+              הגש
+            </button>
+          </div>
+          <br />
+          <label for="file"> טופס ויתור סודיות </label>
+          <div>
+            <input
+              type="file"
+              className="customfile"
+              onChange={(event) => {
+                setImageUpload(event.target.files[0]);
+              }}
+            />
+            <button class="button-84" onClick={uploadImage}>
+              הגש
+            </button>
           </div>
           <br />
           <div class="waiver_of_confidentiality">
@@ -67,44 +147,109 @@ export function AssistanceProjectDocuments() {
         </div>
         <div className="medicalDocuments">
           <h3>מסמכים רפואיים:</h3>
-          <div class="upload-btn-wrapper">
-            <button class="button-10">דוח סוציאלי מגורם מפנה</button>
-            <input type="file" name="social_report" />
+          <br />
+          <label for="file"> דוח סוציאלי מגורם מפנה </label>
+          <div>
+            <input
+              type="file"
+              className="customfile"
+              onChange={(event) => {
+                setImageUpload(event.target.files[0]);
+              }}
+            />
+            <button class="button-84" onClick={uploadImage}>
+              הגש
+            </button>
           </div>
           <br />
-          <div class="upload-btn-wrapper">
-            <button class="button-10">אבחון לקויות למידה</button>
-            <input type="file" name="diagnosis_of_learning_disabilities" />
+          <label for="file"> אבחון לקויות למידה </label>
+          <div>
+            <input
+              type="file"
+              className="customfile"
+              onChange={(event) => {
+                setImageUpload(event.target.files[0]);
+              }}
+            />
+            <button class="button-84" onClick={uploadImage}>
+              הגש
+            </button>
           </div>
           <br />
-          <div class="upload-btn-wrapper">
-            <button class="button-10">הערכה פסיכולוגית</button>
-            <input type="file" name="psychological_assessment" id="demo-file" />
+          <label for="file"> הערכה פסיכולוגית </label>
+          <div>
+            <input
+              type="file"
+              className="customfile"
+              onChange={(event) => {
+                setImageUpload(event.target.files[0]);
+              }}
+            />
+            <button class="button-84" onClick={uploadImage}>
+              הגש
+            </button>
           </div>
+          <br />
+          <br />
           <br />
         </div>
         <div className="bankDocuments">
           <h3>טפסי בנק:</h3>
-          <div class="upload-btn-wrapper">
-            <button class="button-10">אישור ניהול חשבון בנק</button>
-            <input type="file" name="bank_account_management_certificate" />
-          </div>
           <br />
-          <div class="upload-btn-wrapper">
-            <button class="button-10">תדפיסי חשבון בנק (3 חודשים)</button>
-            <input type="file" name="bank_printout" />
-          </div>
-          <br />
-          <div class="upload-btn-wrapper">
-            <button class="button-10">
-              אישור על תשלום משכנתא/שכ"ד/חובות/אחר
+          <label for="file"> אישור ניהול חשבון בנק </label>
+          <div>
+            <input
+              type="file"
+              className="customfile"
+              onChange={(event) => {
+                setImageUpload(event.target.files[0]);
+              }}
+            />
+            <button class="button-84" onClick={uploadImage}>
+              הגש
             </button>
-            <input type="file" name="housing_approval" />
           </div>
           <br />
-          <div class="upload-btn-wrapper">
-            <button class="button-10">אישורי הכנסות אחרות/קצבאות</button>
-            <input type="file" name="other_incomes_approval" />
+          <label for="file"> תדפיסי חשבון בנק (3 חודשים) </label>
+          <div>
+            <input
+              type="file"
+              className="customfile"
+              onChange={(event) => {
+                setImageUpload(event.target.files[0]);
+              }}
+            />
+            <button class="button-84" onClick={uploadImage}>
+              הגש
+            </button>
+          </div>
+          <br />
+          <label for="file"> אישור על תשלום משכנתא/שכ"ד/חובות/אחר </label>
+          <div>
+            <input
+              type="file"
+              className="customfile"
+              onChange={(event) => {
+                setImageUpload(event.target.files[0]);
+              }}
+            />
+            <button class="button-84" onClick={uploadImage}>
+              הגש
+            </button>
+          </div>
+          <br />
+          <label for="file"> אישורי הכנסות אחרות/קצבאות </label>
+          <div>
+            <input
+              type="file"
+              className="customfile"
+              onChange={(event) => {
+                setImageUpload(event.target.files[0]);
+              }}
+            />
+            <button class="button-84" onClick={uploadImage}>
+              הגש
+            </button>
           </div>
         </div>
       </div>
