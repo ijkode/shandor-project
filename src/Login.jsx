@@ -6,7 +6,7 @@ import {
   signOut,
 } from "firebase/auth";
 import "./App.css";
-import { auth } from "./firebase";
+import { app, auth } from "./firebase";
 import { useNavigate } from "react-router-dom";
 import swal from "sweetalert";
 import { getAuth } from "firebase/auth";
@@ -20,7 +20,11 @@ function Register() {
   const [loginPassword, setLoginPassword] = useState("");
 
   const [user, setUser] = useState({});
-
+  // useEffect(() => {
+  //   app.auth().onAuthStateChanged((user) => {
+  //     setUser(user);
+  //   });
+  // }, []);
   const register = async () => {
     try {
       const user = await createUserWithEmailAndPassword(

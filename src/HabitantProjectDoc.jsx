@@ -1,14 +1,15 @@
 import React from "react";
 import "react-slideshow-image/dist/styles.css";
 import { useNavigate } from "react-router-dom";
-import { storage } from "./firebase";
-import { useState } from "react";
+import { storage, app, auth } from "./firebase";
+import { useState, useEffect } from "react";
 import { ref, uploadBytes } from "firebase/storage";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
 import Swal from "sweetalert2";
 export function HabitantProjectDoc() {
   const [imageUpload, setImageUpload] = useState(null);
   const navigate = useNavigate();
-
+  const user = auth.currentUser.email;
   const prevPage = () => {
     navigate("/HabitantProject");
   };
@@ -17,15 +18,15 @@ export function HabitantProjectDoc() {
   };
   const uploadImage = () => {
     if (imageUpload == null) return;
-    const imageRef = ref(storage, `files/${imageUpload.name}`);
+    const imageRef = ref(storage, `${user}/${imageUpload.name}`);
     uploadBytes(imageRef, imageUpload).then(() => {
       Swal.fire("הקובץ הועלה בהצלחה");
     });
   };
   return (
-    <div class="allDocPage">
-      <div class="titleOfPage">
-        <h1>העלאת קבצים בפורמט JPG או PDF </h1>
+    <div className="allDocPage">
+      <div className="titleOfPage">
+        <h1>העלאת קבצים בפורמט JPG או PDF</h1>
         <h5>
           לאחר לחיצה על כפתור הגש יש להמתין כמה רגעים עד לקבלת הודעת שהקובץ
           הועלה בהצלחה{" "}
@@ -45,7 +46,7 @@ export function HabitantProjectDoc() {
                 setImageUpload(event.target.files[0]);
               }}
             />
-            <button class="button-84" onClick={uploadImage}>
+            <button className="button-84" onClick={uploadImage}>
               הגש
             </button>
           </div>
@@ -59,7 +60,7 @@ export function HabitantProjectDoc() {
                 setImageUpload(event.target.files[0]);
               }}
             />
-            <button class="button-84" onClick={uploadImage}>
+            <button className="button-84" onClick={uploadImage}>
               הגש
             </button>
           </div>
@@ -73,7 +74,7 @@ export function HabitantProjectDoc() {
                 setImageUpload(event.target.files[0]);
               }}
             />
-            <button class="button-84" onClick={uploadImage}>
+            <button className="button-84" onClick={uploadImage}>
               הגש
             </button>
           </div>
@@ -87,12 +88,12 @@ export function HabitantProjectDoc() {
                 setImageUpload(event.target.files[0]);
               }}
             />
-            <button class="button-84" onClick={uploadImage}>
+            <button className="button-84" onClick={uploadImage}>
               הגש
             </button>
           </div>
           <br />
-          <div class="waiver_of_confidentiality">
+          <div className="waiver_of_confidentiality">
             {" "}
             להורדת טופס ויתור סודיות:
             <a href="https://drive.google.com/file/d/1U2eN7XRYQB7CsBNsVpz_BZSur9ockUOD/view?usp=sharing">
@@ -112,7 +113,7 @@ export function HabitantProjectDoc() {
                 setImageUpload(event.target.files[0]);
               }}
             />
-            <button class="button-84" onClick={uploadImage}>
+            <button className="button-84" onClick={uploadImage}>
               הגש
             </button>
           </div>
@@ -126,7 +127,7 @@ export function HabitantProjectDoc() {
                 setImageUpload(event.target.files[0]);
               }}
             />
-            <button class="button-84" onClick={uploadImage}>
+            <button className="button-84" onClick={uploadImage}>
               הגש
             </button>
           </div>
@@ -140,7 +141,7 @@ export function HabitantProjectDoc() {
                 setImageUpload(event.target.files[0]);
               }}
             />
-            <button class="button-84" onClick={uploadImage}>
+            <button className="button-84" onClick={uploadImage}>
               הגש
             </button>
           </div>
@@ -154,7 +155,7 @@ export function HabitantProjectDoc() {
                 setImageUpload(event.target.files[0]);
               }}
             />
-            <button class="button-84" onClick={uploadImage}>
+            <button className="button-84" onClick={uploadImage}>
               הגש
             </button>
           </div>
@@ -168,7 +169,7 @@ export function HabitantProjectDoc() {
                 setImageUpload(event.target.files[0]);
               }}
             />
-            <button class="button-84" onClick={uploadImage}>
+            <button className="button-84" onClick={uploadImage}>
               הגש
             </button>
           </div>
@@ -182,7 +183,7 @@ export function HabitantProjectDoc() {
                 setImageUpload(event.target.files[0]);
               }}
             />
-            <button class="button-84" onClick={uploadImage}>
+            <button className="button-84" onClick={uploadImage}>
               הגש
             </button>
           </div>
@@ -199,7 +200,7 @@ export function HabitantProjectDoc() {
                 setImageUpload(event.target.files[0]);
               }}
             />
-            <button class="button-84" onClick={uploadImage}>
+            <button className="button-84" onClick={uploadImage}>
               הגש
             </button>
           </div>
@@ -213,7 +214,7 @@ export function HabitantProjectDoc() {
                 setImageUpload(event.target.files[0]);
               }}
             />
-            <button class="button-84" onClick={uploadImage}>
+            <button className="button-84" onClick={uploadImage}>
               הגש
             </button>
           </div>
@@ -227,7 +228,7 @@ export function HabitantProjectDoc() {
                 setImageUpload(event.target.files[0]);
               }}
             />
-            <button class="button-84" onClick={uploadImage}>
+            <button className="button-84" onClick={uploadImage}>
               הגש
             </button>
           </div>
@@ -236,11 +237,11 @@ export function HabitantProjectDoc() {
       <br />
       <br />
       <br />
-      <button class="button-55" onClick={prevPage}>
+      <button className="button-55" onClick={prevPage}>
         {" "}
         הקודם
       </button>
-      <button class="button-55" onClick={submitPage}>
+      <button className="button-55" onClick={submitPage}>
         {" "}
         הגש
       </button>

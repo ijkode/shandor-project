@@ -1,4 +1,4 @@
-import { addDoc, collection } from "firebase/firestore";
+import { addDoc, collection, setDoc, doc } from "firebase/firestore";
 import React, { useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useNavigate } from "react-router-dom";
@@ -6,7 +6,9 @@ import "react-slideshow-image/dist/styles.css";
 import { auth, db } from "./firebase";
 
 export function HabitantProject() {
+  console.log(auth.currentUser.email);
   const [user, loggedIn] = useAuthState(auth);
+  const formRef = collection(db, "Candidates for assistance project");
   const [formData, setFormData] = useState({
     fname: "",
     lname: "",
@@ -59,57 +61,60 @@ export function HabitantProject() {
     navigate("/Login");
   }
   const habitantDocPage = () => {
+    const uid = auth.currentUser.uid;
+
     const formRef = collection(db, "Candidates for assistance project");
-    addDoc(formRef, {
-      fname: formData.fname,
-      lname: formData.lname,
-      ID: formData.ID,
-      date_of_birth: formData.date_of_birth,
-      born_country: formData.born_country,
-      year_of_immigration: formData.year_of_immigration,
-      hmo: formData.hmo,
-      doctor: formData.doctor,
-      hmo_branch: formData.hmo_branch,
-      hmo_phone: formData.hmo_phone,
-      current_framework: formData.current_framework,
-      framework_name: formData.framework_name,
-      framework_address: formData.framework_address,
-      framework_after_school: formData.framework_after_school,
-      phone_number: formData.phone_number,
-      email: formData.email,
-      referrer_name: formData.referrer_name,
-      referrer_proffesion: formData.referrer_proffesion,
-      referrer_phone: formData.referrer_phone,
-      referrer_email: formData.referrer_email,
-      bureau_name: formData.bureau_name,
-      social_worker_name: formData.social_worker_name,
-      social_worker_role: formData.social_worker_role,
-      social_worker_phone: formData.social_worker_phone,
-      social_worker_email: formData.social_worker_email,
-      family_background: formData.family_background,
-      parents_status: formData.parents_status,
-      family_status: formData.family_status,
-      mother_name: formData.mother_name,
-      mother_address: formData.mother_address,
-      connection_with_mother: formData.connection_with_mother,
-      father_name: formData.father_name,
-      father_address: formData.father_address,
-      connection_with_father: formData.connection_with_father,
-      connection_with_relatives: formData.connection_with_relatives,
-      relative_first_name: formData.relative_first_name,
-      relative_last_name: formData.relative_last_name,
-      relative_address: formData.relative_address,
-      relative_phone: formData.relative_phone,
-      graduation: formData.graduation,
-      graduation_details: formData.graduation_details,
-      teenage_status_details: formData.teenage_status_details,
-    })
-      .then(() => {
-        // alert("success");
+    if (uid != null)
+      setDoc(doc(formRef, uid), {
+        fname: formData.fname,
+        lname: formData.lname,
+        ID: formData.ID,
+        date_of_birth: formData.date_of_birth,
+        born_country: formData.born_country,
+        year_of_immigration: formData.year_of_immigration,
+        hmo: formData.hmo,
+        doctor: formData.doctor,
+        hmo_branch: formData.hmo_branch,
+        hmo_phone: formData.hmo_phone,
+        current_framework: formData.current_framework,
+        framework_name: formData.framework_name,
+        framework_address: formData.framework_address,
+        framework_after_school: formData.framework_after_school,
+        phone_number: formData.phone_number,
+        email: formData.email,
+        referrer_name: formData.referrer_name,
+        referrer_proffesion: formData.referrer_proffesion,
+        referrer_phone: formData.referrer_phone,
+        referrer_email: formData.referrer_email,
+        bureau_name: formData.bureau_name,
+        social_worker_name: formData.social_worker_name,
+        social_worker_role: formData.social_worker_role,
+        social_worker_phone: formData.social_worker_phone,
+        social_worker_email: formData.social_worker_email,
+        family_background: formData.family_background,
+        parents_status: formData.parents_status,
+        family_status: formData.family_status,
+        mother_name: formData.mother_name,
+        mother_address: formData.mother_address,
+        connection_with_mother: formData.connection_with_mother,
+        father_name: formData.father_name,
+        father_address: formData.father_address,
+        connection_with_father: formData.connection_with_father,
+        connection_with_relatives: formData.connection_with_relatives,
+        relative_first_name: formData.relative_first_name,
+        relative_last_name: formData.relative_last_name,
+        relative_address: formData.relative_address,
+        relative_phone: formData.relative_phone,
+        graduation: formData.graduation,
+        graduation_details: formData.graduation_details,
+        teenage_status_details: formData.teenage_status_details,
       })
-      .catch((err) => {
-        // alert("error");
-      });
+        .then(() => {
+          // alert("success");
+        })
+        .catch((err) => {
+          // alert("error");
+        });
     navigate("/HabitantProject/doc");
   };
 
@@ -298,9 +303,10 @@ export function HabitantProject() {
             <label for="date_of_birth">תאריך לידה:</label>
             <input
               className="input1"
-              type="date"
+              type="text"
               id="date_of_birth"
               name="date_of_birth"
+              placeholder="dd/mm/yyyy"
               required
               value={formData.date_of_birth}
               onChange={(e) => handleChange(e)}

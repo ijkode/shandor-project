@@ -2,13 +2,13 @@ import React from "react";
 import "react-slideshow-image/dist/styles.css";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
-import { storage } from "./firebase";
+import { storage, app, auth } from "./firebase";
 import { ref, uploadBytes } from "firebase/storage";
 import Swal from "sweetalert2";
 export function AssistanceProjectDocuments() {
   const [imageUpload, setImageUpload] = useState(null);
   const navigate = useNavigate();
-
+  const user = auth.currentUser.email;
   const assistancePage = () => {
     navigate("/AssistanceProject");
   };
@@ -17,14 +17,14 @@ export function AssistanceProjectDocuments() {
   };
   const uploadImage = () => {
     if (imageUpload == null) return;
-    const imageRef = ref(storage, `files/${imageUpload.name}`);
+    const imageRef = ref(storage, `${user}/${imageUpload.name}`);
     uploadBytes(imageRef, imageUpload).then(() => {
       Swal.fire("הקובץ הועלה בהצלחה");
     });
   };
   return (
-    <div class="allDocPage">
-      <div class="titleOfPage">
+    <div className="allDocPage">
+      <div className="titleOfPage">
         <h1>העלאת קבצים בפורמט JPG או PDF </h1>
         <h5>
           לאחר לחיצה על כפתור הגש יש להמתין כמה רגעים עד לקבלת הודעת שהקובץ
@@ -45,7 +45,7 @@ export function AssistanceProjectDocuments() {
                 setImageUpload(event.target.files[0]);
               }}
             />
-            <button class="button-84" onClick={uploadImage}>
+            <button className="button-84" onClick={uploadImage}>
               הגש
             </button>
           </div>
@@ -59,7 +59,7 @@ export function AssistanceProjectDocuments() {
                 setImageUpload(event.target.files[0]);
               }}
             />
-            <button class="button-84" onClick={uploadImage}>
+            <button className="button-84" onClick={uploadImage}>
               הגש
             </button>
           </div>
@@ -76,7 +76,7 @@ export function AssistanceProjectDocuments() {
                 setImageUpload(event.target.files[0]);
               }}
             />
-            <button class="button-84" onClick={uploadImage}>
+            <button className="button-84" onClick={uploadImage}>
               הגש
             </button>
           </div>
@@ -90,7 +90,7 @@ export function AssistanceProjectDocuments() {
                 setImageUpload(event.target.files[0]);
               }}
             />
-            <button class="button-84" onClick={uploadImage}>
+            <button className="button-84" onClick={uploadImage}>
               הגש
             </button>
           </div>
@@ -104,7 +104,7 @@ export function AssistanceProjectDocuments() {
                 setImageUpload(event.target.files[0]);
               }}
             />
-            <button class="button-84" onClick={uploadImage}>
+            <button className="button-84" onClick={uploadImage}>
               הגש
             </button>
           </div>
@@ -118,7 +118,7 @@ export function AssistanceProjectDocuments() {
                 setImageUpload(event.target.files[0]);
               }}
             />
-            <button class="button-84" onClick={uploadImage}>
+            <button className="button-84" onClick={uploadImage}>
               הגש
             </button>
           </div>
@@ -132,12 +132,12 @@ export function AssistanceProjectDocuments() {
                 setImageUpload(event.target.files[0]);
               }}
             />
-            <button class="button-84" onClick={uploadImage}>
+            <button className="button-84" onClick={uploadImage}>
               הגש
             </button>
           </div>
           <br />
-          <div class="waiver_of_confidentiality">
+          <div className="waiver_of_confidentiality">
             {" "}
             להורדת טופס ויתור סודיות:
             <a href="https://drive.google.com/file/d/1U2eN7XRYQB7CsBNsVpz_BZSur9ockUOD/view?usp=sharing">
@@ -157,7 +157,7 @@ export function AssistanceProjectDocuments() {
                 setImageUpload(event.target.files[0]);
               }}
             />
-            <button class="button-84" onClick={uploadImage}>
+            <button className="button-84" onClick={uploadImage}>
               הגש
             </button>
           </div>
@@ -171,7 +171,7 @@ export function AssistanceProjectDocuments() {
                 setImageUpload(event.target.files[0]);
               }}
             />
-            <button class="button-84" onClick={uploadImage}>
+            <button className="button-84" onClick={uploadImage}>
               הגש
             </button>
           </div>
@@ -185,7 +185,7 @@ export function AssistanceProjectDocuments() {
                 setImageUpload(event.target.files[0]);
               }}
             />
-            <button class="button-84" onClick={uploadImage}>
+            <button className="button-84" onClick={uploadImage}>
               הגש
             </button>
           </div>
@@ -205,7 +205,7 @@ export function AssistanceProjectDocuments() {
                 setImageUpload(event.target.files[0]);
               }}
             />
-            <button class="button-84" onClick={uploadImage}>
+            <button className="button-84" onClick={uploadImage}>
               הגש
             </button>
           </div>
@@ -219,7 +219,7 @@ export function AssistanceProjectDocuments() {
                 setImageUpload(event.target.files[0]);
               }}
             />
-            <button class="button-84" onClick={uploadImage}>
+            <button className="button-84" onClick={uploadImage}>
               הגש
             </button>
           </div>
@@ -233,7 +233,7 @@ export function AssistanceProjectDocuments() {
                 setImageUpload(event.target.files[0]);
               }}
             />
-            <button class="button-84" onClick={uploadImage}>
+            <button className="button-84" onClick={uploadImage}>
               הגש
             </button>
           </div>
@@ -247,7 +247,7 @@ export function AssistanceProjectDocuments() {
                 setImageUpload(event.target.files[0]);
               }}
             />
-            <button class="button-84" onClick={uploadImage}>
+            <button className="button-84" onClick={uploadImage}>
               הגש
             </button>
           </div>
@@ -255,11 +255,11 @@ export function AssistanceProjectDocuments() {
       </div>
       <br />
       <br />
-      <button class="button-55" onClick={assistancePage}>
+      <button className="button-55" onClick={assistancePage}>
         {" "}
         הקודם
       </button>
-      <button class="button-55" onClick={submitPage}>
+      <button className="button-55" onClick={submitPage}>
         {" "}
         הגש
       </button>

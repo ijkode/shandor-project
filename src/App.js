@@ -6,6 +6,7 @@ import HabitantProject from "./HabitantProject";
 import AssistanceProject from "./AssistanceProject";
 import Registration from "./Registration";
 import Login from "./Login";
+import Admin from "./Admin";
 // import SubmitionPage from "./SubmitionPage";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import HabitantProjectDoc from "./HabitantProjectDoc";
@@ -21,6 +22,7 @@ function App() {
       <Routes>
         <Route path="" element={<HomePage />} />
         <Route path="Login" element={<Login />} />
+        <Route path="Admin" element={<Admin />} />
         {/* <Route path="SubmitionPage" element={<SubmitionPage />} /> */}
         <Route path="Registration" element={<Registration />} />
         <Route path="HabitantProject" element={<HabitantProject />} />

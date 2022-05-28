@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "react-slideshow-image/dist/styles.css";
 import { useNavigate } from "react-router-dom";
-import { collection, addDoc } from "firebase/firestore";
+import { collection, addDoc, setDoc, doc } from "firebase/firestore";
 import { db } from "./firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "./firebase";
@@ -42,37 +42,40 @@ export function AssistanceProject() {
   }
   const docPage = () => {
     const formRef = collection(db, "Candidates for habitant project");
-    addDoc(formRef, {
-      fname: formData.fname,
-      lname: formData.lname,
-      ID: formData.ID,
-      date_of_birth: formData.date_of_birth,
-      framework_name: formData.framework_name,
-      framework_field: formData.framework_field,
-      framework_years: formData.framework_years,
-      phone_number: formData.phone_number,
-      email: formData.email,
-      full: formData.full,
-      partial: formData.partial,
-      referrer_name: formData.referrer_name,
-      referrer_proffesion: formData.referrer_proffesion,
-      referrer_phone: formData.referrer_phone,
-      referrer_email: formData.referrer_email,
-      graduation: formData.graduation,
-      insurance_institute_allowance: formData.insurance_institute_allowance,
-      insurance_institute_allowance_details:
-        formData.insurance_institute_allowance_details,
-      graduation_details: formData.graduation_details,
-      other: formData.other,
-      scholarship_details: formData.scholarship_details,
-      tuition: formData.tuition,
-    })
-      .then(() => {
-        // alert("success");
+    const uid = auth.currentUser.uid;
+    if (uid != null)
+      setDoc(doc(formRef, uid), {
+        fname: formData.fname,
+        lname: formData.lname,
+        ID: formData.ID,
+        date_of_birth: formData.date_of_birth,
+        framework_name: formData.framework_name,
+        framework_field: formData.framework_field,
+        framework_years: formData.framework_years,
+        phone_number: formData.phone_number,
+        email: formData.email,
+        address: formData.address,
+        full: formData.full,
+        partial: formData.partial,
+        referrer_name: formData.referrer_name,
+        referrer_proffesion: formData.referrer_proffesion,
+        referrer_phone: formData.referrer_phone,
+        referrer_email: formData.referrer_email,
+        graduation: formData.graduation,
+        insurance_institute_allowance: formData.insurance_institute_allowance,
+        insurance_institute_allowance_details:
+          formData.insurance_institute_allowance_details,
+        graduation_details: formData.graduation_details,
+        other: formData.other,
+        scholarship_details: formData.scholarship_details,
+        tuition: formData.tuition,
       })
-      .catch((err) => {
-        // alert("error");
-      });
+        .then(() => {
+          // alert("success");
+        })
+        .catch((err) => {
+          // alert("error");
+        });
     navigate("/AssistanceProject/documents");
   };
   if (!user) {
@@ -161,9 +164,10 @@ export function AssistanceProject() {
             <label for="date_of_birth">תאריך לידה:</label>
             <input
               className="input1"
-              type="date"
+              type="text"
               id="date_of_birth"
               name="date_of_birth"
+              placeholder="dd/mm/yyyy"
               required
               value={formData.date_of_birth}
               onChange={(e) => handleChange(e)}

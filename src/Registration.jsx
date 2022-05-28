@@ -34,36 +34,34 @@ function Register() {
   const [user, setUser] = useState({});
 
   const register = async () => {
-    try {
-      const user = await createUserWithEmailAndPassword(
-        auth,
-        registerEmail,
-        registerPassword
-      );
-      const formRef = collection(db, "users");
-      addDoc(formRef, {
-        fname: formData.fname,
-        lname: formData.lname,
-        gender: formData.gender,
-        email: formData.email,
-        password: formData.password,
-        phone_number: formData.phone_number,
-        proffesion: formData.proffesion,
-        approval: formData.approval,
+    createUserWithEmailAndPassword(auth, registerEmail, registerPassword)
+      .then((userCredential) => {
+        // Signed in
+        const user = userCredential.user;
+        console.log(user);
+        // ...
       })
-        .then(() => {
-          alert("success");
-        })
-        .catch((err) => {
-          alert("error");
-        });
-      navigate("/");
-
-      console.log(user);
-    } catch (error) {
-      console.log(error.message);
-    }
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        // ..
+      });
   };
+
+  // const database = () => {
+  //   const formRef = collection(db, "users");
+  //   setDoc(doc(formRef, ){
+  //     fname: formData.fname,
+  //     lname: formData.lname,
+  //     gender: formData.gender,
+  //     email: formData.email,
+  //     password: formData.password,
+  //     phone_number: formData.phone_number,
+  //     proffesion: formData.proffesion,
+  //     approval: formData.approval,
+  //   });
+  //   navigate("/");
+  // };
 
   const login = async () => {
     try {
