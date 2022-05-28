@@ -219,7 +219,7 @@ const Admin = () => {
     test(search, search2);
     console.log(search);
   }
-  function searchCandidate(search, id) {
+  function searchCandidate(search, id, type) {
     let x = $("#data");
     x.html("");
     let src = "<div>";
@@ -231,6 +231,7 @@ const Admin = () => {
       "<th>תעודת זהות</th>" +
       "<th>תאריך לידה</th>" +
       "<th>אימייל</th>" +
+      "<th>הצג מידע מלא</th>" +
       "</tr>";
     x.append(src);
     for (let i = 0; i < search.length; i++) {
@@ -243,9 +244,24 @@ const Admin = () => {
             .append($("<td>").append(search[i]["ID"]))
             .append($("<td>").append(search[i]["date_of_birth"]))
             .append($("<td>").append(search[i]["email"]))
+            .append(
+              $("<td>").append(
+                "<button class='button-38' id='show" +
+                  [i] +
+                  "'>לחץ כאן</button>"
+              )
+            )
         );
         found = true;
       }
+      $("body").on("click", "#show" + [i], function () {
+        if (type == 1) {
+          showAssistData(search[i]["ID"], search);
+        }
+        if (type == 0) {
+          showHabData(search[i]["ID"], search);
+        }
+      });
     }
     if (found == false) {
       Swal.fire({
@@ -277,9 +293,9 @@ const Admin = () => {
       },
     }).then((result) => {
       if (result.value.projects == "דיור") {
-        searchCandidate(search, result.value.id);
+        searchCandidate(search, result.value.id, 1);
       } else {
-        searchCandidate(search2, result.value.id);
+        searchCandidate(search2, result.value.id, 0);
       }
     });
   }
