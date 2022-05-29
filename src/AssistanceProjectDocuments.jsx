@@ -255,14 +255,16 @@ export function AssistanceProjectDocuments() {
       </div>
       <br />
       <br />
-      <button className="button-55" onClick={assistancePage}>
-        {" "}
-        הקודם
-      </button>
-      <button className="button-55" onClick={submitPage}>
-        {" "}
-        הגש
-      </button>
+      <div className="back">
+        <a href="#" onClick={assistancePage}>
+          {" "}
+          הקודם
+        </a>
+        <button className="button-55" onClick={submitPage}>
+          {" "}
+          הגש
+        </button>
+      </div>
     </div>
   );
 }

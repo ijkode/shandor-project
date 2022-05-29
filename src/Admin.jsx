@@ -71,8 +71,11 @@ const Admin = () => {
       });
     }
   }
-  function deleteUser(id) {
+  function deleteHabUser(id) {
     deleteDoc(doc(db, "Candidates for assistance project", id));
+  }
+  function deleteAssistUser(id) {
+    deleteDoc(doc(db, "Candidates for habitant project", id));
   }
   async function getHabitantData() {
     var habitantData = [];
@@ -161,6 +164,7 @@ const Admin = () => {
         str += "שם האב: " + data[i]["father_name"] + "<br/>";
         str += "כתובת האב: " + data[i]["father_address"] + "<br/>";
         str += "קשר עם האב: " + data[i]["connection_with_father"] + "<br/>";
+        // str += "<button class='button-38' id='assistDel'>מחק מועמד</button>";
         str += "</div>";
         Swal.fire({
           title: data[i]["fname"] + " " + data[i]["lname"],
@@ -385,7 +389,7 @@ const Admin = () => {
           חיפוש מועמד לפי ת"ז
         </button>
       </div>
-      <div id="data"></div>
+      <br />
       <br />
       <button onClick={sortTable} className="button-38">
         מיין לפי שם
@@ -393,6 +397,8 @@ const Admin = () => {
       <button onClick={sortTablebyDate} className="button-38">
         מיין לפי תאריך
       </button>
+      <div id="data"></div>
+      <br />
     </div>
   );
 };

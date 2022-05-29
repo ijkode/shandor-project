@@ -50,7 +50,7 @@ body {
   background-size: cover;
 }
 .photosmall {
-  height: 5vmin;
+  height: 6.8vmin;
   width: 5vmax;
   float: right;
   background-size: cover;
@@ -105,6 +105,7 @@ li a {
 li a:hover {
   background-color: #111111;
 } */
+
 .topnav {
   float: center;
   width: 100%;
@@ -164,6 +165,21 @@ li a:hover {
   height: 100%;
   padding-left: 20px;
 }
+
+.back {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5%;
+}
+/* .Details {
+  text-align: right;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 8%;
+} */
 /* .App-header {
   background-color: #ffffff;
   min-height: 100vh;

@@ -89,10 +89,6 @@ function Register() {
               {" "}
               כניסה
             </button>
-            <button onClick={logout} class="button-55">
-              {" "}
-              התנתק
-            </button>
             <br />
             <br />
           </div>
@@ -128,10 +124,6 @@ function Register() {
           <button onClick={login} class="button-55">
             {" "}
             כניסה
-          </button>
-          <button onClick={logout} class="button-55">
-            {" "}
-            התנתק
           </button>
           <br />
           <br />

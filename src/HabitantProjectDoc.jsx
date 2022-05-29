@@ -237,14 +237,16 @@ export function HabitantProjectDoc() {
       <br />
       <br />
       <br />
-      <button className="button-55" onClick={prevPage}>
-        {" "}
-        הקודם
-      </button>
-      <button className="button-55" onClick={submitPage}>
-        {" "}
-        הגש
-      </button>
+      <div className="back">
+        <a href="#" onClick={prevPage}>
+          {" "}
+          הקודם
+        </a>
+        <button className="button-55" onClick={submitPage}>
+          {" "}
+          הגש
+        </button>
+      </div>
     </div>
   );
 }

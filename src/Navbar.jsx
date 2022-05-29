@@ -3,6 +3,12 @@ import { onAuthStateChanged } from "firebase/auth";
 import { useEffect, useState } from "react";
 import { auth } from "./firebase";
 import logoSmall from "./logosmall.jpeg";
+import { useNavigate } from "react-router-dom";
+import {
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  signOut,
+} from "firebase/auth";
 export function Navbar() {
   const [loginStatus, setLoginStatus] = useState(0);
   const [adminStatus, setAdminStatus] = useState(0);
@@ -19,6 +25,12 @@ export function Navbar() {
       }
     });
   }, []);
+  const navigate = useNavigate();
+  const logout = async () => {
+    await signOut(auth);
+    navigate("/");
+  };
+
   return (
     <div className="topnav">
       <div className="topnav-right">
@@ -28,12 +40,22 @@ export function Navbar() {
         <Link to="AssistanceProject"> פרויקט הכוון </Link>
       </div>
       <div className="topnav-left">
-        <Link to="Login" class="Registration-Button">
-          <span id="login">{loginStatus ? "התנתק" : "התחבר"}</span>
-        </Link>
-        <Link to="Admin" class="admin-button">
-          <span id="admin">{adminStatus ? "ניהול" : ""}</span>
-        </Link>
+        {loginStatus ? (
+          <Link to="Logout" class="Registration-Button">
+            <span id="Logout" onClick={logout}>
+              {"התנתק"}
+            </span>
+          </Link>
+        ) : (
+          <Link to="Login" class="Registration-Button">
+            <span id="login">{"התחבר"}</span>
+          </Link>
+        )}
+        {adminStatus ? (
+          <Link to="Admin" class="admin-button">
+            <span id="admin">{"ניהול"}</span>
+          </Link>
+        ) : null}
       </div>
     </div>
   );
