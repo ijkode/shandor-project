@@ -10,7 +10,7 @@ import {
 } from "firebase/firestore";
 import $ from "jquery";
 import Swal from "sweetalert2";
-
+import ReactHTMLTableToExcel from "react-html-table-to-excel";
 const Admin = () => {
   const [data, setData] = useState([]);
 
@@ -39,18 +39,19 @@ const Admin = () => {
     x.html("");
     let src = "<div>";
     src +=
-      "<table class='content-table' style='width:100%' id='tab'>" +
+      "<table class='content-table' style='width:100%' id='table-to-xls'>" +
       "<tr>" +
       "<th>שם ושם משפחה</th>" +
       "<th>תעודת זהות</th>" +
       "<th>תאריך לידה</th>" +
       "<th>אימייל</th>" +
       "<th>הצג מידע מלא</th>" +
+      "<th>הורד מידע על מועמד זה</th>" +
       "</tr>";
     x.append(src);
     for (let i = 0; i < assistanceData.length; i++) {
       console.log(i);
-      $("#tab").append(
+      $("#table-to-xls").append(
         $("<tr>")
           .append(
             $("<td>").append(
@@ -65,9 +66,20 @@ const Admin = () => {
               "<button class='button-38' id='show" + [i] + "'>לחץ כאן</button>"
             )
           )
+          .append(
+            $("<td>").append(
+              "<button class='button-38' id='download" +
+                [i] +
+                "'>לחץ כאן</button>"
+            )
+          )
       );
       $("body").on("click", "#show" + [i], function () {
         showAssistData(assistanceData[i]["ID"], assistanceData);
+      });
+      $("body").on("click", "#download" + [i], function () {
+        // TODO - duplicate toexcel and create needed table
+        toExcel(assistanceData[i]["ID"], assistanceData);
       });
     }
   }
@@ -93,17 +105,18 @@ const Admin = () => {
     x.html("");
     let src = "<div>";
     src +=
-      "<table class='content-table' style='width:100%' id='tab'>" +
+      "<table class='content-table' style='width:100%' id='table-to-xls'>" +
       "<tr>" +
       "<th>שם ושם משפחה</th>" +
       "<th>תעודת זהות</th>" +
       "<th>תאריך לידה</th>" +
       "<th>אימייל</th>" +
       "<th>הצג מידע מלא</th>" +
+      "<th>הורד מידע על מועמד זה</th>" +
       "</tr>";
     x.append(src);
     for (let i = 0; i < habitantData.length; i++) {
-      $("#tab").append(
+      $("#table-to-xls").append(
         $("<tr>")
           .append(
             $("<td>").append(
@@ -118,9 +131,19 @@ const Admin = () => {
               "<button class='button-38' id='show" + [i] + "'>לחץ כאן</button>"
             )
           )
+          .append(
+            $("<td>").append(
+              "<button class='button-38' id='download" +
+                [i] +
+                "'>לחץ כאן</button>"
+            )
+          )
       );
       $("body").on("click", "#show" + [i], function () {
         showHabData(habitantData[i]["ID"], habitantData);
+      });
+      $("body").on("click", "#download" + [i], function () {
+        toExcel(habitantData[i]["ID"], habitantData);
       });
     }
   }
@@ -172,6 +195,50 @@ const Admin = () => {
           html: str,
           focusConfirm: false,
         });
+      }
+    }
+  }
+
+  function toExcel(id, data) {
+    let x = $("#data");
+    x.html("");
+    console.log(id);
+    let src = "<div>";
+    src +=
+      "<ReactHTMLTableToExcel id='test-table-xls-button' className='download-table-xls-button' table='table-to-xls' filename='test' sheet='tablexls' buttonText='Download as XLS'/>" +
+      "<table class='content-table' style='width:100%' id='table-to-xls'>" +
+      "<tr>" +
+      "<th>שם ושם משפחה</th>" +
+      "<th>תעודת זהות</th>" +
+      "<th>תאריך לידה</th>" +
+      "<th>מספר טלפון</th>" +
+      "<th>שם ושם משפחה של גורם מפנה</th>" +
+      "<th>תפקיד של גורם מפנה</th>" +
+      "<th>טלפון של גורם מפנה</th>" +
+      "<th>אימייל של גורם מפנה</th>" +
+      "<th>מוסד</th>" +
+      "<th>תחום</th>" +
+      "<th>מספר שנות לימוד</th>" +
+      "<th>היקף שכר לימוד</th>" +
+      "</tr>";
+    x.append(src);
+    for (let i = 0; i < data.length; i++) {
+      if (data[i]["ID"] == id) {
+        $("#table-to-xls").append(
+          $("<tr>")
+            .append($("<td>").append(data[i]["fname"] + " " + data[i]["lname"]))
+            .append($("<td>").append(data[i]["ID"]))
+            .append($("<td>").append(data[i]["date_of_birth"]))
+            .append($("<td>").append(data[i]["phone_number"]))
+            .append($("<td>").append(data[i]["referrer_name"]))
+            .append($("<td>").append(data[i]["referrer_proffesion"]))
+            .append($("<td>").append(data[i]["referrer_phone"]))
+            .append($("<td>").append(data[i]["referrer_email"]))
+            .append($("<td>").append(data[i]["framework_name"]))
+            .append($("<td>").append(data[i]["framework_field"]))
+            .append($("<td>").append(data[i]["framework_years"]))
+            .append($("<td>").append(data[i]["tuition"]))
+        );
       }
     }
   }
@@ -305,7 +372,7 @@ const Admin = () => {
   }
   function sortTable() {
     var table, rows, switching, i, x, y, shouldSwitch;
-    table = document.getElementById("tab");
+    table = document.getElementById("table-to-xls");
     switching = true;
     /*Make a loop that will continue until
     no switching has been done:*/
@@ -322,7 +389,6 @@ const Admin = () => {
         one from current row and one from the next:*/
         x = rows[i].getElementsByTagName("TD")[0];
         y = rows[i + 1].getElementsByTagName("TD")[0];
-        console.log(y);
         //check if the two rows should switch place:
         if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
           //if so, mark as a switch and break the loop:
@@ -341,7 +407,7 @@ const Admin = () => {
 
   function sortTablebyDate() {
     var table, rows, switching, i, x, y, shouldSwitch;
-    table = document.getElementById("tab");
+    table = document.getElementById("table-to-xls");
     switching = true;
     /*Make a loop that will continue until
     no switching has been done:*/
@@ -397,6 +463,14 @@ const Admin = () => {
       <button onClick={sortTablebyDate} className="button-38">
         מיין לפי תאריך
       </button>
+      <ReactHTMLTableToExcel
+        id="test-table-xls-button"
+        className="button-38"
+        table="table-to-xls"
+        filename="tablexls"
+        sheet="tablexls"
+        buttonText="הורד את הטבלה המוצגת לקובץ אקסל"
+      />
       <div id="data"></div>
       <br />
     </div>
