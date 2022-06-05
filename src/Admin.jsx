@@ -13,7 +13,8 @@ import Swal from "sweetalert2";
 import ReactHTMLTableToExcel from "react-html-table-to-excel";
 const Admin = () => {
   const [data, setData] = useState([]);
-
+  const [click, setClick] = useState(0);
+  const [btn, setBtn] = useState(0);
   useEffect(() => {
     const getData = async () => {
       const showData = await getDocs(
@@ -24,6 +25,7 @@ const Admin = () => {
     getData();
   }, []);
   async function getAssistanceData() {
+    setBtn(1);
     var assistanceData = [];
     const querySnapshot = await getDocs(
       collection(db, "Candidates for assistance project")
@@ -35,6 +37,7 @@ const Admin = () => {
     console.log(assistanceData);
   }
   function showAssistanceData(assistanceData) {
+    setClick(0);
     let x = $("#data");
     x.html("");
     let src = "<div>";
@@ -46,7 +49,6 @@ const Admin = () => {
       "<th>תאריך לידה</th>" +
       "<th>אימייל</th>" +
       "<th>הצג מידע מלא</th>" +
-      "<th>הורד מידע על מועמד זה</th>" +
       "</tr>";
     x.append(src);
     for (let i = 0; i < assistanceData.length; i++) {
@@ -63,11 +65,6 @@ const Admin = () => {
           .append($("<td>").append(assistanceData[i]["email"]))
           .append(
             $("<td>").append(
-              "<button class='button-38' id='show" + [i] + "'>לחץ כאן</button>"
-            )
-          )
-          .append(
-            $("<td>").append(
               "<button class='button-38' id='download" +
                 [i] +
                 "'>לחץ כאן</button>"
@@ -78,8 +75,8 @@ const Admin = () => {
         showAssistData(assistanceData[i]["ID"], assistanceData);
       });
       $("body").on("click", "#download" + [i], function () {
-        // TODO - duplicate toexcel and create needed table
-        toExcel(assistanceData[i]["ID"], assistanceData);
+        setClick(1);
+        tohabExcel(assistanceData[i]["ID"], assistanceData);
       });
     }
   }
@@ -90,6 +87,7 @@ const Admin = () => {
     deleteDoc(doc(db, "Candidates for habitant project", id));
   }
   async function getHabitantData() {
+    setBtn(1);
     var habitantData = [];
     const querySnapshot = await getDocs(
       collection(db, "Candidates for habitant project")
@@ -98,9 +96,9 @@ const Admin = () => {
       habitantData.push(doc.data());
     });
     showHabitantData(habitantData);
-    console.log(habitantData);
   }
   function showHabitantData(habitantData) {
+    setClick(0);
     let x = $("#data");
     x.html("");
     let src = "<div>";
@@ -112,7 +110,6 @@ const Admin = () => {
       "<th>תאריך לידה</th>" +
       "<th>אימייל</th>" +
       "<th>הצג מידע מלא</th>" +
-      "<th>הורד מידע על מועמד זה</th>" +
       "</tr>";
     x.append(src);
     for (let i = 0; i < habitantData.length; i++) {
@@ -128,11 +125,6 @@ const Admin = () => {
           .append($("<td>").append(habitantData[i]["email"]))
           .append(
             $("<td>").append(
-              "<button class='button-38' id='show" + [i] + "'>לחץ כאן</button>"
-            )
-          )
-          .append(
-            $("<td>").append(
               "<button class='button-38' id='download" +
                 [i] +
                 "'>לחץ כאן</button>"
@@ -143,15 +135,15 @@ const Admin = () => {
         showHabData(habitantData[i]["ID"], habitantData);
       });
       $("body").on("click", "#download" + [i], function () {
+        setClick(1);
         toExcel(habitantData[i]["ID"], habitantData);
       });
     }
   }
 
   function showAssistData(id, data) {
-    console.log(id);
     for (let i = 0; i < data.length; i++) {
-      if (data[i]["ID"] == id) {
+      if (data[i]["ID"] === id) {
         let str = "<div>תז: " + data[i]["ID"] + "<br/>";
         str += "תאריך לידה: " + data[i]["date_of_birth"] + "<br/>";
         str += "כתובת: " + data[i]["address"] + "<br/>";
@@ -243,8 +235,83 @@ const Admin = () => {
     }
   }
 
-  function showHabData(id, data) {
+  function tohabExcel(id, data) {
+    let x = $("#data");
+    x.html("");
     console.log(id);
+    let src = "<div>";
+    src +=
+      "<ReactHTMLTableToExcel id='test-table-xls-button' className='download-table-xls-button' table='table-to-xls' filename='test' sheet='tablexls' buttonText='Download as XLS'/>" +
+      "<table class='content-table' style='width:100%' id='table-to-xls'>" +
+      "<tr>" +
+      "<th>שם ושם משפחה</th>" +
+      "<th>תעודת זהות</th>" +
+      "<th>תאריך לידה</th>" +
+      "<th>ארץ לידה</th>" +
+      "<th>קופת חולים</th>" +
+      "<th>רופא מטפל</th>" +
+      "<th>סניף קופת חולים</th>" +
+      "<th>טלפון קופת חולים</th>" +
+      "<th>מסגרת נוכחית</th>" +
+      "<th>שם המסגרת</th>" +
+      "<th>כתובת המסגרת</th>" +
+      "<th>מספר טלפון</th>" +
+      "<th>אימייל</th>" +
+      "<th>שם ושם משפחה של גורם מפנה</th>" +
+      "<th>תפקיד של גורם מפנה</th>" +
+      "<th>טלפון של גורם מפנה</th>" +
+      "<th>אימייל של גורם מפנה</th>" +
+      "<th>שם הלשכה</th>" +
+      "<th>שם העוס</th>" +
+      "<th>תפקיד העוס</th>" +
+      "<th>טלפון של העוס</th>" +
+      "<th>רקע משפחתי</th>" +
+      "<th>מצב ההורים</th>" +
+      "<th>מצב משפחתי</th>" +
+      "<th>שם האם</th>" +
+      "<th>כתובת האם</th>" +
+      "<th>שם האב</th>" +
+      "<th>כתובת האב</th>" +
+      "</tr>";
+    x.append(src);
+    for (let i = 0; i < data.length; i++) {
+      if (data[i]["ID"] == id) {
+        $("#table-to-xls").append(
+          $("<tr>")
+            .append($("<td>").append(data[i]["fname"] + " " + data[i]["lname"]))
+            .append($("<td>").append(data[i]["ID"]))
+            .append($("<td>").append(data[i]["date_of_birth"]))
+            .append($("<td>").append(data[i]["born_country"]))
+            .append($("<td>").append(data[i]["hmo"]))
+            .append($("<td>").append(data[i]["doctor"]))
+            .append($("<td>").append(data[i]["hmo_branch"]))
+            .append($("<td>").append(data[i]["hmo_phone"]))
+            .append($("<td>").append(data[i]["current_framework"]))
+            .append($("<td>").append(data[i]["framework_name"]))
+            .append($("<td>").append(data[i]["framework_address"]))
+            .append($("<td>").append(data[i]["phone_number"]))
+            .append($("<td>").append(data[i]["email"]))
+            .append($("<td>").append(data[i]["referrer_name"]))
+            .append($("<td>").append(data[i]["referrer_proffesion"]))
+            .append($("<td>").append(data[i]["referrer_phone"]))
+            .append($("<td>").append(data[i]["referrer_email"]))
+            .append($("<td>").append(data[i]["bureau_name"]))
+            .append($("<td>").append(data[i]["social_worker_name"]))
+            .append($("<td>").append(data[i]["social_worker_role"]))
+            .append($("<td>").append(data[i]["social_worker_phone"]))
+            .append($("<td>").append(data[i]["family_background"]))
+            .append($("<td>").append(data[i]["parents_status"]))
+            .append($("<td>").append(data[i]["family_status"]))
+            .append($("<td>").append(data[i]["mother_name"]))
+            .append($("<td>").append(data[i]["mother_address"]))
+            .append($("<td>").append(data[i]["father_name"]))
+            .append($("<td>").append(data[i]["father_address"]))
+        );
+      }
+    }
+  }
+
+  function showHabData(id, data) {
     for (let i = 0; i < data.length; i++) {
       if (data[i]["ID"] == id) {
         let str = "<div>תז: " + data[i]["ID"] + "<br/>";
@@ -290,7 +357,10 @@ const Admin = () => {
     test(search, search2);
     console.log(search);
   }
+  function downloadData(data, id) {}
   function searchCandidate(search, id, type) {
+    setBtn(1);
+    setClick(0);
     let x = $("#data");
     x.html("");
     let src = "<div>";
@@ -317,7 +387,7 @@ const Admin = () => {
             .append($("<td>").append(search[i]["email"]))
             .append(
               $("<td>").append(
-                "<button class='button-38' id='show" +
+                "<button class='button-38' id='download" +
                   [i] +
                   "'>לחץ כאן</button>"
               )
@@ -326,15 +396,25 @@ const Admin = () => {
         found = true;
       }
       $("body").on("click", "#show" + [i], function () {
-        if (type == 1) {
+        if (type === 1) {
           showAssistData(search[i]["ID"], search);
         }
-        if (type == 0) {
+        if (type === 0) {
           showHabData(search[i]["ID"], search);
         }
       });
+      $("body").on("click", "#download" + [i], function () {
+        if (type === 1) {
+          setClick(1);
+          tohabExcel(search[i]["ID"], search);
+        }
+        if (type === 0) {
+          setClick(1);
+          toExcel(search[i]["ID"], search);
+        }
+      });
     }
-    if (found == false) {
+    if (found === false) {
       Swal.fire({
         title: "שגיאה",
         icon: "error",
@@ -363,7 +443,7 @@ const Admin = () => {
         };
       },
     }).then((result) => {
-      if (result.value.projects == "דיור") {
+      if (result.value.projects === "דיור") {
         searchCandidate(search, result.value.id, 1);
       } else {
         searchCandidate(search2, result.value.id, 0);
@@ -457,20 +537,30 @@ const Admin = () => {
       </div>
       <br />
       <br />
-      <button onClick={sortTable} className="button-38">
-        מיין לפי שם
-      </button>
-      <button onClick={sortTablebyDate} className="button-38">
-        מיין לפי תאריך
-      </button>
-      <ReactHTMLTableToExcel
-        id="test-table-xls-button"
-        className="button-38"
-        table="table-to-xls"
-        filename="tablexls"
-        sheet="tablexls"
-        buttonText="הורד את הטבלה המוצגת לקובץ אקסל"
-      />
+      {btn ? (
+        <div>
+          <button onClick={sortTable} className="button-38">
+            מיין לפי שם
+          </button>
+          <button onClick={sortTablebyDate} className="button-38">
+            מיין לפי תאריך
+          </button>
+        </div>
+      ) : null}
+      <br />
+      {click ? (
+        <div>
+          <br />
+          <ReactHTMLTableToExcel
+            id="test-table-xls-button"
+            className="button-38"
+            table="table-to-xls"
+            filename="tablexls"
+            sheet="tablexls"
+            buttonText="הורד את הטבלה המוצגת לקובץ אקסל"
+          />
+        </div>
+      ) : null}
       <div id="data"></div>
       <br />
     </div>

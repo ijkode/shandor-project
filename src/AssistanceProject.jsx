@@ -292,6 +292,8 @@ export function AssistanceProject() {
             value={formData.framework_years}
             onChange={(e) => handleChange(e)}
           />
+          <br />
+          <br />
           <label for="tuition"> היקף שכר לימוד : </label>
           <input
             className="input1"

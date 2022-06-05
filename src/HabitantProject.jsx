@@ -405,6 +405,8 @@ export function HabitantProject() {
               value={formData.framework_address}
               onChange={(e) => handleChange(e)}
             />
+            <br />
+            <br />
             <label for="framework_after_school">מסגרת אחרי לימודים : </label>
             <select id="framework_after_school" className="select1">
               <option id="militaryService">שירות צבאי</option>

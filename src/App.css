@@ -32,11 +32,17 @@
 body {
   margin: 0;
   text-align: center;
-  font-family: "Alef Hebrew", “Helvetica Neue”, Helvetica, Arial, sans-serif;
+  font-family: "Nunito", sans-serif;
   background-image: url("background.jpg");
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center center;
+}
+
+td {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  word-wrap: break-word;
 }
 
 .App {
@@ -357,6 +363,7 @@ fieldset {
 
 /* CSS */
 .button-38 {
+  margin-right: 30px;
   border: 0;
   border-radius: 0.5rem;
   box-sizing: border-box;
@@ -563,14 +570,6 @@ h2 {
   outline: none;
 }
 
-fieldset {
-  border: 2px solid #4102ff;
-  -moz-border-radius: 8px;
-  -webkit-border-radius: 8px;
-  border-radius: 8px;
-  padding: 16px;
-}
-
 .legendTitle {
   /* color: black; */
   font-size: x-large;
@@ -578,18 +577,21 @@ fieldset {
 }
 
 fieldset {
+  margin: auto;
+  float: center;
   font-family: sans-serif;
   border: 1px solid #1f497d;
   background: rgb(230, 242, 255);
-  border-radius: 1px;
-  padding: 15px;
+  border-radius: 50px;
+  padding: 50px;
+  width: 90%;
 }
 
 fieldset legend {
   background-color: #e0fafb;
   border: 2px solid #000042;
   border-radius: 30px;
-  box-shadow: #017885 4px 4px 0 0;
+  box-shadow: #029fb1 2px 4px 0 0;
   color: #080042;
   display: inline-block;
   font-weight: 600;
@@ -642,7 +644,7 @@ fieldset legend {
 .input1 {
   padding: 8px 12px;
   margin: 8px 0 0 10px;
-  box-sizing: border-box;
+  /* box-sizing: border-box; */
   border: 2px solid #1f497d;
   border-radius: 16px;
   width: 15%;
@@ -782,6 +784,7 @@ fieldset legend {
   margin: 25px 0;
   font-size: 0.9em;
   min-width: 400px;
+  width: 100%;
   border-radius: 5px 5px 0 0;
   overflow: hidden;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
