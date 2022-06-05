@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { db } from "./firebase";
+import { db, storage } from "./firebase";
 import {
   collection,
   addDoc,
@@ -8,6 +8,7 @@ import {
   getDocs,
   deleteDoc,
 } from "firebase/firestore";
+import { ref, getDownloadURL, listAll } from "firebase/storage";
 import $ from "jquery";
 import Swal from "sweetalert2";
 import ReactHTMLTableToExcel from "react-html-table-to-excel";
@@ -71,14 +72,37 @@ const Admin = () => {
             )
           )
       );
-      $("body").on("click", "#show" + [i], function () {
-        showAssistData(assistanceData[i]["ID"], assistanceData);
+      $("body").on("click", "#down" + [i], function () {
+        downloadData(assistanceData[i]["email"]);
       });
       $("body").on("click", "#download" + [i], function () {
         setClick(1);
         tohabExcel(assistanceData[i]["ID"], assistanceData);
       });
     }
+  }
+  function downloadData(id) {
+    console.log("here");
+    getDownloadURL(ref(storage, id + "/Screenshot 2022-06-02 152705.png"))
+      .then((url) => {
+        // `url` is the download URL for 'images/stars.jpg'
+
+        // This can be downloaded directly:
+        const xhr = new XMLHttpRequest();
+        xhr.responseType = "blob";
+        xhr.onload = (event) => {
+          const blob = xhr.response;
+        };
+        xhr.open("GET", url);
+        xhr.send();
+
+        // Or inserted into an <img> element
+        // const img = document.getElementById('myimg');
+        // img.setAttribute('src', url);
+      })
+      .catch((error) => {
+        // Handle any errors
+      });
   }
   function deleteHabUser(id) {
     deleteDoc(doc(db, "Candidates for assistance project", id));
@@ -131,8 +155,8 @@ const Admin = () => {
             )
           )
       );
-      $("body").on("click", "#show" + [i], function () {
-        showHabData(habitantData[i]["ID"], habitantData);
+      $("body").on("click", "#down" + [i], function () {
+        downloadData(habitantData[i]["email"]);
       });
       $("body").on("click", "#download" + [i], function () {
         setClick(1);
@@ -261,17 +285,6 @@ const Admin = () => {
       "<th>תפקיד של גורם מפנה</th>" +
       "<th>טלפון של גורם מפנה</th>" +
       "<th>אימייל של גורם מפנה</th>" +
-      "<th>שם הלשכה</th>" +
-      "<th>שם העוס</th>" +
-      "<th>תפקיד העוס</th>" +
-      "<th>טלפון של העוס</th>" +
-      "<th>רקע משפחתי</th>" +
-      "<th>מצב ההורים</th>" +
-      "<th>מצב משפחתי</th>" +
-      "<th>שם האם</th>" +
-      "<th>כתובת האם</th>" +
-      "<th>שם האב</th>" +
-      "<th>כתובת האב</th>" +
       "</tr>";
     x.append(src);
     for (let i = 0; i < data.length; i++) {
@@ -295,6 +308,23 @@ const Admin = () => {
             .append($("<td>").append(data[i]["referrer_proffesion"]))
             .append($("<td>").append(data[i]["referrer_phone"]))
             .append($("<td>").append(data[i]["referrer_email"]))
+        );
+        $("#table-to-xls").append(
+          $("<tr>")
+            .append($("<th>").append("שם הלשכה"))
+            .append($("<th>").append("שם העוס"))
+            .append($("<th>").append("תפקיד העוס"))
+            .append($("<th>").append("טלפון של העוס"))
+            .append($("<th>").append("רקע משפחתי"))
+            .append($("<th>").append("מצב ההורים"))
+            .append($("<th>").append("מצב משפחתי"))
+            .append($("<th>").append("שם האם"))
+            .append($("<th>").append("כתובת האם"))
+            .append($("<th>").append("שם האב"))
+            .append($("<th>").append("כתובת האב"))
+        );
+        $("#table-to-xls").append(
+          $("<tr>")
             .append($("<td>").append(data[i]["bureau_name"]))
             .append($("<td>").append(data[i]["social_worker_name"]))
             .append($("<td>").append(data[i]["social_worker_role"]))
@@ -357,7 +387,7 @@ const Admin = () => {
     test(search, search2);
     console.log(search);
   }
-  function downloadData(data, id) {}
+
   function searchCandidate(search, id, type) {
     setBtn(1);
     setClick(0);
