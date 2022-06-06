@@ -559,7 +559,7 @@ h3 {
 
 /* Focus */
 .file input:focus ~ .file-custom {
-  box-shadow: 0 0 0 0.075rem #fff, 0 0 0 0.2rem #0074d9;
+  box-shadow: 0 0 0 0.075rem #fff, 0 0 0 0.2rem #ffffff;
 }
 
 h1 {
@@ -643,7 +643,7 @@ h2 {
 }
 #upload-border {
   height: 30px;
-  border: 1px solid #2077c9;
+  border: 1px solid #ffffff;
   display: inline-block;
   padding-left: 7px;
   margin: 20px 0;
@@ -658,7 +658,7 @@ h2 {
   height: 100%;
   padding: 0 20px;
   border: none;
-  background: #2077c9;
+  background: #ffffff;
   color: white;
   cursor: pointer;
 }
@@ -786,21 +786,22 @@ fieldset legend {
 }
 
 .customfile {
-  border: 1px solid rgb(62, 91, 255);
-  border-radius: 20px;
+  border: 1px solid rgb(0, 0, 0);
+  border-radius: 10px;
   padding: 1px;
   font-size: 10px;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 }
 .customfile::-webkit-file-upload-button {
-  background-image: -webkit-linear-gradient(
-    rgb(4, 121, 255),
-    rgb(173, 196, 231)
-  );
-  color: #fff;
-  padding: 6px 14px;
-  border: 1px solid rgb(138, 222, 255);
-  border-radius: 50px;
+  position: relative;
+  border-radius: 20px;
+  border: 1px;
+  background: rgb(255, 255, 255);
+  padding: 10px 15px;
   cursor: pointer;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 50px 0px,
+    rgba(0, 0, 0, 0.3) 0px 30px 30px -30px,
+    rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
 }
 
 /* CSS */
