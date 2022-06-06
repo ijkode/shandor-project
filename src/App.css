@@ -61,10 +61,11 @@ td {
   background-size: cover;
 }
 .photosmall {
-  height: 6.8vmin;
-  width: 5vmax;
   float: right;
-  background-size: cover;
+  width: 80px;
+  height: 56px;
+  overflow: hidden;
+  margin-top: -6px;
 }
 .topBackground {
   background-color: white;
@@ -106,8 +107,12 @@ td {
   background-position: -200%;
   animation: animated-gradient 4s infinite alternate-reverse;
 }
-.Details {
+.AllDetails {
   display: flex;
+  flex-direction: column;
+}
+.AllDetails .Details {
+  align-self: center;
   flex-direction: column;
   justify-content: center;
   box-shadow: rgba(50, 50, 105, 0.15) 0px 2px 5px 0px,
@@ -115,7 +120,12 @@ td {
   border-radius: 50px;
   padding: 20px;
   width: 50%;
-  margin-right: 350px;
+  /* margin-right: 350px; */
+}
+.titleToHabitantProject {
+  align-self: center;
+  flex-direction: column;
+  justify-content: center;
 }
 .Assistance {
   border-radius: 50px;
