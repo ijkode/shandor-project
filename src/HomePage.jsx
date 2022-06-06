@@ -41,7 +41,7 @@ const HomePage = () => {
       <div class="about">
         <br></br>
         <div class="bothProjects">
-          <div class="tooltip">
+          <div class="Habitant">
             <h2>פרויקט דירת בוגרות</h2>
             <p />
             <br />
@@ -102,9 +102,9 @@ const HomePage = () => {
         <br></br>
         <br></br>
         <br></br>
-        <h2>קצת עלינו</h2>
-        <br></br>
-        <div>
+        <div className="aboutUs">
+          <h2>קצת עלינו</h2>
+          <br></br>
           סיוע והכוון לצעירים בסיכון מגורים ומעטפת טיפולית בצעירות בסיכון חסרי
           עורף משפחתי
         </div>
