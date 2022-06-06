@@ -5,9 +5,10 @@ import { storage, app, auth } from "./firebase";
 import { useState, useEffect } from "react";
 import { ref, uploadBytes } from "firebase/storage";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
+import { LinearProgress } from "@mui/material";
 import Swal from "sweetalert2";
 export function HabitantProjectDoc() {
-  const [imageUpload, setImageUpload] = useState(null);
+  const [imageUpload, setImageUpload] = useState([]);
   const navigate = useNavigate();
   const user = auth.currentUser.email;
   const prevPage = () => {
@@ -18,18 +19,34 @@ export function HabitantProjectDoc() {
   };
   const uploadImage = () => {
     if (imageUpload == null) return;
-    const imageRef = ref(storage, `${user}/${imageUpload.name}`);
-    uploadBytes(imageRef, imageUpload).then(() => {
-      Swal.fire("הקובץ הועלה בהצלחה");
-    });
+    if (imageUpload.length < 13) {
+      Swal.fire({
+        title: "שגיאה",
+        icon: "error",
+        html: "יש להעלות את כל הקבצים הנדרשים",
+        focusConfirm: false,
+      });
+    } else {
+      for (let i = 0; i < imageUpload.length; i++) {
+        const imageRef = ref(storage, `${user}/${imageUpload[i].name}`);
+        uploadBytes(imageRef, imageUpload[i]).then(() => {
+          if (i == 12) {
+            Swal.fire("הקבצים הועלו בהצלחה");
+            setImageUpload([]);
+            navigate("/");
+          }
+        });
+      }
+    }
   };
   return (
     <div className="allDocPage">
       <div className="titleOfPage">
         <h1>העלאת קבצים בפורמט JPG או PDF</h1>
+        <br />
         <h5>
-          לאחר לחיצה על כפתור הגש יש להמתין כמה רגעים עד לקבלת הודעת שהקובץ
-          הועלה בהצלחה{" "}
+          לאחר לחיצה על כפתור הגש יש להמתין כמה רגעים עד לקבלת הודעת שהקבצים
+          הועלו בהצלחה{" "}
         </h5>
       </div>
       <br></br>
@@ -43,12 +60,9 @@ export function HabitantProjectDoc() {
               type="file"
               className="customfile"
               onChange={(event) => {
-                setImageUpload(event.target.files[0]);
+                imageUpload.push(event.target.files[0]);
               }}
             />
-            <button className="button-84" onClick={uploadImage}>
-              הגש
-            </button>
           </div>
           <br />
           <label for="file"> מכתב הפנייה מהמועמדת </label>
@@ -57,12 +71,9 @@ export function HabitantProjectDoc() {
               type="file"
               className="customfile"
               onChange={(event) => {
-                setImageUpload(event.target.files[0]);
+                imageUpload.push(event.target.files[0]);
               }}
             />
-            <button className="button-84" onClick={uploadImage}>
-              הגש
-            </button>
           </div>
           <br />
           <label for="file"> חו"ד הורי בית/אומנה/פנימייה </label>
@@ -71,12 +82,9 @@ export function HabitantProjectDoc() {
               type="file"
               className="customfile"
               onChange={(event) => {
-                setImageUpload(event.target.files[0]);
+                imageUpload.push(event.target.files[0]);
               }}
             />
-            <button className="button-84" onClick={uploadImage}>
-              הגש
-            </button>
           </div>
           <br />
           <label for="file"> טופס ויתור סודיות </label>
@@ -85,12 +93,9 @@ export function HabitantProjectDoc() {
               type="file"
               className="customfile"
               onChange={(event) => {
-                setImageUpload(event.target.files[0]);
+                imageUpload.push(event.target.files[0]);
               }}
             />
-            <button className="button-84" onClick={uploadImage}>
-              הגש
-            </button>
           </div>
           <br />
           <div className="waiver_of_confidentiality">
@@ -110,12 +115,9 @@ export function HabitantProjectDoc() {
               type="file"
               className="customfile"
               onChange={(event) => {
-                setImageUpload(event.target.files[0]);
+                imageUpload.push(event.target.files[0]);
               }}
             />
-            <button className="button-84" onClick={uploadImage}>
-              הגש
-            </button>
           </div>
           <br />
           <label for="file"> סיכום מידע רפואי </label>
@@ -124,12 +126,9 @@ export function HabitantProjectDoc() {
               type="file"
               className="customfile"
               onChange={(event) => {
-                setImageUpload(event.target.files[0]);
+                imageUpload.push(event.target.files[0]);
               }}
             />
-            <button className="button-84" onClick={uploadImage}>
-              הגש
-            </button>
           </div>
           <br />
           <label for="file"> הערכה פסיכולוגית </label>
@@ -138,12 +137,9 @@ export function HabitantProjectDoc() {
               type="file"
               className="customfile"
               onChange={(event) => {
-                setImageUpload(event.target.files[0]);
+                imageUpload.push(event.target.files[0]);
               }}
             />
-            <button className="button-84" onClick={uploadImage}>
-              הגש
-            </button>
           </div>
           <br />
           <label for="file"> אבחון פסיכו סוציאלי </label>
@@ -152,12 +148,9 @@ export function HabitantProjectDoc() {
               type="file"
               className="customfile"
               onChange={(event) => {
-                setImageUpload(event.target.files[0]);
+                imageUpload.push(event.target.files[0]);
               }}
             />
-            <button className="button-84" onClick={uploadImage}>
-              הגש
-            </button>
           </div>
           <br />
           <label for="file"> אבחון לקויות למידה </label>
@@ -166,12 +159,9 @@ export function HabitantProjectDoc() {
               type="file"
               className="customfile"
               onChange={(event) => {
-                setImageUpload(event.target.files[0]);
+                imageUpload.push(event.target.files[0]);
               }}
             />
-            <button className="button-84" onClick={uploadImage}>
-              הגש
-            </button>
           </div>
           <br />
           <label for="file"> סיכום טיפול שנה וחו"ד מטפל </label>
@@ -180,12 +170,9 @@ export function HabitantProjectDoc() {
               type="file"
               className="customfile"
               onChange={(event) => {
-                setImageUpload(event.target.files[0]);
+                imageUpload.push(event.target.files[0]);
               }}
             />
-            <button className="button-84" onClick={uploadImage}>
-              הגש
-            </button>
           </div>
         </div>
         <div className="bankDocuments">
@@ -197,12 +184,9 @@ export function HabitantProjectDoc() {
               type="file"
               className="customfile"
               onChange={(event) => {
-                setImageUpload(event.target.files[0]);
+                imageUpload.push(event.target.files[0]);
               }}
             />
-            <button className="button-84" onClick={uploadImage}>
-              הגש
-            </button>
           </div>
           <br />
           <label for="file"> הצהרה על אי קיום חובות </label>
@@ -211,12 +195,9 @@ export function HabitantProjectDoc() {
               type="file"
               className="customfile"
               onChange={(event) => {
-                setImageUpload(event.target.files[0]);
+                imageUpload.push(event.target.files[0]);
               }}
             />
-            <button className="button-84" onClick={uploadImage}>
-              הגש
-            </button>
           </div>
           <br />
           <label for="file"> תדפיסי חשבון בנק (3 חודשים) </label>
@@ -225,12 +206,9 @@ export function HabitantProjectDoc() {
               type="file"
               className="customfile"
               onChange={(event) => {
-                setImageUpload(event.target.files[0]);
+                imageUpload.push(event.target.files[0]);
               }}
             />
-            <button className="button-84" onClick={uploadImage}>
-              הגש
-            </button>
           </div>
         </div>
       </div>
@@ -242,7 +220,7 @@ export function HabitantProjectDoc() {
           {" "}
           הקודם
         </a>
-        <button className="button-55" onClick={submitPage}>
+        <button className="button-55" onClick={uploadImage}>
           {" "}
           הגש
         </button>

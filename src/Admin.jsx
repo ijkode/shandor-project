@@ -66,7 +66,7 @@ const Admin = () => {
           .append($("<td>").append(assistanceData[i]["email"]))
           .append(
             $("<td>").append(
-              "<button class='button-38' id='download" +
+              "<button class='button-13' id='download" +
                 [i] +
                 "'>לחץ כאן</button>"
             )
@@ -149,7 +149,7 @@ const Admin = () => {
           .append($("<td>").append(habitantData[i]["email"]))
           .append(
             $("<td>").append(
-              "<button class='button-38' id='download" +
+              "<button class='button-13' id='download" +
                 [i] +
                 "'>לחץ כאן</button>"
             )
@@ -282,9 +282,6 @@ const Admin = () => {
       "<th>מספר טלפון</th>" +
       "<th>אימייל</th>" +
       "<th>שם ושם משפחה של גורם מפנה</th>" +
-      "<th>תפקיד של גורם מפנה</th>" +
-      "<th>טלפון של גורם מפנה</th>" +
-      "<th>אימייל של גורם מפנה</th>" +
       "</tr>";
     x.append(src);
     for (let i = 0; i < data.length; i++) {
@@ -305,12 +302,12 @@ const Admin = () => {
             .append($("<td>").append(data[i]["phone_number"]))
             .append($("<td>").append(data[i]["email"]))
             .append($("<td>").append(data[i]["referrer_name"]))
-            .append($("<td>").append(data[i]["referrer_proffesion"]))
-            .append($("<td>").append(data[i]["referrer_phone"]))
-            .append($("<td>").append(data[i]["referrer_email"]))
         );
         $("#table-to-xls").append(
           $("<tr>")
+            .append($("<th>").append("תפקיד של גורם מפנה"))
+            .append($("<th>").append("טלפון של גורם מפנה"))
+            .append($("<th>").append("אימייל של גורם מפנה"))
             .append($("<th>").append("שם הלשכה"))
             .append($("<th>").append("שם העוס"))
             .append($("<th>").append("תפקיד העוס"))
@@ -325,6 +322,9 @@ const Admin = () => {
         );
         $("#table-to-xls").append(
           $("<tr>")
+            .append($("<td>").append(data[i]["referrer_proffesion"]))
+            .append($("<td>").append(data[i]["referrer_phone"]))
+            .append($("<td>").append(data[i]["referrer_email"]))
             .append($("<td>").append(data[i]["bureau_name"]))
             .append($("<td>").append(data[i]["social_worker_name"]))
             .append($("<td>").append(data[i]["social_worker_role"]))
@@ -417,7 +417,7 @@ const Admin = () => {
             .append($("<td>").append(search[i]["email"]))
             .append(
               $("<td>").append(
-                "<button class='button-38' id='download" +
+                "<button class='button-13' id='download" +
                   [i] +
                   "'>לחץ כאן</button>"
               )
@@ -555,13 +555,13 @@ const Admin = () => {
       <h1>ניהול מידע</h1>
       <br />
       <div className="test">
-        <button className="button-29" onClick={getHabitantData}>
+        <button className="button-17" onClick={getHabitantData}>
           מידע על מועמדים לפרויקט הכוון
         </button>
-        <button className="button-29" onClick={getAssistanceData}>
+        <button className="button-17" onClick={getAssistanceData}>
           מידע על מועמדים לפרויקט דיור
         </button>
-        <button className="button-29" onClick={getSearchData}>
+        <button className="button-17" onClick={getSearchData}>
           חיפוש מועמד לפי ת"ז
         </button>
       </div>
@@ -569,10 +569,10 @@ const Admin = () => {
       <br />
       {btn ? (
         <div>
-          <button onClick={sortTable} className="button-38">
+          <button onClick={sortTable} className="button-13">
             מיין לפי שם
           </button>
-          <button onClick={sortTablebyDate} className="button-38">
+          <button onClick={sortTablebyDate} className="button-13">
             מיין לפי תאריך
           </button>
         </div>
@@ -583,11 +583,11 @@ const Admin = () => {
           <br />
           <ReactHTMLTableToExcel
             id="test-table-xls-button"
-            className="button-38"
+            className="button-68"
             table="table-to-xls"
             filename="tablexls"
             sheet="tablexls"
-            buttonText="הורד את הטבלה המוצגת לקובץ אקסל"
+            buttonText="הורד טבלה ↓"
           />
         </div>
       ) : null}

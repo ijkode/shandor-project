@@ -6,7 +6,7 @@ import { storage, app, auth } from "./firebase";
 import { ref, uploadBytes } from "firebase/storage";
 import Swal from "sweetalert2";
 export function AssistanceProjectDocuments() {
-  const [imageUpload, setImageUpload] = useState(null);
+  const [imageUpload, setImageUpload] = useState([]);
   const navigate = useNavigate();
   const user = auth.currentUser.email;
   const assistancePage = () => {
@@ -16,19 +16,35 @@ export function AssistanceProjectDocuments() {
     navigate("/SubmitionPage");
   };
   const uploadImage = () => {
+    console.log(imageUpload.length);
     if (imageUpload == null) return;
-    const imageRef = ref(storage, `${user}/${imageUpload.name}`);
-    uploadBytes(imageRef, imageUpload).then(() => {
-      Swal.fire("הקובץ הועלה בהצלחה");
-    });
+    if (imageUpload.length < 14) {
+      Swal.fire({
+        title: "שגיאה",
+        icon: "error",
+        html: "יש להעלות את כל הקבצים הנדרשים",
+        focusConfirm: false,
+      });
+    } else {
+      for (let i = 0; i < imageUpload.length; i++) {
+        const imageRef = ref(storage, `${user}/${imageUpload[i].name}`);
+        uploadBytes(imageRef, imageUpload[i]).then(() => {
+          if (i == 13) {
+            Swal.fire("הקבצים הועלו בהצלחה");
+            navigate("/");
+          }
+        });
+      }
+    }
   };
   return (
     <div className="allDocPage">
       <div className="titleOfPage">
         <h1>העלאת קבצים בפורמט JPG או PDF </h1>
+        <br />
         <h5>
-          לאחר לחיצה על כפתור הגש יש להמתין כמה רגעים עד לקבלת הודעת שהקובץ
-          הועלה בהצלחה{" "}
+          לאחר לחיצה על כפתור הגש יש להמתין כמה רגעים עד לקבלת הודעת שהקבצים
+          הועלו בהצלחה{" "}
         </h5>
       </div>
       <br></br>
@@ -42,12 +58,9 @@ export function AssistanceProjectDocuments() {
               type="file"
               className="customfile"
               onChange={(event) => {
-                setImageUpload(event.target.files[0]);
+                imageUpload.push(event.target.files[0]);
               }}
             />
-            <button className="button-84" onClick={uploadImage}>
-              הגש
-            </button>
           </div>
           <br />
           <label for="file"> מכתב בקשה מהפונה הכולל רקע אישי </label>
@@ -56,12 +69,9 @@ export function AssistanceProjectDocuments() {
               type="file"
               className="customfile"
               onChange={(event) => {
-                setImageUpload(event.target.files[0]);
+                imageUpload.push(event.target.files[0]);
               }}
             />
-            <button className="button-84" onClick={uploadImage}>
-              הגש
-            </button>
           </div>
           <br />
           <label for="file">
@@ -73,12 +83,9 @@ export function AssistanceProjectDocuments() {
               type="file"
               className="customfile"
               onChange={(event) => {
-                setImageUpload(event.target.files[0]);
+                imageUpload.push(event.target.files[0]);
               }}
             />
-            <button className="button-84" onClick={uploadImage}>
-              הגש
-            </button>
           </div>
           <br />
           <label for="file"> גיליון ציונים </label>
@@ -87,12 +94,9 @@ export function AssistanceProjectDocuments() {
               type="file"
               className="customfile"
               onChange={(event) => {
-                setImageUpload(event.target.files[0]);
+                imageUpload.push(event.target.files[0]);
               }}
             />
-            <button className="button-84" onClick={uploadImage}>
-              הגש
-            </button>
           </div>
           <br />
           <label for="file"> צילום רישיון רכב (במידה וקיים) </label>
@@ -101,12 +105,9 @@ export function AssistanceProjectDocuments() {
               type="file"
               className="customfile"
               onChange={(event) => {
-                setImageUpload(event.target.files[0]);
+                imageUpload.push(event.target.files[0]);
               }}
             />
-            <button className="button-84" onClick={uploadImage}>
-              הגש
-            </button>
           </div>
           <br />
           <label for="file"> צילום רישיון נשק (במידה וקיים) </label>
@@ -115,12 +116,9 @@ export function AssistanceProjectDocuments() {
               type="file"
               className="customfile"
               onChange={(event) => {
-                setImageUpload(event.target.files[0]);
+                imageUpload.push(event.target.files[0]);
               }}
             />
-            <button className="button-84" onClick={uploadImage}>
-              הגש
-            </button>
           </div>
           <br />
           <label for="file"> טופס ויתור סודיות </label>
@@ -129,12 +127,9 @@ export function AssistanceProjectDocuments() {
               type="file"
               className="customfile"
               onChange={(event) => {
-                setImageUpload(event.target.files[0]);
+                imageUpload.push(event.target.files[0]);
               }}
             />
-            <button className="button-84" onClick={uploadImage}>
-              הגש
-            </button>
           </div>
           <br />
           <div className="waiver_of_confidentiality">
@@ -154,12 +149,9 @@ export function AssistanceProjectDocuments() {
               type="file"
               className="customfile"
               onChange={(event) => {
-                setImageUpload(event.target.files[0]);
+                imageUpload.push(event.target.files[0]);
               }}
             />
-            <button className="button-84" onClick={uploadImage}>
-              הגש
-            </button>
           </div>
           <br />
           <label for="file"> אבחון לקויות למידה </label>
@@ -168,12 +160,9 @@ export function AssistanceProjectDocuments() {
               type="file"
               className="customfile"
               onChange={(event) => {
-                setImageUpload(event.target.files[0]);
+                imageUpload.push(event.target.files[0]);
               }}
             />
-            <button className="button-84" onClick={uploadImage}>
-              הגש
-            </button>
           </div>
           <br />
           <label for="file"> הערכה פסיכולוגית </label>
@@ -182,12 +171,9 @@ export function AssistanceProjectDocuments() {
               type="file"
               className="customfile"
               onChange={(event) => {
-                setImageUpload(event.target.files[0]);
+                imageUpload.push(event.target.files[0]);
               }}
             />
-            <button className="button-84" onClick={uploadImage}>
-              הגש
-            </button>
           </div>
           <br />
           <br />
@@ -202,12 +188,9 @@ export function AssistanceProjectDocuments() {
               type="file"
               className="customfile"
               onChange={(event) => {
-                setImageUpload(event.target.files[0]);
+                imageUpload.push(event.target.files[0]);
               }}
             />
-            <button className="button-84" onClick={uploadImage}>
-              הגש
-            </button>
           </div>
           <br />
           <label for="file"> תדפיסי חשבון בנק (3 חודשים) </label>
@@ -216,12 +199,9 @@ export function AssistanceProjectDocuments() {
               type="file"
               className="customfile"
               onChange={(event) => {
-                setImageUpload(event.target.files[0]);
+                imageUpload.push(event.target.files[0]);
               }}
             />
-            <button className="button-84" onClick={uploadImage}>
-              הגש
-            </button>
           </div>
           <br />
           <label for="file"> אישור על תשלום משכנתא/שכ"ד/חובות/אחר </label>
@@ -230,12 +210,9 @@ export function AssistanceProjectDocuments() {
               type="file"
               className="customfile"
               onChange={(event) => {
-                setImageUpload(event.target.files[0]);
+                imageUpload.push(event.target.files[0]);
               }}
             />
-            <button className="button-84" onClick={uploadImage}>
-              הגש
-            </button>
           </div>
           <br />
           <label for="file"> אישורי הכנסות אחרות/קצבאות </label>
@@ -244,12 +221,9 @@ export function AssistanceProjectDocuments() {
               type="file"
               className="customfile"
               onChange={(event) => {
-                setImageUpload(event.target.files[0]);
+                imageUpload.push(event.target.files[0]);
               }}
             />
-            <button className="button-84" onClick={uploadImage}>
-              הגש
-            </button>
           </div>
         </div>
       </div>
@@ -260,7 +234,7 @@ export function AssistanceProjectDocuments() {
           {" "}
           הקודם
         </a>
-        <button className="button-55" onClick={submitPage}>
+        <button className="button-55" onClick={uploadImage}>
           {" "}
           הגש
         </button>

@@ -87,6 +87,7 @@ export function AssistanceProject() {
             <div class="titleToAssistnceProject">
               <h1>פרויקט הכוון </h1>
             </div>
+            <br />
             <div class="Details">
               העמותה ע"ש אהרן שנדור מזמינה צעירים/ות המעוניינים/ות ללמוד
               תואר/תעודה בראש שקט תוך כדי תרומה לקהילה.
@@ -111,6 +112,7 @@ export function AssistanceProject() {
         <div class="titleToAssistnceProject">
           <h1>פרויקט הכוון </h1>
         </div>
+        <br />
         <div class="Details">
           העמותה ע"ש אהרן שנדור מזמינה צעירים/ות המעוניינים/ות ללמוד תואר/תעודה
           בראש שקט תוך כדי תרומה לקהילה.
@@ -118,15 +120,11 @@ export function AssistanceProject() {
           <br />
         </div>
       </div>
-
+      <br />
+      <br />
       <div class="SubmitRequest">
-        <hr />
-        <div class="title1">
-          <h2>הגשת בקשה לפרויקט הכוון</h2>
-        </div>
-
         <br />
-        <hr />
+
         <br />
         <fieldset>
           <legend class="legendTitle">פרטים אישיים</legend>
