@@ -10,8 +10,8 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { useNavigate } from "react-router-dom";
 import "react-slideshow-image/dist/styles.css";
 import { auth, db } from "./firebase";
-import register from "./register.png";
-export function HabitantProject() {
+
+export function HabitantProjectRegister() {
   console.log(auth.currentUser);
   const [user, loggedIn] = useAuthState(auth);
   const formRef = collection(db, "Candidates for assistance project");
@@ -60,6 +60,9 @@ export function HabitantProject() {
     teenage_status_details: "",
     timestamp: "",
   });
+  const nextPage = () => {
+    navigate("/HabitantProject/doc");
+  };
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
@@ -130,39 +133,30 @@ export function HabitantProject() {
   if (!user) {
     return (
       <div className="loggedIn">
-        <div className="allThePage">
-          <div className="AllDetails">
+        <div class="allThePage">
+          <div class="AllDetails">
             <br />
-            <div className="titleToHabitantProject"></div>
-            <section className="banner">
-              <h1 id="difh1">פרויקט דיור בוגרות</h1>
-              {/* <p>Company Mission Statement goes here</p> */}
-              <a className="btn-bgstroke">להרשמה לחץ</a>
-            </section>
-            <div className="Details">
-              <div className="regImg">
-                <div>
-                  <h1>פרויקט דירת בוגרות </h1>
-                  <h2>מידע כללי</h2>
-                  בעמותה ע"ש אהרן שנדור מזמינים בוגרות להשמה חוץ ביתית בגילאי
-                  18-24
-                  <br />
-                  אשר בעלות תפקוד ואחריות ברמה עצמאית סבירה, להצטרף אל דירת
-                  הבוגרות
-                  <br />
-                  הממוקמת במעלה אדומים ובה מתגוררות עד כ-6 צעירות. השהות בדירה
-                  היא
-                  <br />
-                  לתקופה של עד 4 שנים, שבהם על הצעירה לפעול על מנת לקדם את חייה
-                  בתחומים שונים.
-                  <br /> הדירה מלווה על ידי מדריכה ועובדת סוציאלית של העמותה.
-                  <br />
-                  <br />
-                  <br />
-                  <img src={register}></img>
-                </div>
+            <div class="titleToHabitantProject"></div>
+            <div class="Details">
+              <div>
+                <h1>פרויקט דירת בוגרות </h1>
+                <h2>מידע כללי</h2>
+                בעמותה ע"ש אהרן שנדור מזמינים בוגרות להשמה חוץ ביתית בגילאי
+                18-24
+                <br />
+                אשר בעלות תפקוד ואחריות ברמה עצמאית סבירה, להצטרף אל דירת
+                הבוגרות
+                <br />
+                הממוקמת במעלה אדומים ובה מתגוררות עד כ-6 צעירות. השהות בדירה היא
+                <br />
+                לתקופה של עד 4 שנים, שבהם על הצעירה לפעול על מנת לקדם את חייה
+                בתחומים שונים.
+                <br /> הדירה מלווה על ידי מדריכה ועובדת סוציאלית של העמותה.
+                <br />
+                <br />
+                <br />
               </div>
-              {/* <div class="ProcessDetails">
+              <div class="ProcessDetails">
                 <h2>תהליך ההרשמה</h2>
                 תהליך הרשמה לשנת 2021-2022 בנוי מהשלבים הבאים:
                 <br />
@@ -194,7 +188,7 @@ export function HabitantProject() {
                     העמותה שומרת לעצמה זכות לסיים את תהליך הקבלה בכל שלב שהוא.
                   </h3>
                 </b>
-              </div> */}
+              </div>
             </div>
           </div>
           <br /> <br />
@@ -206,69 +200,28 @@ export function HabitantProject() {
     );
   }
   return (
-    <div className="allThePage">
-      <div className="AllDetails">
-        <section className="banner">
-          <h1 id="difh1">פרויקט דיור בוגרות</h1>
-          {/* <p>Company Mission Statement goes here</p> */}
-          <a className="btn-bgstroke">להרשמה לחץ</a>
-        </section>
+    <div class="allThePage">
+      <div class="AllDetails">
         <br />
-        <div className="Details">
-          <div className="det">
-            <div className="regImg">
-              בעמותה ע"ש אהרן שנדור מזמינים בוגרות להשמה חוץ ביתית בגילאי 18-24
-              <br />
-              אשר בעלות תפקוד ואחריות ברמה עצמאית סבירה, להצטרף אל דירת הבוגרות
-              <br />
-              הממוקמת במעלה אדומים ובה מתגוררות עד כ-6 צעירות. השהות בדירה היא
-              <br />
-              לתקופה של עד 4 שנים, שבהם על הצעירה לפעול על מנת לקדם את חייה
-              בתחומים שונים.
-              <br /> הדירה מלווה על ידי מדריכה ועובדת סוציאלית של העמותה.
-              <br />
-              <br />
-              <img src={register}></img>
-            </div>
+        <div class="titleToHabitantProject">
+          <h1>פרויקט דירת בוגרות </h1>
+        </div>
+        <br />
+        <div class="Details">
+          <div class="ProcessDetails">
+            <h2>הוראות להרשמה לפרויקט דירת בוגרות:</h2>
+            אנא מלא את כל הפרטים הנדרשים ולאחר מכן לחץ על הכפתור בתחתית המסך בכדי לעבור להעלאת הקבצים הרלוונטים
+    
           </div>
-          {/* <div class="ProcessDetails">
-            <h2>תהליך ההרשמה:</h2>
-            תהליך הרשמה לשנת 2021-2022 בנוי מהשלבים הבאים:
-            <br />
-            פתיחת תיק מועמדת עד לתאריך ה-30.06.2021 על ידי פנייה בכתב מאת עו"ס
-            מטפל. מילוי כל הטפסים הנדרשים (מצ"ב בהמשך).
-            <br />
-            ראיון אישי - לאחר אישור הועדה מטעם העמותה, תזומן הצעירה בליווי עו"ס
-            מפנה לראיון במשרדי העמותה. <br />
-            אינטייק - במידה והצעירה עברה את שלב הריאיון , תופנה אל פסיכולוגית
-            העמותה להערכה אישית.
-            <br /> החלטה לגבי קבלת הצעירה לדירה, תינתן לעו"ס המפנה (במייל)
-            שבועיים מסיום התהליך.
-            <br /> צעירה אשר תקבל תשובה חיובית של הועדה, תתבקש לעדכן את עו"ס
-            העמותה לגבי החלטתה האישית תוך שבוע מיום ההודעה. <br /> חתימת חוזה
-            מול העמותה. צעירה המעוניינת להתרשם מהדירה, תוכל לעשות זאת בתיאום
-            מראש ובליווי צוות העמותה. <br />
-            כניסה לדירה תתקיים החל מחודש אוגוסט, המעבר של הצעירה לדירה יתואם
-            וילווה (פיזית) גם ע"י העו"ס המפנה.
-            <br />
-            <b>
-              מיום שהחל תהליך הקבלה יש לעדכן את העמותה לגבי כל החלטה שתשפיע על
-              עתידה של הצעירה.
-            </b>
-            <br />
-            <b>
-              <h3>
-                העמותה שומרת לעצמה זכות לסיים את תהליך הקבלה בכל שלב שהוא.
-              </h3>
-            </b>
-          </div> */}
         </div>
       </div>
-      <div className="SubmitRequest">
+      <br />
+      <br />
+      <div class="SubmitRequest">
         <br />
         <br />
         <fieldset>
-          <legend className="legendTitle">פרטים אישיים</legend>
+          <legend class="legendTitle">פרטים אישיים</legend>
           <form>
             <label for="fname">שם פרטי : </label>
             <input
@@ -803,4 +756,4 @@ export function HabitantProject() {
   );
 }
 
-export default HabitantProject;
+export default HabitantProjectRegister;

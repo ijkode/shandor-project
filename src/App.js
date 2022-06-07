@@ -21,6 +21,7 @@ function App() {
       {/* <img src={logo} className="App-logo" alt="logo" /> */}
       <Navbar />
       <Routes>
+        <Route path="shandor-project" element={<HomePage />} />
         <Route path="" element={<HomePage />} />
         <Route path="Login" element={<Login />} />
         <Route path="Admin" element={<Admin />} />

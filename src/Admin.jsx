@@ -16,6 +16,7 @@ import ReactHTMLTableToExcel from "react-html-table-to-excel";
 import dateFormat, { masks } from "dateformat";
 const Admin = () => {
   const [data, setData] = useState([]);
+  var Links = [];
   const [click, setClick] = useState(0);
   const [btn, setBtn] = useState(0);
   useEffect(() => {
@@ -52,7 +53,7 @@ const Admin = () => {
       "<th>תאריך לידה</th>" +
       "<th>אימייל</th>" +
       "<th>הצג מידע מלא</th>" +
-      // "<th>הורד קבצים</th>" +
+      "<th>הורד קבצים</th>" +
       "</tr>";
     x.append(src);
     for (let i = 0; i < assistanceData.length; i++) {
@@ -76,11 +77,11 @@ const Admin = () => {
                 "'>לחץ כאן</button>"
             )
           )
-        // .append(
-        //   $("<td>").append(
-        //     "<button class='button-13' id='down" + [i] + "'>לחץ כאן</button>"
-        //   )
-        // )
+          .append(
+            $("<td>").append(
+              "<button class='button-13' id='down" + [i] + "'>לחץ כאן</button>"
+            )
+          )
       );
       $("body").on("click", "#down" + [i], function () {
         downloadData(assistanceData[i]["email"]);
@@ -92,23 +93,47 @@ const Admin = () => {
     }
   }
   function downloadData(email) {
-    const listRef = ref(storage, email + "/");
+    const listRef = ref(storage, email);
     // Create a child reference
+    var toShow = "<div id = 'myimg'>";
+    let index = 1;
     listAll(listRef)
       .then((res) => {
-        res.prefixes.forEach((folderRef) => {
-          console.log(folderRef);
-        });
+        res.prefixes.forEach((folderRef) => {});
         res.items.forEach((itemRef) => {
-          console.log(
-            "folder",
-            itemRef._delegate._location.path_.split("/")[1]
-          );
+          // console.log(itemRef._location.path_);
+          getUrl(itemRef._location.path_);
+          // console.log(url);
+          // toShow += "File" + index + " " + url + "<br/>";
+          // index += 1;
         });
       })
       .catch((error) => {
         // Uh-oh, an error occurred!
       });
+    console.log(Links);
+    for (let i = 0; i < Links.length; i++) {
+      toShow +=
+        "קובץ" + index + " " + "<a href='" + "'>" + index + "<a>" + "<br/>";
+      index += 1;
+    }
+    Links = [];
+    Swal.fire({ html: toShow });
+  }
+  function getUrl(itemRef) {
+    getDownloadURL(ref(storage, itemRef))
+      .then((url) => {
+        // const img = document.getElementById("myimg");
+        // img.setAttribute("src", url);
+        Links.push(url);
+      })
+      .catch((error) => {
+        // Handle any errors
+      });
+  }
+  function add(url) {
+    console.log(url);
+    Links.push(url);
   }
   const deleteHabUser = async (id) => {
     await deleteDoc(doc(db, "Candidates for assistance project", id));
@@ -141,6 +166,7 @@ const Admin = () => {
       "<th>תאריך לידה</th>" +
       "<th>אימייל</th>" +
       "<th>הצג מידע מלא</th>" +
+      "<th>הורד קבצים</th>" +
       "</tr>";
     x.append(src);
     for (let i = 0; i < habitantData.length; i++) {
@@ -162,6 +188,11 @@ const Admin = () => {
               "<button class='button-13' id='download" +
                 [i] +
                 "'>לחץ כאן</button>"
+            )
+          )
+          .append(
+            $("<td>").append(
+              "<button class='button-13' id='down" + [i] + "'>לחץ כאן</button>"
             )
           )
       );
@@ -607,6 +638,7 @@ const Admin = () => {
         </div>
       ) : null}
       <div id="data"></div>
+      <div id="file-area"></div>
       <br />
     </div>
   );

@@ -45,6 +45,11 @@ const HomePage = () => {
             <h2>פרויקט דירת בוגרות</h2>
             <p />
             <br />
+            <button class="button-55" onClick={habitantPage}>
+              הרשמה לפרויקט
+            </button>
+            <br />
+            <br />
             בעמותה ע"ש אהרן שנדור מזמינים בוגרות להשמה חוץ ביתית בגילאי 18-24
             <br />
             <br />
@@ -63,12 +68,14 @@ const HomePage = () => {
             <br />
             <br />
             <br />
-            <button class="button-55" onClick={habitantPage}>
-              לפרטים נוספים והרשמה לפרויקט
-            </button>
           </div>
           <div class="Assistance">
             <h2>פרויקט הכוון</h2>
+            <br />
+            <button class="button-55" onClick={assistancePage}>
+              הרשמה לפרויקט
+            </button>
+            <br />
             <br />
             בעמותה ע"ש אהרן שנדור מזמינים צעירים המעוניינים להתחיל ללמוד לימודים
             <br />
@@ -89,9 +96,6 @@ const HomePage = () => {
             <br /> ביותר.
             <br />
             <br />
-            <button class="button-55" onClick={assistancePage}>
-              לפרטים נוספים והרשמה לפרויקט
-            </button>
           </div>
           <br></br>
           <br></br>

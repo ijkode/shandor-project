@@ -41,18 +41,18 @@ export function Navbar() {
       </div>
       <div className="topnav-left">
         {loginStatus ? (
-          <Link to="Logout" class="Registration-Button">
+          <Link to="Logout" className="Registration-Button">
             <span id="Logout" onClick={logout}>
               {"התנתק"}
             </span>
           </Link>
         ) : (
-          <Link to="Login" class="Registration-Button">
+          <Link to="Login" className="Registration-Button">
             <span id="login">{"התחבר"}</span>
           </Link>
         )}
         {adminStatus ? (
-          <Link to="Admin" class="admin-button">
+          <Link to="Admin" className="admin-button">
             <span id="admin">{"ניהול"}</span>
           </Link>
         ) : null}

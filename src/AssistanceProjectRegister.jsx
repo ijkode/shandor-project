@@ -12,7 +12,7 @@ import { db } from "./firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "./firebase";
 
-export function AssistanceProject() {
+export function AssistanceProjectRegister() {
   const [user, loggedIn] = useAuthState(auth);
   const [formData, setFormData] = useState({
     fname: "",
@@ -91,11 +91,11 @@ export function AssistanceProject() {
       <div className="loggedIn">
         <div class="allThePage">
           <div class="AllDetails">
-            <section class="banner">
-              <h1 id="difh1">פרויקט הכוון</h1>
-              {/* <p>Company Mission Statement goes here</p> */}
-              <a class="btn-bgstroke">להרשמה לחץ</a>
-            </section>
+            <br />
+            <div class="titleToAssistnceProject">
+              <h1>פרויקט הכוון </h1>
+            </div>
+            <br />
             <div class="Details">
               העמותה ע"ש אהרן שנדור מזמינה צעירים/ות המעוניינים/ות ללמוד
               תואר/תעודה בראש שקט תוך כדי תרומה לקהילה.
@@ -117,17 +117,15 @@ export function AssistanceProject() {
   return (
     <div class="allThePage">
       <div class="AllDetails">
-        <section class="banner">
-          <h1 id="difh1">פרויקט הכוון</h1>
-          {/* <p>Company Mission Statement goes here</p> */}
-          <a class="btn-bgstroke">להרשמה לחץ</a>
-        </section>
+        <br />
+        <div class="titleToAssistnceProject">
+          <h1>פרויקט הכוון </h1>
+        </div>
         <br />
         <div class="Details">
-          העמותה ע"ש אהרן שנדור מזמינה צעירים/ות המעוניינים/ות ללמוד תואר/תעודה
-          בראש שקט תוך כדי תרומה לקהילה.
-          <br />
-          <br />
+        <h2>הוראות להרשמה לפרויקט דירת בוגרות:</h2>
+            אנא מלא את כל הפרטים הנדרשים ולאחר מכן לחץ על הכפתור בתחתית המסך בכדי לעבור להעלאת הקבצים הרלוונטים
+  
         </div>
       </div>
       <br />
@@ -392,4 +390,4 @@ export function AssistanceProject() {
   );
 }
 
-export default AssistanceProject;
+export default AssistanceProjectRegister;
