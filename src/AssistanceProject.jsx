@@ -1,7 +1,13 @@
 import React, { useState } from "react";
 import "react-slideshow-image/dist/styles.css";
 import { useNavigate } from "react-router-dom";
-import { collection, addDoc, setDoc, doc } from "firebase/firestore";
+import {
+  collection,
+  addDoc,
+  setDoc,
+  doc,
+  serverTimestamp,
+} from "firebase/firestore";
 import { db } from "./firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "./firebase";
@@ -32,6 +38,7 @@ export function AssistanceProject() {
     referrer_proffesion: "",
     scholarship_details: "",
     tuition: "",
+    timestamp: "",
   });
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -69,6 +76,7 @@ export function AssistanceProject() {
         other: formData.other,
         scholarship_details: formData.scholarship_details,
         tuition: formData.tuition,
+        timestamp: serverTimestamp(),
       })
         .then(() => {
           // alert("success");

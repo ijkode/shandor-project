@@ -19,7 +19,7 @@ function Copyright() {
       90805 דוא"ל galitby017@gmail.com
       <br />
       {"Copyright © "}
-      <Link color="inherit">JCE project Team</Link> {new Date().getFullYear()}
+      <Link color="inherit">JCE Project Team</Link> {new Date().getFullYear()}
     </Typography>
   );
 }

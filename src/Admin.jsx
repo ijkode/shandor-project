@@ -7,11 +7,13 @@ import {
   doc,
   getDocs,
   deleteDoc,
+  toDate,
 } from "firebase/firestore";
 import { ref, getDownloadURL, listAll } from "firebase/storage";
 import $ from "jquery";
 import Swal from "sweetalert2";
 import ReactHTMLTableToExcel from "react-html-table-to-excel";
+import dateFormat, { masks } from "dateformat";
 const Admin = () => {
   const [data, setData] = useState([]);
   const [click, setClick] = useState(0);
@@ -35,7 +37,6 @@ const Admin = () => {
       assistanceData.push(doc.data());
     });
     showAssistanceData(assistanceData);
-    console.log(assistanceData);
   }
   function showAssistanceData(assistanceData) {
     setClick(0);
@@ -45,17 +46,21 @@ const Admin = () => {
     src +=
       "<table class='content-table' style='width:100%' id='table-to-xls'>" +
       "<tr>" +
+      "<th>תאריך הגשת הבקשה</th>" +
       "<th>שם ושם משפחה</th>" +
       "<th>תעודת זהות</th>" +
       "<th>תאריך לידה</th>" +
       "<th>אימייל</th>" +
       "<th>הצג מידע מלא</th>" +
+      // "<th>הורד קבצים</th>" +
       "</tr>";
     x.append(src);
     for (let i = 0; i < assistanceData.length; i++) {
-      console.log(i);
+      let date = assistanceData[i]["timestamp"].toDate();
+      date = dateFormat(date, "dd/mm/yyyy");
       $("#table-to-xls").append(
         $("<tr>")
+          .append($("<td>").append(date))
           .append(
             $("<td>").append(
               assistanceData[i]["fname"] + " " + assistanceData[i]["lname"]
@@ -71,6 +76,11 @@ const Admin = () => {
                 "'>לחץ כאן</button>"
             )
           )
+        // .append(
+        //   $("<td>").append(
+        //     "<button class='button-13' id='down" + [i] + "'>לחץ כאן</button>"
+        //   )
+        // )
       );
       $("body").on("click", "#down" + [i], function () {
         downloadData(assistanceData[i]["email"]);
@@ -81,32 +91,28 @@ const Admin = () => {
       });
     }
   }
-  function downloadData(id) {
-    console.log("here");
-    getDownloadURL(ref(storage, id + "/Screenshot 2022-06-02 152705.png"))
-      .then((url) => {
-        // `url` is the download URL for 'images/stars.jpg'
-
-        // This can be downloaded directly:
-        const xhr = new XMLHttpRequest();
-        xhr.responseType = "blob";
-        xhr.onload = (event) => {
-          const blob = xhr.response;
-        };
-        xhr.open("GET", url);
-        xhr.send();
-
-        // Or inserted into an <img> element
-        // const img = document.getElementById('myimg');
-        // img.setAttribute('src', url);
+  function downloadData(email) {
+    const listRef = ref(storage, email + "/");
+    // Create a child reference
+    listAll(listRef)
+      .then((res) => {
+        res.prefixes.forEach((folderRef) => {
+          console.log(folderRef);
+        });
+        res.items.forEach((itemRef) => {
+          console.log(
+            "folder",
+            itemRef._delegate._location.path_.split("/")[1]
+          );
+        });
       })
       .catch((error) => {
-        // Handle any errors
+        // Uh-oh, an error occurred!
       });
   }
-  function deleteHabUser(id) {
-    deleteDoc(doc(db, "Candidates for assistance project", id));
-  }
+  const deleteHabUser = async (id) => {
+    await deleteDoc(doc(db, "Candidates for assistance project", id));
+  };
   function deleteAssistUser(id) {
     deleteDoc(doc(db, "Candidates for habitant project", id));
   }
@@ -129,6 +135,7 @@ const Admin = () => {
     src +=
       "<table class='content-table' style='width:100%' id='table-to-xls'>" +
       "<tr>" +
+      "<th>תאריך הגשת הבקשה</th>" +
       "<th>שם ושם משפחה</th>" +
       "<th>תעודת זהות</th>" +
       "<th>תאריך לידה</th>" +
@@ -137,8 +144,11 @@ const Admin = () => {
       "</tr>";
     x.append(src);
     for (let i = 0; i < habitantData.length; i++) {
+      let date = habitantData[i]["timestamp"].toDate();
+      date = dateFormat(date, "dd/mm/yyyy");
       $("#table-to-xls").append(
         $("<tr>")
+          .append($("<td>").append(date))
           .append(
             $("<td>").append(
               habitantData[i]["fname"] + " " + habitantData[i]["lname"]
@@ -218,7 +228,6 @@ const Admin = () => {
   function toExcel(id, data) {
     let x = $("#data");
     x.html("");
-    console.log(id);
     let src = "<div>";
     src +=
       "<ReactHTMLTableToExcel id='test-table-xls-button' className='download-table-xls-button' table='table-to-xls' filename='test' sheet='tablexls' buttonText='Download as XLS'/>" +
@@ -262,7 +271,6 @@ const Admin = () => {
   function tohabExcel(id, data) {
     let x = $("#data");
     x.html("");
-    console.log(id);
     let src = "<div>";
     src +=
       "<ReactHTMLTableToExcel id='test-table-xls-button' className='download-table-xls-button' table='table-to-xls' filename='test' sheet='tablexls' buttonText='Download as XLS'/>" +
@@ -385,7 +393,6 @@ const Admin = () => {
       search2.push(doc.data());
     });
     test(search, search2);
-    console.log(search);
   }
 
   function searchCandidate(search, id, type) {
@@ -497,9 +504,10 @@ const Admin = () => {
         shouldSwitch = false;
         /*Get the two elements you want to compare,
         one from current row and one from the next:*/
-        x = rows[i].getElementsByTagName("TD")[0];
-        y = rows[i + 1].getElementsByTagName("TD")[0];
+        x = rows[i].getElementsByTagName("TD")[1];
+        y = rows[i + 1].getElementsByTagName("TD")[1];
         //check if the two rows should switch place:
+
         if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
           //if so, mark as a switch and break the loop:
           shouldSwitch = true;
@@ -517,11 +525,13 @@ const Admin = () => {
 
   function sortTablebyDate() {
     var table, rows, switching, i, x, y, shouldSwitch;
+    var dates = [];
     table = document.getElementById("table-to-xls");
     switching = true;
     /*Make a loop that will continue until
     no switching has been done:*/
     while (switching) {
+      dates = [];
       //start by saying: no switching is done:
       switching = false;
       rows = table.rows;
@@ -533,11 +543,16 @@ const Admin = () => {
         /*Get the two elements you want to compare,
         one from current row and one from the next:*/
 
-        x = rows[i].getElementsByTagName("TD")[2];
-        y = rows[i + 1].getElementsByTagName("TD")[2];
+        x = rows[i].getElementsByTagName("TD")[0];
+        y = rows[i + 1].getElementsByTagName("TD")[0];
+        dates.push(x.innerHTML.toLowerCase());
+        dates.push(y.innerHTML.toLowerCase());
+        var a = x.innerHTML.toLowerCase();
+        var b = y.innerHTML.toLowerCase();
         //check if the two rows should switch place:
-        if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
-          //if so, mark as a switch and break the loop:
+        var aa = a.split("/").reverse().join(),
+          bb = b.split("/").reverse().join();
+        if (aa < bb) {
           shouldSwitch = true;
           break;
         }

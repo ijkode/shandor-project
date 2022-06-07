@@ -1,4 +1,10 @@
-import { addDoc, collection, setDoc, doc } from "firebase/firestore";
+import {
+  addDoc,
+  collection,
+  setDoc,
+  doc,
+  serverTimestamp,
+} from "firebase/firestore";
 import React, { useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useNavigate } from "react-router-dom";
@@ -52,6 +58,7 @@ export function HabitantProject() {
     graduation: "",
     graduation_details: "",
     teenage_status_details: "",
+    timestamp: "",
   });
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -108,6 +115,7 @@ export function HabitantProject() {
         graduation: formData.graduation,
         graduation_details: formData.graduation_details,
         teenage_status_details: formData.teenage_status_details,
+        timestamp: serverTimestamp(),
       })
         .then(() => {
           // alert("success");
