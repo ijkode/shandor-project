@@ -11,7 +11,7 @@ import {
 import { db } from "./firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "./firebase";
-
+import register from "./register.png";
 export function AssistanceProject() {
   const [user, loggedIn] = useAuthState(auth);
   const [formData, setFormData] = useState({
@@ -101,6 +101,7 @@ export function AssistanceProject() {
               תואר/תעודה בראש שקט תוך כדי תרומה לקהילה.
               <br />
               <br />
+              <img src={register}></img>
             </div>
           </div>
           <br />
@@ -132,6 +133,7 @@ export function AssistanceProject() {
       </div>
       <br />
       <br />
+      <img src={register}></img>
       <div class="SubmitRequest">
         <br />
 

@@ -32,7 +32,6 @@ function Register() {
         registerEmail,
         registerPassword
       );
-      console.log(user);
     } catch (error) {
       console.log(error.message);
     }
@@ -47,9 +46,8 @@ function Register() {
       );
       swal("התחברת בהצלחה");
       navigate("/");
-      console.log(user);
     } catch (error) {
-      console.log(error.message);
+      swal("משתמש לא קיים");
     }
   };
 

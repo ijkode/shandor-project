@@ -70,7 +70,6 @@ function Register() {
         loginEmail,
         loginPassword
       );
-      console.log(user);
     } catch (error) {
       console.log(error.message);
     }

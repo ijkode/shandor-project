@@ -12,7 +12,6 @@ import "react-slideshow-image/dist/styles.css";
 import { auth, db } from "./firebase";
 import register from "./register.png";
 export function HabitantProject() {
-  console.log(auth.currentUser);
   const [user, loggedIn] = useAuthState(auth);
   const formRef = collection(db, "Candidates for assistance project");
   const [formData, setFormData] = useState({
@@ -126,7 +125,6 @@ export function HabitantProject() {
     navigate("/HabitantProject/doc");
   };
 
-  console.log(user);
   if (!user) {
     return (
       <div className="loggedIn">
@@ -159,7 +157,6 @@ export function HabitantProject() {
                   <br />
                   <br />
                   <br />
-                  <img src={register}></img>
                 </div>
               </div>
               {/* <div class="ProcessDetails">
@@ -196,6 +193,8 @@ export function HabitantProject() {
                 </b>
               </div> */}
             </div>
+            <br />
+            <img src={register}></img>
           </div>
           <br /> <br />
           <button className="button-55" onClick={nav}>
@@ -216,21 +215,19 @@ export function HabitantProject() {
         <br />
         <div className="Details">
           <div className="det">
-            <div className="regImg">
-              בעמותה ע"ש אהרן שנדור מזמינים בוגרות להשמה חוץ ביתית בגילאי 18-24
-              <br />
-              אשר בעלות תפקוד ואחריות ברמה עצמאית סבירה, להצטרף אל דירת הבוגרות
-              <br />
-              הממוקמת במעלה אדומים ובה מתגוררות עד כ-6 צעירות. השהות בדירה היא
-              <br />
-              לתקופה של עד 4 שנים, שבהם על הצעירה לפעול על מנת לקדם את חייה
-              בתחומים שונים.
-              <br /> הדירה מלווה על ידי מדריכה ועובדת סוציאלית של העמותה.
-              <br />
-              <br />
-              <img src={register}></img>
-            </div>
+            בעמותה ע"ש אהרן שנדור מזמינים בוגרות להשמה חוץ ביתית בגילאי 18-24
+            <br />
+            אשר בעלות תפקוד ואחריות ברמה עצמאית סבירה, להצטרף אל דירת הבוגרות
+            <br />
+            הממוקמת במעלה אדומים ובה מתגוררות עד כ-6 צעירות. השהות בדירה היא
+            <br />
+            לתקופה של עד 4 שנים, שבהם על הצעירה לפעול על מנת לקדם את חייה
+            בתחומים שונים.
+            <br /> הדירה מלווה על ידי מדריכה ועובדת סוציאלית של העמותה.
+            <br />
+            <br />
           </div>
+
           {/* <div class="ProcessDetails">
             <h2>תהליך ההרשמה:</h2>
             תהליך הרשמה לשנת 2021-2022 בנוי מהשלבים הבאים:
@@ -264,6 +261,8 @@ export function HabitantProject() {
           </div> */}
         </div>
       </div>
+      <br />
+      <img src={register}></img>
       <div className="SubmitRequest">
         <br />
         <br />

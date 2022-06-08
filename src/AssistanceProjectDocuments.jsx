@@ -16,7 +16,6 @@ export function AssistanceProjectDocuments() {
     navigate("/SubmitionPage");
   };
   const uploadImage = () => {
-    console.log(imageUpload.length);
     if (imageUpload == null) return;
     if (imageUpload.length < 14) {
       Swal.fire({

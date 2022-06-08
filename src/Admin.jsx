@@ -111,14 +111,25 @@ const Admin = () => {
       .catch((error) => {
         // Uh-oh, an error occurred!
       });
-    console.log(Links);
     for (let i = 0; i < Links.length; i++) {
       toShow +=
-        "קובץ" + index + " " + "<a href='" + "'>" + index + "<a>" + "<br/>";
+        " קובץ " +
+        index +
+        " " +
+        "<a id='under' href='" +
+        Links[i] +
+        "'>" +
+        "לחץ להורדה" +
+        "<a>" +
+        "<br/><br/>";
       index += 1;
     }
+    if (Links.length > 0) {
+      Swal.fire({
+        html: toShow,
+      });
+    }
     Links = [];
-    Swal.fire({ html: toShow });
   }
   function getUrl(itemRef) {
     getDownloadURL(ref(storage, itemRef))
@@ -131,10 +142,15 @@ const Admin = () => {
         // Handle any errors
       });
   }
-  function add(url) {
-    console.log(url);
-    Links.push(url);
-  }
+  // function getUrl(url) {
+  //   const xhr = new XMLHttpRequest();
+  //   xhr.responseType = "blob";
+  //   xhr.onload = (event) => {
+  //     const blob = xhr.response;
+  //   };
+  //   xhr.open("GET", url);
+  //   xhr.send();
+  // }
   const deleteHabUser = async (id) => {
     await deleteDoc(doc(db, "Candidates for assistance project", id));
   };
@@ -598,7 +614,10 @@ const Admin = () => {
   }
   return (
     <div className="Admin">
-      <h1>ניהול מידע</h1>
+      <section class="banner">
+        <h1 id="difh1">ניהול מידע</h1>
+        {/* <p>Company Mission Statement goes here</p> */}
+      </section>
       <br />
       <div className="test">
         <button className="button-17" onClick={getHabitantData}>

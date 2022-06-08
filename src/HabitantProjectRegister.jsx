@@ -12,7 +12,6 @@ import "react-slideshow-image/dist/styles.css";
 import { auth, db } from "./firebase";
 
 export function HabitantProjectRegister() {
-  console.log(auth.currentUser);
   const [user, loggedIn] = useAuthState(auth);
   const formRef = collection(db, "Candidates for assistance project");
   const [formData, setFormData] = useState({
@@ -129,7 +128,6 @@ export function HabitantProjectRegister() {
     navigate("/HabitantProject/doc");
   };
 
-  console.log(user);
   if (!user) {
     return (
       <div className="loggedIn">
@@ -210,8 +208,8 @@ export function HabitantProjectRegister() {
         <div class="Details">
           <div class="ProcessDetails">
             <h2>הוראות להרשמה לפרויקט דירת בוגרות:</h2>
-            אנא מלא את כל הפרטים הנדרשים ולאחר מכן לחץ על הכפתור בתחתית המסך בכדי לעבור להעלאת הקבצים הרלוונטים
-    
+            אנא מלא את כל הפרטים הנדרשים ולאחר מכן לחץ על הכפתור בתחתית המסך
+            בכדי לעבור להעלאת הקבצים הרלוונטים
           </div>
         </div>
       </div>
