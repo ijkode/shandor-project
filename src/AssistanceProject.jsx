@@ -11,8 +11,11 @@ import {
 import { db } from "./firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "./firebase";
-import register from "./register.png";
+import $ from "jquery";
 export function AssistanceProject() {
+  $("body").on("click", "#scr3", function () {
+    navigate("/Login");
+  });
   const [user, loggedIn] = useAuthState(auth);
   const [formData, setFormData] = useState({
     fname: "",
@@ -91,11 +94,11 @@ export function AssistanceProject() {
       <div className="loggedIn">
         <div class="allThePage">
           <div class="AllDetails">
-            <section class="banner">
-              <h1 id="difh1">פרויקט הכוון</h1>
+            <section className="banner">
+              <h1 id="difh1">פרויקט דיור בוגרות</h1>
               {/* <p>Company Mission Statement goes here</p> */}
-              <a href="#scr1" className="btn-bgstroke">
-                להרשמה לחץ
+              <a id="scr3" className="btn-bgstroke">
+                להתחברות לחץ
               </a>
             </section>
             <br />
@@ -122,10 +125,6 @@ export function AssistanceProject() {
             </ul>
           </div>
           <br />
-          <button className="button-55" onClick={nav}>
-            להתחברות לחץ כאן
-          </button>
-
           <div class="SubmitRequest"></div>
         </div>
       </div>

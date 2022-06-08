@@ -11,7 +11,11 @@ import { useNavigate } from "react-router-dom";
 import "react-slideshow-image/dist/styles.css";
 import { auth, db } from "./firebase";
 import register from "./register.png";
+import $ from "jquery";
 export function HabitantProject() {
+  $("body").on("click", "#scr3", function () {
+    navigate("/Login");
+  });
   const [user, loggedIn] = useAuthState(auth);
   const formRef = collection(db, "Candidates for assistance project");
   const [formData, setFormData] = useState({
@@ -58,8 +62,12 @@ export function HabitantProject() {
     graduation_details: "",
     teenage_status_details: "",
     timestamp: "",
+    medical_problem: false,
   });
   const handleChange = (e) => {
+    // if (e.target.value === false) {
+    //   e.target.value = true;
+    // }
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
   const navigate = useNavigate();
@@ -115,6 +123,7 @@ export function HabitantProject() {
         graduation_details: formData.graduation_details,
         teenage_status_details: formData.teenage_status_details,
         timestamp: serverTimestamp(),
+        medical_problem: formData.medical_problem,
       })
         .then(() => {
           // alert("success");
@@ -129,87 +138,46 @@ export function HabitantProject() {
     return (
       <div className="loggedIn">
         <div className="allThePage">
-          <div className="AllDetails">
-            <br />
-            <div className="titleToHabitantProject"></div>
-            <section className="banner">
-              <h1 id="difh1">פרויקט דיור בוגרות</h1>
-              {/* <p>Company Mission Statement goes here</p> */}
-              <a href="#scr" className="btn-bgstroke">
-                להרשמה לחץ
-              </a>
-            </section>
-            <div className="Details">
-              <div className="regImg">
-                <ul class="tilesWrap">
-                  <li>
-                    <h2>01</h2>
-                    <p>סיוע והכוון כלכלי לצעירות</p>
-                  </li>
-                  <li>
-                    <h2>02</h2>
-                    <p>הקניית כלים ומיומניות להתנהל בחיי היום יום</p>
-                  </li>
-                  <li>
-                    <h2>03</h2>
-                    <p>
-                      עבודה על תהליכים בסיסיים עם המדריכות, העובדות הסוציאליות
-                      והגורמים הטיפוליים המתאימים
-                    </p>
-                  </li>
-                  <li>
-                    <h2>04</h2>
-                    <p>טיפול רפואי במידת הצורך</p>
-                  </li>
-                  <li>
-                    <h2>05</h2>
-                    <p>
-                      ליווי הדוק ומבוקר של כל דבר שקורה בדירה ובחייה של הצעירה
-                    </p>
-                  </li>
-                </ul>
-              </div>
-              {/* <div class="ProcessDetails">
-                <h2>תהליך ההרשמה</h2>
-                תהליך הרשמה לשנת 2021-2022 בנוי מהשלבים הבאים:
-                <br />
-                פתיחת תיק מועמדת עד לתאריך ה-30.06.2021 על ידי פנייה בכתב מאת
-                עו"ס מטפל. מילוי כל הטפסים הנדרשים (מצ"ב בהמשך).
-                <br />
-                <br />
-                ראיון אישי - לאחר אישור הועדה מטעם העמותה, תזומן הצעירה בליווי
-                עו"ס מפנה לראיון במשרדי העמותה. <br />
-                אינטייק - במידה והצעירה עברה את שלב הריאיון , תופנה אל
-                פסיכולוגית העמותה להערכה אישית.
-                <br /> החלטה לגבי קבלת הצעירה לדירה, תינתן לעו"ס המפנה (במייל)
-                שבועיים מסיום התהליך.
-                <br />
-                צעירה אשר תקבל תשובה חיובית של הועדה, תתבקש לעדכן את עו"ס העמותה
-                לגבי החלטתה האישית תוך שבוע מיום ההודעה. <br />
-                חתימת חוזה מול העמותה. צעירה המעוניינת להתרשם מהדירה, תוכל לעשות
-                זאת בתיאום מראש ובליווי צוות העמותה. <br />
-                כניסה לדירה תתקיים החל מחודש אוגוסט, המעבר של הצעירה לדירה יתואם
-                וילווה (פיזית) גם ע"י העו"ס המפנה.
-                <br />
-                <b>
-                  מיום שהחל תהליך הקבלה יש לעדכן את העמותה לגבי כל החלטה שתשפיע
-                  על עתידה של הצעירה.
-                </b>
-                <br />
-                <b>
-                  <h3>
-                    העמותה שומרת לעצמה זכות לסיים את תהליך הקבלה בכל שלב שהוא.
-                  </h3>
-                </b>
-              </div> */}
+          <section className="banner">
+            <h1 id="difh1">פרויקט דיור בוגרות</h1>
+            {/* <p>Company Mission Statement goes here</p> */}
+            <a id="scr3" className="btn-bgstroke">
+              להתחברות לחץ
+            </a>
+          </section>
+          <div className="Details">
+            <div className="regImg">
+              <ul class="tilesWrap">
+                <li>
+                  <h2>01</h2>
+                  <p>סיוע והכוון כלכלי לצעירות</p>
+                </li>
+                <li>
+                  <h2>02</h2>
+                  <p>הקניית כלים ומיומניות להתנהל בחיי היום יום</p>
+                </li>
+                <li>
+                  <h2>03</h2>
+                  <p>
+                    עבודה על תהליכים בסיסיים עם המדריכות, העובדות הסוציאליות
+                    והגורמים הטיפוליים המתאימים
+                  </p>
+                </li>
+                <li>
+                  <h2>04</h2>
+                  <p>טיפול רפואי במידת הצורך</p>
+                </li>
+                <li>
+                  <h2>05</h2>
+                  <p>
+                    ליווי הדוק ומבוקר של כל דבר שקורה בדירה ובחייה של הצעירה
+                  </p>
+                </li>
+              </ul>
             </div>
             <br />
-            <img src={register}></img>
           </div>
-          <br /> <br />
-          <button className="button-55" onClick={nav}>
-            להתחברות לחץ כאן
-          </button>
+          <br />
         </div>
       </div>
     );
@@ -706,7 +674,8 @@ export function HabitantProject() {
             type="checkbox"
             id="medical_problems"
             name="medical_problems"
-            value="medical_problems"
+            value={formData.medical_problem}
+            onChange={(e) => handleChange(e)}
           />
           <label for="medical_problems"> בעיות רפואיות</label>
           <br />

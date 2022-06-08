@@ -41,14 +41,14 @@ export function HabitantProjectDoc() {
   };
   return (
     <div className="allDocPage">
-      <div className="titleOfPage">
-        <h1>העלאת קבצים בפורמט JPG או PDF</h1>
+      <section className="banner">
+        <h1 id="difh1">העלאת קבצים בפורמט JPG או PDF</h1>
         <br />
-        <h5>
-          לאחר לחיצה על כפתור הגש יש להמתין מספר רגעים עד לקבלת הודעת שהקבצים
-          הועלו בהצלחה{" "}
-        </h5>
-      </div>
+        <p>
+          לאחר לחיצה על כפתור הגש יש להמתין מספר רגעים עד לקבלת הודעה שהקבצים
+          הועלו בהצלחה
+        </p>
+      </section>
       <br></br>
       <div className="box">
         <div className="generalDocuments">

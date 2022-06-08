@@ -1364,14 +1364,15 @@ fieldset legend {
 }
 .tilesWrap1 li button {
   background: transparent;
+  justify-content: center;
   border: 1px solid #b7b7b7;
   padding: 10px 40px;
   color: #b7b7b7;
-  margin-right: 30px;
+  /* margin-right: 30px; */
   border-radius: 3px;
   /* position: relative; */
-  transition: all 0.3s ease-in-out;
-  transform: translateY(-40px);
+  transition: all 0.2s ease-in-out;
+  transform: translateY(40px);
   opacity: 0;
   cursor: pointer;
   overflow: hidden;
@@ -1419,7 +1420,6 @@ fieldset legend {
 .tilesWrap1 li:after {
   content: "";
   position: absolute;
-  width: 40%;
   height: 100%;
   left: 0;
   top: 0;
