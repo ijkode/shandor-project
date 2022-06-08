@@ -417,6 +417,7 @@ export function HabitantProject() {
             type="email"
             id="email"
             name="email"
+            required
             value={formData.email}
             onChange={(e) => handleChange(e)}
           />
