@@ -163,12 +163,28 @@ export function AssistanceProject() {
           </li>
         </ul>
       </div>
+      <section className="banner2">
+        {/* <p>Company Mission Statement goes here</p> */}
+        <a href="#private" className="btn-bgstroke1">
+          פרטים אישיים
+        </a>
+        <a href="#social" className="btn-bgstroke1">
+          גורם מפנה
+        </a>
+        <a href="#study" className="btn-bgstroke1">
+          לימודים
+        </a>
+        <a href="#general" className="btn-bgstroke1">
+          כללי
+        </a>
+      </section>
       <div id="scr1" class="SubmitRequest">
         <br />
-
         <br />
         <fieldset>
-          <legend class="legendTitle">פרטים אישיים</legend>
+          <legend id="private" class="legendTitle">
+            פרטים אישיים
+          </legend>
           <form>
             <label for="fname">שם פרטי : </label>
             <input
@@ -250,7 +266,9 @@ export function AssistanceProject() {
         <br />
 
         <fieldset>
-          <legend class="legendTitle">גורם מפנה</legend>
+          <legend id="social" class="legendTitle">
+            גורם מפנה
+          </legend>
           <form>
             <label for="referrer_name"> שם : </label>
             <input
@@ -300,7 +318,9 @@ export function AssistanceProject() {
         <br />
 
         <fieldset>
-          <legend class="legendTitle">לימודים</legend>
+          <legend id="study" class="legendTitle">
+            לימודים
+          </legend>
           <label for="framework_name"> מוסד לימודים : </label>
           <input
             className="input1"
@@ -367,7 +387,9 @@ export function AssistanceProject() {
         <br />
 
         <fieldset>
-          <legend class="legendTitle">כללי</legend>
+          <legend id="general" class="legendTitle">
+            כללי
+          </legend>
           <label for="other_schilarships">
             {" "}
             האם הוגשו בקשות למלגות נוספות :{" "}

@@ -62,7 +62,7 @@ export function HabitantProject() {
     graduation_details: "",
     teenage_status_details: "",
     timestamp: "",
-    medical_problem: false,
+    medical_problem: "",
   });
   const handleChange = (e) => {
     // if (e.target.value === false) {
@@ -219,13 +219,34 @@ export function HabitantProject() {
           <p>ליווי הדוק ומבוקר של כל דבר שקורה בדירה ובחייה של הצעירה</p>
         </li>
       </ul>
-      <br />
-
+      <section className="banner2">
+        {/* <p>Company Mission Statement goes here</p> */}
+        <a href="#private" className="btn-bgstroke1">
+          פרטים אישיים
+        </a>
+        <a href="#general" className="btn-bgstroke1">
+          פרטים כלליים
+        </a>
+        <a href="#phone" className="btn-bgstroke1">
+          פרטי הקשר
+        </a>
+        <a href="#social" className="btn-bgstroke1">
+          גורם מפנה
+        </a>
+        <a href="#beauru" className="btn-bgstroke1">
+          שיוך ללשכה
+        </a>
+        <a href="#family" className="btn-bgstroke1">
+          רקע משפחתי
+        </a>
+      </section>
       <div id="scr" className="SubmitRequest">
         <br />
         <br />
         <fieldset>
-          <legend className="legendTitle">פרטים אישיים</legend>
+          <legend id="private" className="legendTitle">
+            פרטים אישיים
+          </legend>
           <form>
             <label for="fname">שם פרטי : </label>
             <input
@@ -330,7 +351,9 @@ export function HabitantProject() {
         <br />
 
         <fieldset>
-          <legend class="legendTitle">פרטים כלליים</legend>
+          <legend id="general" class="legendTitle">
+            פרטים כלליים
+          </legend>
           <form>
             <label for="current_framework">מסגרת נוכחית : </label>
             <select id="current_framework" className="select1">
@@ -375,7 +398,9 @@ export function HabitantProject() {
         <br />
 
         <fieldset>
-          <legend class="legendTitle">פרטי הקשר (של הצעירה)</legend>
+          <legend id="phone" class="legendTitle">
+            פרטי הקשר (של הצעירה)
+          </legend>
           <label for="phone_number"> נייד: </label>
           <input
             className="input1"
@@ -403,7 +428,9 @@ export function HabitantProject() {
         <br />
 
         <fieldset>
-          <legend class="legendTitle">גורם מפנה</legend>
+          <legend id="social" class="legendTitle">
+            גורם מפנה
+          </legend>
 
           <label for="referrer_name"> שם : </label>
           <input
@@ -453,7 +480,9 @@ export function HabitantProject() {
         <br />
 
         <fieldset>
-          <legend class="legendTitle">שיוך ללשכה</legend>
+          <legend id="beauru" class="legendTitle">
+            שיוך ללשכה
+          </legend>
 
           <label for="bureau_name"> שם הלשכה : </label>
           <input
@@ -648,12 +677,32 @@ export function HabitantProject() {
         <br />
 
         <fieldset>
-          <legend class="legendTitle">שאלון כללי</legend>
+          <legend id="family" class="legendTitle">
+            שאלון כללי
+          </legend>
           <label for="graduation"> סיום לימודים : </label>
           <select id="graduation" className="select1">
-            <option id="full">בגרות מלאה </option>
-            <option id="partial">בגרות חלקית </option>
-            <option id="other">אחר </option>
+            <option
+              id="full"
+              value={formData.graduation}
+              onChange={(e) => handleChange(e)}
+            >
+              בגרות מלאה{" "}
+            </option>
+            <option
+              id="partial"
+              value={formData.graduation}
+              onChange={(e) => handleChange(e)}
+            >
+              בגרות חלקית{" "}
+            </option>
+            <option
+              id="other"
+              value={formData.graduation}
+              onChange={(e) => handleChange(e)}
+            >
+              אחר{" "}
+            </option>
           </select>
           <label for="graduation_details"> פירוט אודות הלימודים : </label>
           <input
@@ -675,7 +724,12 @@ export function HabitantProject() {
             id="medical_problems"
             name="medical_problems"
             value={formData.medical_problem}
-            onChange={(e) => handleChange(e)}
+            onChange={(e) => {
+              e.target.name =
+                e.target.type === "checkbox"
+                  ? e.target.checked
+                  : e.target.value;
+            }}
           />
           <label for="medical_problems"> בעיות רפואיות</label>
           <br />
