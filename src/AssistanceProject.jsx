@@ -94,7 +94,9 @@ export function AssistanceProject() {
             <section class="banner">
               <h1 id="difh1">פרויקט הכוון</h1>
               {/* <p>Company Mission Statement goes here</p> */}
-              <a class="btn-bgstroke">להרשמה לחץ</a>
+              <a href="#scr1" className="btn-bgstroke">
+                להרשמה לחץ
+              </a>
             </section>
             <div class="Details">
               העמותה ע"ש אהרן שנדור מזמינה צעירים/ות המעוניינים/ות ללמוד
@@ -121,7 +123,9 @@ export function AssistanceProject() {
         <section class="banner">
           <h1 id="difh1">פרויקט הכוון</h1>
           {/* <p>Company Mission Statement goes here</p> */}
-          <a class="btn-bgstroke">להרשמה לחץ</a>
+          <a href="#scr1" className="btn-bgstroke">
+            להרשמה לחץ
+          </a>
         </section>
         <br />
         <div class="Details">
@@ -134,7 +138,7 @@ export function AssistanceProject() {
       <br />
       <br />
       <img src={register}></img>
-      <div class="SubmitRequest">
+      <div id="scr1" class="SubmitRequest">
         <br />
 
         <br />

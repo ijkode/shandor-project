@@ -135,7 +135,9 @@ export function HabitantProject() {
             <section className="banner">
               <h1 id="difh1">פרויקט דיור בוגרות</h1>
               {/* <p>Company Mission Statement goes here</p> */}
-              <a className="btn-bgstroke">להרשמה לחץ</a>
+              <a href="#scr" className="btn-bgstroke">
+                להרשמה לחץ
+              </a>
             </section>
             <div className="Details">
               <div className="regImg">
@@ -210,7 +212,9 @@ export function HabitantProject() {
         <section className="banner">
           <h1 id="difh1">פרויקט דיור בוגרות</h1>
           {/* <p>Company Mission Statement goes here</p> */}
-          <a className="btn-bgstroke">להרשמה לחץ</a>
+          <a href="#scr" className="btn-bgstroke">
+            להרשמה לחץ
+          </a>
         </section>
         <br />
         <div className="Details">
@@ -263,7 +267,7 @@ export function HabitantProject() {
       </div>
       <br />
       <img src={register}></img>
-      <div className="SubmitRequest">
+      <div id="scr" className="SubmitRequest">
         <br />
         <br />
         <fieldset>
