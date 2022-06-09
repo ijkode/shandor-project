@@ -78,7 +78,15 @@ export function HabitantProject() {
     // if (e.target.value === false) {
     //   e.target.value = true;
     // }
+
     setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+  const handleSelecetChange = (e) => {
+    // if (e.target.value === false) {
+    //   e.target.value = true;
+    // }
+
+    setFormData({ ...formData, [e.target.id]: e.target.value });
   };
   const navigate = useNavigate();
   function nav() {
@@ -373,10 +381,20 @@ export function HabitantProject() {
           </legend>
           <form>
             <label htmlFor="current_framework">מסגרת נוכחית : </label>
-            <select id="current_framework" className="select1">
-              <option id="boardingSchool">פנימייה</option>
-              <option id="custody">אומנה</option>
-              <option id="nursery">משפחתון</option>
+            <select
+              id="current_framework"
+              className="select1"
+              onChange={(e) => handleSelecetChange(e)}
+            >
+              <option id="boardingSchool" value="פנימייה">
+                פנימייה
+              </option>
+              <option id="custody" value="אומנה">
+                אומנה
+              </option>
+              <option id="nursery" value="משפחתון">
+                משפחתון
+              </option>
             </select>
             <label htmlFor="framework_name">שם המסגרת : </label>
             <input
@@ -403,10 +421,20 @@ export function HabitantProject() {
             <label htmlFor="framework_after_school">
               מסגרת אחרי לימודים :{" "}
             </label>
-            <select id="framework_after_school" className="select1">
-              <option id="militaryService">שירות צבאי</option>
-              <option id="nationalService">שירות לאומי</option>
-              <option id="other">אחר</option>
+            <select
+              id="framework_after_school"
+              className="select1"
+              onChange={(e) => handleSelecetChange(e)}
+            >
+              <option id="militaryService" value="שירות צבאי">
+                שירות צבאי
+              </option>
+              <option id="nationalService" value="שירות לאומי">
+                שירות לאומי
+              </option>
+              <option id="other" value="אחר">
+                אחר
+              </option>
             </select>
             <br />
             <br />
@@ -571,16 +599,36 @@ export function HabitantProject() {
             onChange={(e) => handleChange(e)}
           />
           <label htmlFor="parents_status"> מצב הורים : </label>
-          <select id="framework_after_school" className="select1">
-            <option id="married">נשואים </option>
-            <option id="divorced">גרושים</option>
-            <option id="separated">פרודים</option>
+          <select
+            id="parents_status"
+            className="select1"
+            onChange={(e) => handleSelecetChange(e)}
+          >
+            <option id="married" value="נשואים">
+              נשואים{" "}
+            </option>
+            <option id="divorced" value="גרושים">
+              גרושים
+            </option>
+            <option id="separated" value="פרודים">
+              פרודים
+            </option>
           </select>
           <label htmlFor="family_status"> מצב משפחתי : </label>
-          <select id="framework_after_school" className="select1">
-            <option id="orphan_from_mother">יתום מאם </option>
-            <option id="orphan_from_father">יתום מאב</option>
-            <option id="orphan_from_both_parents">יתום משני ההורים</option>
+          <select
+            id="family_status"
+            className="select1"
+            onChange={(e) => handleSelecetChange(e)}
+          >
+            <option id="orphan_from_mother" value="יתום מאם">
+              יתום מאם{" "}
+            </option>
+            <option id="orphan_from_father" value="יתום מאב">
+              יתום מאב
+            </option>
+            <option id="orphan_from_both_parents" value="יתום משני ההורים">
+              יתום משני ההורים
+            </option>
           </select>
           <br />
           <br />
@@ -604,9 +652,17 @@ export function HabitantProject() {
             onChange={(e) => handleChange(e)}
           />
           <label htmlFor="connection_with_mother"> קשר עם האם : </label>
-          <select id="connection_with_mother" className="select1">
-            <option id="have_connection_with_mother">כן </option>
-            <option id="not_connection_with_mother">לא</option>
+          <select
+            id="connection_with_mother"
+            className="select1"
+            onChange={(e) => handleSelecetChange(e)}
+          >
+            <option id="have_connection_with_mother" value="כן">
+              כן{" "}
+            </option>
+            <option id="not_connection_with_mother" value="לא">
+              לא
+            </option>
           </select>
 
           <br />
@@ -631,9 +687,17 @@ export function HabitantProject() {
             onChange={(e) => handleChange(e)}
           />
           <label htmlFor="connection_with_father"> קשר עם האב : </label>
-          <select id="connection_with_father" className="select1">
-            <option id="have_connection_with_father">כן </option>
-            <option id="not_connection_with_father">לא</option>
+          <select
+            id="connection_with_father"
+            className="select1"
+            onChange={(e) => handleSelecetChange(e)}
+          >
+            <option id="have_connection_with_father" value="כן">
+              כן{" "}
+            </option>
+            <option id="not_connection_with_father" value="לא">
+              לא
+            </option>
           </select>
 
           <br />
@@ -701,26 +765,18 @@ export function HabitantProject() {
             שאלון כללי
           </legend>
           <label htmlFor="graduation"> סיום לימודים : </label>
-          <select id="graduation" className="select1">
-            <option
-              id="full"
-              value={formData.graduation}
-              onChange={(e) => handleChange(e)}
-            >
+          <select
+            id="graduation"
+            className="select1"
+            onChange={(e) => handleSelecetChange(e)}
+          >
+            <option id="full" value="בגרות מלאה">
               בגרות מלאה{" "}
             </option>
-            <option
-              id="partial"
-              value={formData.graduation}
-              onChange={(e) => handleChange(e)}
-            >
+            <option id="partial" value="בגרות חלקית">
               בגרות חלקית{" "}
             </option>
-            <option
-              id="other"
-              value={formData.graduation}
-              onChange={(e) => handleChange(e)}
-            >
+            <option id="other" value="אחר">
               אחר{" "}
             </option>
           </select>

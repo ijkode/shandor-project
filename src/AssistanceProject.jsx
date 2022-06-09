@@ -46,6 +46,13 @@ export function AssistanceProject() {
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
+  const handleSelecetChange = (e) => {
+    // if (e.target.value === false) {
+    //   e.target.value = true;
+    // }
+
+    setFormData({ ...formData, [e.target.id]: e.target.value });
+  };
   const navigate = useNavigate();
   function nav() {
     navigate("/Login");
@@ -368,9 +375,18 @@ export function AssistanceProject() {
           <br />
           <br />
           <label htmlFor="graduation"> סיום לימודים : </label>
-          <select id="graduation" required className="select1">
-            <option id="full">בגרות מלאה </option>
-            <option id="partial">בגרות חלקית </option>
+          <select
+            id="graduation"
+            required
+            className="select1"
+            onChange={(e) => handleSelecetChange(e)}
+          >
+            <option id="full" value="בגרות מלאה">
+              בגרות מלאה{" "}
+            </option>
+            <option id="partial" value="בגרות חלקית">
+              בגרות חלקית{" "}
+            </option>
           </select>
           <label htmlFor="graduation_details"> פירוט אודות הלימודים : </label>
           <input
@@ -396,9 +412,17 @@ export function AssistanceProject() {
             {" "}
             האם הוגשו בקשות למלגות נוספות :{" "}
           </label>
-          <select id="other_schilarships" className="select1">
-            <option id="other_schilarships">כן </option>
-            <option id="not_other_schilarships">לא</option>
+          <select
+            id="other_schilarships"
+            className="select1"
+            onChange={(e) => handleSelecetChange(e)}
+          >
+            <option id="other_schilarships" value="כן">
+              כן{" "}
+            </option>
+            <option id="not_other_schilarships" value="לא">
+              לא
+            </option>
           </select>
           <label htmlFor="scholarships_details"> פירוט אודות המלגות : </label>
           <input
@@ -414,9 +438,17 @@ export function AssistanceProject() {
           <label htmlFor="insurance_institute_allowance">
             האם מקבל/ת קצבאות מביטוח לאומי/משרד הביטחון? :{" "}
           </label>
-          <select id="insurance_institute_allowance" className="select1">
-            <option id="insurance_institute_allowance">כן </option>
-            <option id="not_insurance_institute_allowance">לא</option>
+          <select
+            id="insurance_institute_allowance"
+            className="select1"
+            onChange={(e) => handleSelecetChange(e)}
+          >
+            <option id="insurance_institute_allowance" value="כן">
+              כן{" "}
+            </option>
+            <option id="not_insurance_institute_allowance" value="לא">
+              לא
+            </option>
             <option id="other">אחר</option>
           </select>
           <label htmlFor="insurance_institute_allowance_details">
