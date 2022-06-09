@@ -83,9 +83,6 @@ export function HabitantProject() {
     // if (e.target.value === false) {
     //   e.target.value = true;
     // }
-    console.log(e.target.name);
-    console.log(e.target.id);
-    console.log(e.target.value);
     if (e.target.name === "date_of_birth") {
       let date = dateFormat(e.target.value, "dd/mm/yyyy");
       setFormData({ ...formData, [e.target.name]: date });
@@ -97,10 +94,7 @@ export function HabitantProject() {
     // if (e.target.value === false) {
     //   e.target.value = true;
     // }
-    console.log(e.target.id);
-    console.log(e.target.value);
     setFormData({ ...formData, [e.target.id]: e.target.value });
-    console.log(formData);
   };
   const navigate = useNavigate();
   function nav() {
