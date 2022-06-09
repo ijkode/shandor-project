@@ -743,6 +743,7 @@ export function HabitantProject() {
             type="checkbox"
             id="medical_problem"
             name="medical_problem"
+            className="switch_1"
             value={formData.medical_problem}
             onChange={(e) => handlecheckBoxChange(e)}
           />
@@ -752,6 +753,7 @@ export function HabitantProject() {
             type="checkbox"
             id="drugs_and_alcohol"
             name="drugs_and_alcohol"
+            className="switch_1"
             value={formData.drugs_and_alcohol}
             onChange={(e) => handlecheckBoxChange(e)}
           />
@@ -761,6 +763,7 @@ export function HabitantProject() {
             type="checkbox"
             id="violent_incidents"
             name="violent_incidents"
+            className="switch_1"
             value={formData.violent_incidents}
             onChange={(e) => handlecheckBoxChange(e)}
           />
@@ -770,6 +773,7 @@ export function HabitantProject() {
             type="checkbox"
             id="eating_disorders"
             name="eating_disorders"
+            className="switch_1"
             value={formData.eating_disorders}
             onChange={(e) => handlecheckBoxChange(e)}
           />
@@ -779,6 +783,7 @@ export function HabitantProject() {
             type="checkbox"
             id="suicidal_attempts"
             name="suicidal_attempts"
+            className="switch_1"
             value={formData.suicidal_attempts}
             onChange={(e) => handlecheckBoxChange(e)}
           />
@@ -788,6 +793,7 @@ export function HabitantProject() {
             type="checkbox"
             id="criminal_record"
             name="criminal_record"
+            className="switch_1"
             value={formData.criminal_record}
             onChange={(e) => handlecheckBoxChange(e)}
           />
@@ -799,6 +805,7 @@ export function HabitantProject() {
             type="checkbox"
             id="learning_disabilities"
             name="learning_disabilities"
+            className="switch_1"
             value={formData.learning_disabilities}
             onChange={(e) => handlecheckBoxChange(e)}
           />
@@ -808,6 +815,7 @@ export function HabitantProject() {
             type="checkbox"
             id="allowances"
             name="allowances"
+            className="switch_1"
             value={formData.allowances}
             onChange={(e) => handlecheckBoxChange(e)}
           />
