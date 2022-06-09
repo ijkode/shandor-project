@@ -12,6 +12,7 @@ import { db } from "./firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "./firebase";
 import $ from "jquery";
+import dateFormat, { masks } from "dateformat";
 export function AssistanceProject() {
   $("body").on("click", "#scr3", function () {
     navigate("/Login");
@@ -44,7 +45,12 @@ export function AssistanceProject() {
     timestamp: "",
   });
   const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    if (e.target.name === "date_of_birth") {
+      let date = dateFormat(e.target.value, "dd/mm/yyyy");
+      setFormData({ ...formData, [e.target.name]: date });
+    } else {
+      setFormData({ ...formData, [e.target.name]: e.target.value });
+    }
   };
   const handleSelecetChange = (e) => {
     // if (e.target.value === false) {
@@ -228,10 +234,9 @@ export function AssistanceProject() {
             <label htmlFor="date_of_birth">תאריך לידה:</label>
             <input
               className="input1"
-              type="text"
+              type="date"
               id="date_of_birth"
               name="date_of_birth"
-              placeholder="dd/mm/yyyy"
               required
               value={formData.date_of_birth}
               onChange={(e) => handleChange(e)}
