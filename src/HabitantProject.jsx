@@ -10,13 +10,19 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { useNavigate } from "react-router-dom";
 import "react-slideshow-image/dist/styles.css";
 import { auth, db } from "./firebase";
-import register from "./register.png";
 import $ from "jquery";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
+import { Formik, Form, Field } from "formik";
+import Swal from "sweetalert2";
+import dateFormat, { masks } from "dateformat";
 export function HabitantProject() {
   $("body").on("click", "#scr3", function () {
     navigate("/Login");
   });
   const [user, loggedIn] = useAuthState(auth);
+  const [flag, setFlag] = useState(0);
   const formRef = collection(db, "Candidates for assistance project");
   const [formData, setFormData] = useState({
     fname: "",
@@ -24,7 +30,6 @@ export function HabitantProject() {
     ID: "",
     date_of_birth: "",
     born_country: "",
-    year_of_immigration: "",
     hmo: "",
     doctor: "",
     hmo_branch: "",
@@ -78,85 +83,104 @@ export function HabitantProject() {
     // if (e.target.value === false) {
     //   e.target.value = true;
     // }
-
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    console.log(e.target.name);
+    console.log(e.target.id);
+    console.log(e.target.value);
+    if (e.target.name === "date_of_birth") {
+      let date = dateFormat(e.target.value, "dd/mm/yyyy");
+      setFormData({ ...formData, [e.target.name]: date });
+    } else {
+      setFormData({ ...formData, [e.target.name]: e.target.value });
+    }
   };
   const handleSelecetChange = (e) => {
     // if (e.target.value === false) {
     //   e.target.value = true;
     // }
-
+    console.log(e.target.id);
+    console.log(e.target.value);
     setFormData({ ...formData, [e.target.id]: e.target.value });
+    console.log(formData);
   };
   const navigate = useNavigate();
   function nav() {
     navigate("/Login");
   }
   const habitantDocPage = () => {
+    console.log(formData);
     const uid = auth.currentUser.uid;
-
-    const formRef = collection(db, "Candidates for assistance project");
-    if (uid != null)
-      setDoc(doc(formRef, uid), {
-        fname: formData.fname,
-        lname: formData.lname,
-        ID: formData.ID,
-        date_of_birth: formData.date_of_birth,
-        born_country: formData.born_country,
-        year_of_immigration: formData.year_of_immigration,
-        hmo: formData.hmo,
-        doctor: formData.doctor,
-        hmo_branch: formData.hmo_branch,
-        hmo_phone: formData.hmo_phone,
-        current_framework: formData.current_framework,
-        framework_name: formData.framework_name,
-        framework_address: formData.framework_address,
-        framework_after_school: formData.framework_after_school,
-        phone_number: formData.phone_number,
-        email: formData.email,
-        referrer_name: formData.referrer_name,
-        referrer_proffesion: formData.referrer_proffesion,
-        referrer_phone: formData.referrer_phone,
-        referrer_email: formData.referrer_email,
-        bureau_name: formData.bureau_name,
-        social_worker_name: formData.social_worker_name,
-        social_worker_role: formData.social_worker_role,
-        social_worker_phone: formData.social_worker_phone,
-        social_worker_email: formData.social_worker_email,
-        family_background: formData.family_background,
-        parents_status: formData.parents_status,
-        family_status: formData.family_status,
-        mother_name: formData.mother_name,
-        mother_address: formData.mother_address,
-        connection_with_mother: formData.connection_with_mother,
-        father_name: formData.father_name,
-        father_address: formData.father_address,
-        connection_with_father: formData.connection_with_father,
-        connection_with_relatives: formData.connection_with_relatives,
-        relative_first_name: formData.relative_first_name,
-        relative_last_name: formData.relative_last_name,
-        relative_address: formData.relative_address,
-        relative_phone: formData.relative_phone,
-        graduation: formData.graduation,
-        graduation_details: formData.graduation_details,
-        teenage_status_details: formData.teenage_status_details,
-        timestamp: serverTimestamp(),
-        medical_problem: formData.medical_problem,
-        drugs_and_alcohol: formData.drugs_and_alcohol,
-        violent_incidents: formData.violent_incidents,
-        eating_disorders: formData.eating_disorders,
-        suicidal_attempts: formData.suicidal_attempts,
-        criminal_record: formData.criminal_record,
-        learning_disabilities: formData.learning_disabilities,
-        allowances: formData.allowances,
-      })
-        .then(() => {
-          // alert("success");
+    let flag = 0;
+    // for (const [key, value] of Object.entries(formData)) {
+    //   if (`${value}` === "") {
+    //     console.log(key);
+    //     flag = 1;
+    //     Swal.fire("יש להזין את כל הפרטים הנדרשים");
+    //     break;
+    //   }
+    // }
+    if (flag === 0) {
+      const formRef = collection(db, "Candidates for assistance project");
+      if (uid != null)
+        setDoc(doc(formRef, uid), {
+          fname: formData.fname,
+          lname: formData.lname,
+          ID: formData.ID,
+          date_of_birth: formData.date_of_birth,
+          born_country: formData.born_country,
+          hmo: formData.hmo,
+          doctor: formData.doctor,
+          hmo_branch: formData.hmo_branch,
+          hmo_phone: formData.hmo_phone,
+          current_framework: formData.current_framework,
+          framework_name: formData.framework_name,
+          framework_address: formData.framework_address,
+          framework_after_school: formData.framework_after_school,
+          phone_number: formData.phone_number,
+          email: formData.email,
+          referrer_name: formData.referrer_name,
+          referrer_proffesion: formData.referrer_proffesion,
+          referrer_phone: formData.referrer_phone,
+          referrer_email: formData.referrer_email,
+          bureau_name: formData.bureau_name,
+          social_worker_name: formData.social_worker_name,
+          social_worker_role: formData.social_worker_role,
+          social_worker_phone: formData.social_worker_phone,
+          social_worker_email: formData.social_worker_email,
+          family_background: formData.family_background,
+          parents_status: formData.parents_status,
+          family_status: formData.family_status,
+          mother_name: formData.mother_name,
+          mother_address: formData.mother_address,
+          connection_with_mother: formData.connection_with_mother,
+          father_name: formData.father_name,
+          father_address: formData.father_address,
+          connection_with_father: formData.connection_with_father,
+          connection_with_relatives: formData.connection_with_relatives,
+          relative_first_name: formData.relative_first_name,
+          relative_last_name: formData.relative_last_name,
+          relative_address: formData.relative_address,
+          relative_phone: formData.relative_phone,
+          graduation: formData.graduation,
+          graduation_details: formData.graduation_details,
+          teenage_status_details: formData.teenage_status_details,
+          timestamp: serverTimestamp(),
+          medical_problem: formData.medical_problem,
+          drugs_and_alcohol: formData.drugs_and_alcohol,
+          violent_incidents: formData.violent_incidents,
+          eating_disorders: formData.eating_disorders,
+          suicidal_attempts: formData.suicidal_attempts,
+          criminal_record: formData.criminal_record,
+          learning_disabilities: formData.learning_disabilities,
+          allowances: formData.allowances,
         })
-        .catch((err) => {
-          // alert("error");
-        });
-    navigate("/HabitantProject/doc");
+          .then(() => {
+            // alert("success");
+          })
+          .catch((err) => {
+            // alert("error");
+          });
+      navigate("/HabitantProject/doc");
+    }
   };
 
   if (!user) {
@@ -268,11 +292,11 @@ export function HabitantProject() {
       <div id="scr" className="SubmitRequest">
         <br />
         <br />
-        <fieldset>
-          <legend id="private" className="legendTitle">
-            פרטים אישיים
-          </legend>
-          <form>
+        <form>
+          <fieldset>
+            <legend id="private" className="legendTitle">
+              פרטים אישיים
+            </legend>
             <label htmlFor="fname">שם פרטי : </label>
             <input
               className="input1"
@@ -306,10 +330,10 @@ export function HabitantProject() {
             <label htmlFor="date_of_birth">תאריך לידה:</label>
             <input
               className="input1"
-              type="text"
+              type="date"
               id="date_of_birth"
               name="date_of_birth"
-              placeholder="dd/mm/yyyy"
+              // placeholder="dd/mm/yyyy"
               required
               value={formData.date_of_birth}
               onChange={(e) => handleChange(e)}
@@ -369,23 +393,25 @@ export function HabitantProject() {
               value={formData.hmo_phone}
               onChange={(e) => handleChange(e)}
             />
-          </form>
-        </fieldset>
+          </fieldset>
 
-        <br />
-        <br />
+          <br />
+          <br />
 
-        <fieldset>
-          <legend id="general" className="legendTitle">
-            פרטים כלליים
-          </legend>
-          <form>
+          <fieldset>
+            <legend id="general" className="legendTitle">
+              פרטים כלליים
+            </legend>
+
             <label htmlFor="current_framework">מסגרת נוכחית : </label>
             <select
               id="current_framework"
               className="select1"
               onChange={(e) => handleSelecetChange(e)}
             >
+              <option value="" selected disabled hidden>
+                בחר
+              </option>
               <option id="boardingSchool" value="פנימייה">
                 פנימייה
               </option>
@@ -394,6 +420,9 @@ export function HabitantProject() {
               </option>
               <option id="nursery" value="משפחתון">
                 משפחתון
+              </option>
+              <option id="nursery" value="אחר">
+                אחר
               </option>
             </select>
             <label htmlFor="framework_name">שם המסגרת : </label>
@@ -426,6 +455,9 @@ export function HabitantProject() {
               className="select1"
               onChange={(e) => handleSelecetChange(e)}
             >
+              <option value="" selected disabled hidden>
+                בחר
+              </option>
               <option id="militaryService" value="שירות צבאי">
                 שירות צבאי
               </option>
@@ -438,464 +470,482 @@ export function HabitantProject() {
             </select>
             <br />
             <br />
-          </form>
-        </fieldset>
-
-        <br />
-        <br />
-
-        <fieldset>
-          <legend id="phone" className="legendTitle">
-            פרטי הקשר (של הצעירה)
-          </legend>
-          <label htmlFor="phone_number"> נייד: </label>
-          <input
-            className="input1"
-            type="number"
-            id="phone_number"
-            name="phone_number"
-            required
-            value={formData.phone_number}
-            onChange={(e) => handleChange(e)}
-          />
-          <label htmlFor="email"> מייל : </label>
-          <input
-            className="input1"
-            type="email"
-            id="email"
-            name="email"
-            required
-            value={formData.email}
-            onChange={(e) => handleChange(e)}
-          />
-          <br />
-          <br />
-        </fieldset>
-
-        <br />
-        <br />
-
-        <fieldset>
-          <legend id="social" className="legendTitle">
-            גורם מפנה
-          </legend>
-
-          <label htmlFor="referrer_name"> שם : </label>
-          <input
-            className="input1"
-            type="text"
-            id="referrer_name"
-            name="referrer_name"
-            required
-            value={formData.referrer_name}
-            onChange={(e) => handleChange(e)}
-          />
-          <label htmlFor="referrer_proffesion"> תפקיד : </label>
-          <input
-            className="input1"
-            type="text"
-            id="referrer_proffesion"
-            name="referrer_proffesion"
-            required
-            value={formData.referrer_proffesion}
-            onChange={(e) => handleChange(e)}
-          />
-          <label htmlFor="referrer_phone"> טלפון : </label>
-          <input
-            className="input1"
-            type="number"
-            id="referrer_phone"
-            name="referrer_phone"
-            required
-            value={formData.referrer_phone}
-            onChange={(e) => handleChange(e)}
-          />
-          <label htmlFor="referrer_email"> מייל : </label>
-          <input
-            className="input1"
-            type="email"
-            id="referrer_email"
-            name="referrer_email"
-            required
-            value={formData.referrer_email}
-            onChange={(e) => handleChange(e)}
-          />
-          <br />
-          <br />
-        </fieldset>
-
-        <br />
-        <br />
-
-        <fieldset>
-          <legend id="beauru" className="legendTitle">
-            שיוך ללשכה
-          </legend>
-
-          <label htmlFor="bureau_name"> שם הלשכה : </label>
-          <input
-            className="input1"
-            type="text"
-            id="bureau_name"
-            name="bureau_name"
-            value={formData.bureau_name}
-            onChange={(e) => handleChange(e)}
-          />
-          <label htmlFor="social_worker_name"> שם העו"ס : </label>
-          <input
-            className="input1"
-            type="text"
-            id="social_worker_name"
-            name="social_worker_name"
-            value={formData.social_worker_name}
-            onChange={(e) => handleChange(e)}
-          />
-          <label htmlFor="social_worker_role"> תפקיד : </label>
-          <input
-            className="input1"
-            type="text"
-            id="social_worker_role"
-            name="social_worker_role"
-            value={formData.social_worker_role}
-            onChange={(e) => handleChange(e)}
-          />
-          <label htmlFor="social_worker_phone"> טלפון : </label>
-          <input
-            className="input1"
-            type="number"
-            id="social_worker_phone"
-            name="social_worker_phone"
-            value={formData.social_worker_phone}
-            onChange={(e) => handleChange(e)}
-          />
-          <br />
-          <br />
-          <label htmlFor="social_worker_email"> מייל : </label>
-          <input
-            className="input1"
-            type="email"
-            id="social_worker_email"
-            name="social_worker_email"
-            value={formData.social_worker_email}
-            onChange={(e) => handleChange(e)}
-          />
-
-          <br />
-          <br />
-        </fieldset>
-
-        <br />
-        <br />
-
-        <fieldset>
-          <legend className="legendTitle">רקע משפחתי</legend>
-          <label htmlFor="family_background"> רקע משפחתי קצר : </label>
-          <input
-            className="input1"
-            type="text"
-            id="family_background"
-            name="family_background"
-            value={formData.family_background}
-            onChange={(e) => handleChange(e)}
-          />
-          <label htmlFor="parents_status"> מצב הורים : </label>
-          <select
-            id="parents_status"
-            className="select1"
-            onChange={(e) => handleSelecetChange(e)}
-          >
-            <option id="married" value="נשואים">
-              נשואים{" "}
-            </option>
-            <option id="divorced" value="גרושים">
-              גרושים
-            </option>
-            <option id="separated" value="פרודים">
-              פרודים
-            </option>
-          </select>
-          <label htmlFor="family_status"> מצב משפחתי : </label>
-          <select
-            id="family_status"
-            className="select1"
-            onChange={(e) => handleSelecetChange(e)}
-          >
-            <option id="orphan_from_mother" value="יתום מאם">
-              יתום מאם{" "}
-            </option>
-            <option id="orphan_from_father" value="יתום מאב">
-              יתום מאב
-            </option>
-            <option id="orphan_from_both_parents" value="יתום משני ההורים">
-              יתום משני ההורים
-            </option>
-          </select>
-          <br />
-          <br />
-
-          <label htmlFor="mother_name"> שם האם : </label>
-          <input
-            className="input1"
-            type="text"
-            id="mother_name"
-            name="mother_name"
-            value={formData.mother_name}
-            onChange={(e) => handleChange(e)}
-          />
-          <label htmlFor="mother_address"> כתובת האם : </label>
-          <input
-            className="input1"
-            type="text"
-            id="mother_address"
-            name="mother_address"
-            value={formData.mother_address}
-            onChange={(e) => handleChange(e)}
-          />
-          <label htmlFor="connection_with_mother"> קשר עם האם : </label>
-          <select
-            id="connection_with_mother"
-            className="select1"
-            onChange={(e) => handleSelecetChange(e)}
-          >
-            <option id="have_connection_with_mother" value="כן">
-              כן{" "}
-            </option>
-            <option id="not_connection_with_mother" value="לא">
-              לא
-            </option>
-          </select>
+          </fieldset>
 
           <br />
           <br />
 
-          <label htmlFor="father_name"> שם האב : </label>
-          <input
-            className="input1"
-            type="text"
-            id="father_name"
-            name="father_name"
-            value={formData.father_name}
-            onChange={(e) => handleChange(e)}
-          />
-          <label htmlFor="father_address"> כתובת האב : </label>
-          <input
-            className="input1"
-            type="text"
-            id="father_address"
-            name="father_address"
-            value={formData.father_address}
-            onChange={(e) => handleChange(e)}
-          />
-          <label htmlFor="connection_with_father"> קשר עם האב : </label>
-          <select
-            id="connection_with_father"
-            className="select1"
-            onChange={(e) => handleSelecetChange(e)}
-          >
-            <option id="have_connection_with_father" value="כן">
-              כן{" "}
-            </option>
-            <option id="not_connection_with_father" value="לא">
-              לא
-            </option>
-          </select>
+          <fieldset>
+            <legend id="phone" className="legendTitle">
+              פרטי הקשר (של הצעירה)
+            </legend>
+            <label htmlFor="phone_number"> נייד: </label>
+            <input
+              className="input1"
+              type="number"
+              id="phone_number"
+              name="phone_number"
+              required
+              value={formData.phone_number}
+              onChange={(e) => handleChange(e)}
+            />
+            <label htmlFor="email"> מייל : </label>
+            <input
+              className="input1"
+              type="email"
+              id="email"
+              name="email"
+              required
+              value={formData.email}
+              onChange={(e) => handleChange(e)}
+            />
+            <br />
+            <br />
+          </fieldset>
 
           <br />
           <br />
 
-          <label htmlFor="connection_with_relatives">
-            {" "}
-            קרוב משפחה נוסף עימו יש קשר :{" "}
-          </label>
-          <input
-            className="input1"
-            type="text"
-            id="connection_with_relatives"
-            name="connection_with_relatives"
-            value={formData.connection_with_relatives}
-            onChange={(e) => handleChange(e)}
-          />
-          <label htmlFor="relative_first name"> שם פרטי: </label>
-          <input
-            className="input1"
-            type="text"
-            id="relative_first_name"
-            name="relative_first_name"
-            value={formData.relative_first_name}
-            onChange={(e) => handleChange(e)}
-          />
-          <label htmlFor="relative_last_name"> שם משפחה : </label>
-          <input
-            className="input1"
-            type="text"
-            id="relative_last_name"
-            name="relative_last_name"
-            value={formData.relative_last_name}
-            onChange={(e) => handleChange(e)}
-          />
-          <br />
-          <br />
-          <label htmlFor="relative_address"> כתובת : </label>
-          <input
-            className="input1"
-            type="text"
-            id="relative_address"
-            name="relative_address"
-            value={formData.relative_address}
-            onChange={(e) => handleChange(e)}
-          />
-          <label htmlFor="relative_phone"> טלפון : </label>
-          <input
-            className="input1"
-            type="number"
-            id="relative_phone"
-            name="relative_phone"
-            value={formData.referrer_phone}
-            onChange={(e) => handleChange(e)}
-          />
-          <br />
-          <br />
-        </fieldset>
+          <fieldset>
+            <legend id="social" className="legendTitle">
+              גורם מפנה
+            </legend>
 
-        <br />
-        <br />
+            <label htmlFor="referrer_name"> שם : </label>
+            <input
+              className="input1"
+              type="text"
+              id="referrer_name"
+              name="referrer_name"
+              required
+              value={formData.referrer_name}
+              onChange={(e) => handleChange(e)}
+            />
+            <label htmlFor="referrer_proffesion"> תפקיד : </label>
+            <input
+              className="input1"
+              type="text"
+              id="referrer_proffesion"
+              name="referrer_proffesion"
+              required
+              value={formData.referrer_proffesion}
+              onChange={(e) => handleChange(e)}
+            />
+            <label htmlFor="referrer_phone"> טלפון : </label>
+            <input
+              className="input1"
+              type="number"
+              id="referrer_phone"
+              name="referrer_phone"
+              required
+              value={formData.referrer_phone}
+              onChange={(e) => handleChange(e)}
+            />
+            <label htmlFor="referrer_email"> מייל : </label>
+            <input
+              className="input1"
+              type="email"
+              id="referrer_email"
+              name="referrer_email"
+              required
+              value={formData.referrer_email}
+              onChange={(e) => handleChange(e)}
+            />
+            <br />
+            <br />
+          </fieldset>
 
-        <fieldset>
-          <legend id="family" className="legendTitle">
-            שאלון כללי
-          </legend>
-          <label htmlFor="graduation"> סיום לימודים : </label>
-          <select
-            id="graduation"
-            className="select1"
-            onChange={(e) => handleSelecetChange(e)}
-          >
-            <option id="full" value="בגרות מלאה">
-              בגרות מלאה{" "}
-            </option>
-            <option id="partial" value="בגרות חלקית">
-              בגרות חלקית{" "}
-            </option>
-            <option id="other" value="אחר">
-              אחר{" "}
-            </option>
-          </select>
-          <label htmlFor="graduation_details"> פירוט אודות הלימודים : </label>
-          <input
-            className="input1"
-            type="text"
-            id="graduation_details"
-            name="graduation_details"
-            value={formData.graduation_details}
-            onChange={(e) => handleChange(e)}
-          />
-          <br /> <br />
-          <label htmlFor="teenage_status">
-            {" "}
-            נא לסמן מה מהבאים מתאים לצעירה המופנה :{" "}
-          </label>
-          <br />
-          <input
-            type="checkbox"
-            id="medical_problem"
-            name="medical_problem"
-            className="switch_1"
-            value={formData.medical_problem}
-            onChange={(e) => handlecheckBoxChange(e)}
-          />
-          <label htmlFor="medical_problems"> בעיות רפואיות</label>
-          <br />
-          <input
-            type="checkbox"
-            id="drugs_and_alcohol"
-            name="drugs_and_alcohol"
-            className="switch_1"
-            value={formData.drugs_and_alcohol}
-            onChange={(e) => handlecheckBoxChange(e)}
-          />
-          <label htmlFor="drugs_and_alcohol"> סמים ואלכוהול</label>
-          <br />
-          <input
-            type="checkbox"
-            id="violent_incidents"
-            name="violent_incidents"
-            className="switch_1"
-            value={formData.violent_incidents}
-            onChange={(e) => handlecheckBoxChange(e)}
-          />
-          <label htmlFor="violent_incidents"> אירועים אלימים</label>
-          <br />
-          <input
-            type="checkbox"
-            id="eating_disorders"
-            name="eating_disorders"
-            className="switch_1"
-            value={formData.eating_disorders}
-            onChange={(e) => handlecheckBoxChange(e)}
-          />
-          <label htmlFor="eatind_disorders"> הפרעות אכילה</label>
-          <br />
-          <input
-            type="checkbox"
-            id="suicidal_attempts"
-            name="suicidal_attempts"
-            className="switch_1"
-            value={formData.suicidal_attempts}
-            onChange={(e) => handlecheckBoxChange(e)}
-          />
-          <label htmlFor="suicidal_attempts"> נסיונות אובדניים</label>
-          <br />
-          <input
-            type="checkbox"
-            id="criminal_record"
-            name="criminal_record"
-            className="switch_1"
-            value={formData.criminal_record}
-            onChange={(e) => handlecheckBoxChange(e)}
-          />
-          <label htmlFor="criminal_record">
-            רישום פלילי/עבירות שנסגרו ללא רישום פלילי
-          </label>
-          <br />
-          <input
-            type="checkbox"
-            id="learning_disabilities"
-            name="learning_disabilities"
-            className="switch_1"
-            value={formData.learning_disabilities}
-            onChange={(e) => handlecheckBoxChange(e)}
-          />
-          <label htmlFor="learning_disabilities"> לקויות למידה</label>
-          <br />
-          <input
-            type="checkbox"
-            id="allowances"
-            name="allowances"
-            className="switch_1"
-            value={formData.allowances}
-            onChange={(e) => handlecheckBoxChange(e)}
-          />
-          <label htmlFor="allowances"> קצבאה מביטוח לאומי </label>
           <br />
           <br />
-          <label htmlFor="teenage_status_details"> הרחבה : </label>
-          <input
-            className="input1"
-            type="text"
-            id="teenage_status_details"
-            name="teenage_status_details"
-          />
-          <br />
-          <br />
-        </fieldset>
 
-        <br />
-        <br />
+          <fieldset>
+            <legend id="beauru" className="legendTitle">
+              שיוך ללשכה
+            </legend>
 
-        <button className="button-55" onClick={habitantDocPage}>
+            <label htmlFor="bureau_name"> שם הלשכה : </label>
+            <input
+              className="input1"
+              type="text"
+              id="bureau_name"
+              name="bureau_name"
+              value={formData.bureau_name}
+              onChange={(e) => handleChange(e)}
+            />
+            <label htmlFor="social_worker_name"> שם העו"ס : </label>
+            <input
+              className="input1"
+              type="text"
+              id="social_worker_name"
+              name="social_worker_name"
+              value={formData.social_worker_name}
+              onChange={(e) => handleChange(e)}
+            />
+            <label htmlFor="social_worker_role"> תפקיד : </label>
+            <input
+              className="input1"
+              type="text"
+              id="social_worker_role"
+              name="social_worker_role"
+              value={formData.social_worker_role}
+              onChange={(e) => handleChange(e)}
+            />
+            <label htmlFor="social_worker_phone"> טלפון : </label>
+            <input
+              className="input1"
+              type="number"
+              id="social_worker_phone"
+              name="social_worker_phone"
+              value={formData.social_worker_phone}
+              onChange={(e) => handleChange(e)}
+            />
+            <br />
+            <br />
+            <label htmlFor="social_worker_email"> מייל : </label>
+            <input
+              className="input1"
+              type="email"
+              id="social_worker_email"
+              name="social_worker_email"
+              value={formData.social_worker_email}
+              onChange={(e) => handleChange(e)}
+            />
+
+            <br />
+            <br />
+          </fieldset>
+
+          <br />
+          <br />
+
+          <fieldset>
+            <legend className="legendTitle">רקע משפחתי</legend>
+            <label htmlFor="family_background"> רקע משפחתי קצר : </label>
+            <input
+              className="input1"
+              type="text"
+              id="family_background"
+              name="family_background"
+              value={formData.family_background}
+              onChange={(e) => handleChange(e)}
+            />
+            <label htmlFor="parents_status"> מצב הורים : </label>
+            <select
+              id="parents_status"
+              className="select1"
+              onChange={(e) => handleSelecetChange(e)}
+            >
+              <option value="" selected disabled hidden>
+                בחר
+              </option>
+              <option id="married" value="נשואים">
+                נשואים{" "}
+              </option>
+              <option id="divorced" value="גרושים">
+                גרושים
+              </option>
+              <option id="separated" value="פרודים">
+                פרודים
+              </option>
+            </select>
+            <label htmlFor="family_status"> מצב משפחתי : </label>
+            <select
+              id="family_status"
+              className="select1"
+              onChange={(e) => handleSelecetChange(e)}
+            >
+              <option value="" selected disabled hidden>
+                בחר
+              </option>
+              <option id="orphan_from_mother" value="יתום מאם">
+                יתום מאם{" "}
+              </option>
+              <option id="orphan_from_father" value="יתום מאב">
+                יתום מאב
+              </option>
+              <option id="orphan_from_both_parents" value="יתום משני ההורים">
+                יתום משני ההורים
+              </option>
+              <option id="orphan_from_mother" value="אחר">
+                אחר{" "}
+              </option>
+            </select>
+            <br />
+            <br />
+
+            <label htmlFor="mother_name"> שם האם : </label>
+            <input
+              className="input1"
+              type="text"
+              id="mother_name"
+              name="mother_name"
+              value={formData.mother_name}
+              onChange={(e) => handleChange(e)}
+            />
+            <label htmlFor="mother_address"> כתובת האם : </label>
+            <input
+              className="input1"
+              type="text"
+              id="mother_address"
+              name="mother_address"
+              value={formData.mother_address}
+              onChange={(e) => handleChange(e)}
+            />
+            <label htmlFor="connection_with_mother"> קשר עם האם : </label>
+            <select
+              id="connection_with_mother"
+              className="select1"
+              onChange={(e) => handleSelecetChange(e)}
+            >
+              <option value="" selected disabled hidden>
+                בחר
+              </option>
+              <option id="have_connection_with_mother" value="כן">
+                כן{" "}
+              </option>
+              <option id="not_connection_with_mother" value="לא">
+                לא
+              </option>
+            </select>
+
+            <br />
+            <br />
+
+            <label htmlFor="father_name"> שם האב : </label>
+            <input
+              className="input1"
+              type="text"
+              id="father_name"
+              name="father_name"
+              value={formData.father_name}
+              onChange={(e) => handleChange(e)}
+            />
+            <label htmlFor="father_address"> כתובת האב : </label>
+            <input
+              className="input1"
+              type="text"
+              id="father_address"
+              name="father_address"
+              value={formData.father_address}
+              onChange={(e) => handleChange(e)}
+            />
+            <label htmlFor="connection_with_father"> קשר עם האב : </label>
+            <select
+              id="connection_with_father"
+              className="select1"
+              onChange={(e) => handleSelecetChange(e)}
+            >
+              <option value="" selected disabled hidden>
+                בחר
+              </option>
+              <option id="have_connection_with_father" value="כן">
+                כן{" "}
+              </option>
+              <option id="not_connection_with_father" value="לא">
+                לא
+              </option>
+            </select>
+
+            <br />
+            <br />
+
+            <label htmlFor="connection_with_relatives">
+              {" "}
+              קרוב משפחה נוסף עימו יש קשר :{" "}
+            </label>
+            <input
+              className="input1"
+              type="text"
+              id="connection_with_relatives"
+              name="connection_with_relatives"
+              value={formData.connection_with_relatives}
+              onChange={(e) => handleChange(e)}
+            />
+            <label htmlFor="relative_first name"> שם פרטי: </label>
+            <input
+              className="input1"
+              type="text"
+              id="relative_first_name"
+              name="relative_first_name"
+              value={formData.relative_first_name}
+              onChange={(e) => handleChange(e)}
+            />
+            <label htmlFor="relative_last_name"> שם משפחה : </label>
+            <input
+              className="input1"
+              type="text"
+              id="relative_last_name"
+              name="relative_last_name"
+              value={formData.relative_last_name}
+              onChange={(e) => handleChange(e)}
+            />
+            <br />
+            <br />
+            <label htmlFor="relative_address"> כתובת : </label>
+            <input
+              className="input1"
+              type="text"
+              id="relative_address"
+              name="relative_address"
+              value={formData.relative_address}
+              onChange={(e) => handleChange(e)}
+            />
+            <label htmlFor="relative_phone"> טלפון : </label>
+            <input
+              className="input1"
+              type="number"
+              id="relative_phone"
+              name="relative_phone"
+              value={formData.referrer_phone}
+              onChange={(e) => handleChange(e)}
+            />
+            <br />
+            <br />
+          </fieldset>
+
+          <br />
+          <br />
+
+          <fieldset>
+            <legend id="family" className="legendTitle">
+              שאלון כללי
+            </legend>
+            <label htmlFor="graduation"> סיום לימודים : </label>
+            <select
+              id="graduation"
+              className="select1"
+              onChange={(e) => handleSelecetChange(e)}
+            >
+              <option value="" selected disabled hidden>
+                בחר
+              </option>
+              <option id="full" value="בגרות מלאה">
+                בגרות מלאה{" "}
+              </option>
+              <option id="partial" value="בגרות חלקית">
+                בגרות חלקית{" "}
+              </option>
+              <option id="other" value="אחר">
+                אחר{" "}
+              </option>
+            </select>
+            <label htmlFor="graduation_details"> פירוט אודות הלימודים : </label>
+            <input
+              className="input1"
+              type="text"
+              id="graduation_details"
+              name="graduation_details"
+              value={formData.graduation_details}
+              onChange={(e) => handleChange(e)}
+            />
+            <br /> <br />
+            <label htmlFor="teenage_status">
+              {" "}
+              נא לסמן מה מהבאים מתאים לצעירה המופנה :{" "}
+            </label>
+            <br />
+            <input
+              type="checkbox"
+              id="medical_problem"
+              name="medical_problem"
+              className="switch_1"
+              value={formData.medical_problem}
+              onChange={(e) => handlecheckBoxChange(e)}
+            />
+            <label htmlFor="medical_problems"> בעיות רפואיות</label>
+            <br />
+            <input
+              type="checkbox"
+              id="drugs_and_alcohol"
+              name="drugs_and_alcohol"
+              className="switch_1"
+              value={formData.drugs_and_alcohol}
+              onChange={(e) => handlecheckBoxChange(e)}
+            />
+            <label htmlFor="drugs_and_alcohol"> סמים ואלכוהול</label>
+            <br />
+            <input
+              type="checkbox"
+              id="violent_incidents"
+              name="violent_incidents"
+              className="switch_1"
+              value={formData.violent_incidents}
+              onChange={(e) => handlecheckBoxChange(e)}
+            />
+            <label htmlFor="violent_incidents"> אירועים אלימים</label>
+            <br />
+            <input
+              type="checkbox"
+              id="eating_disorders"
+              name="eating_disorders"
+              className="switch_1"
+              value={formData.eating_disorders}
+              onChange={(e) => handlecheckBoxChange(e)}
+            />
+            <label htmlFor="eatind_disorders"> הפרעות אכילה</label>
+            <br />
+            <input
+              type="checkbox"
+              id="suicidal_attempts"
+              name="suicidal_attempts"
+              className="switch_1"
+              value={formData.suicidal_attempts}
+              onChange={(e) => handlecheckBoxChange(e)}
+            />
+            <label htmlFor="suicidal_attempts"> נסיונות אובדניים</label>
+            <br />
+            <input
+              type="checkbox"
+              id="criminal_record"
+              name="criminal_record"
+              className="switch_1"
+              value={formData.criminal_record}
+              onChange={(e) => handlecheckBoxChange(e)}
+            />
+            <label htmlFor="criminal_record">
+              רישום פלילי/עבירות שנסגרו ללא רישום פלילי
+            </label>
+            <br />
+            <input
+              type="checkbox"
+              id="learning_disabilities"
+              name="learning_disabilities"
+              className="switch_1"
+              value={formData.learning_disabilities}
+              onChange={(e) => handlecheckBoxChange(e)}
+            />
+            <label htmlFor="learning_disabilities"> לקויות למידה</label>
+            <br />
+            <input
+              type="checkbox"
+              id="allowances"
+              name="allowances"
+              className="switch_1"
+              value={formData.allowances}
+              onChange={(e) => handlecheckBoxChange(e)}
+            />
+            <label htmlFor="allowances"> קצבאה מביטוח לאומי </label>
+            <br />
+            <br />
+            <label htmlFor="teenage_status_details"> הרחבה : </label>
+            <input
+              className="input1"
+              type="text"
+              id="teenage_status_details"
+              name="teenage_status_details"
+              value={formData.teenage_status_details}
+              onChange={(e) => handleChange(e)}
+            />
+            <br />
+            <br />
+          </fieldset>
+        </form>
+        <button className="button-55" type="submit" onClick={habitantDocPage}>
           {" "}
           הבא
         </button>
+        <br />
+        <br />
       </div>
     </div>
   );

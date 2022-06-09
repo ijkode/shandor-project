@@ -381,11 +381,17 @@ export function AssistanceProject() {
             className="select1"
             onChange={(e) => handleSelecetChange(e)}
           >
+            <option value="" selected disabled hidden>
+              בחר
+            </option>
             <option id="full" value="בגרות מלאה">
               בגרות מלאה{" "}
             </option>
             <option id="partial" value="בגרות חלקית">
               בגרות חלקית{" "}
+            </option>
+            <option id="full" value="אחר">
+              אחר{" "}
             </option>
           </select>
           <label htmlFor="graduation_details"> פירוט אודות הלימודים : </label>
@@ -417,6 +423,9 @@ export function AssistanceProject() {
             className="select1"
             onChange={(e) => handleSelecetChange(e)}
           >
+            <option value="" selected disabled hidden>
+              בחר
+            </option>
             <option id="other_schilarships" value="כן">
               כן{" "}
             </option>
@@ -443,6 +452,9 @@ export function AssistanceProject() {
             className="select1"
             onChange={(e) => handleSelecetChange(e)}
           >
+            <option value="" selected disabled hidden>
+              בחר
+            </option>
             <option id="insurance_institute_allowance" value="כן">
               כן{" "}
             </option>
