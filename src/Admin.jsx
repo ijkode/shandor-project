@@ -16,7 +16,7 @@ import ReactHTMLTableToExcel from "react-html-table-to-excel";
 import dateFormat, { masks } from "dateformat";
 const Admin = () => {
   const [data, setData] = useState([]);
-  var Links = [];
+  const [flagTwo, setFlagTwo] = useState(0);
   const [click, setClick] = useState(0);
   const [btn, setBtn] = useState(0);
   useEffect(() => {
@@ -84,6 +84,7 @@ const Admin = () => {
           )
       );
       $("body").on("click", "#down" + [i], function () {
+        setFlagTwo(1);
         downloadData(assistanceData[i]["email"]);
       });
       $("body").on("click", "#download" + [i], function () {
@@ -92,65 +93,40 @@ const Admin = () => {
       });
     }
   }
-  function downloadData(email) {
+  async function downloadData(email) {
     const listRef = ref(storage, email);
     // Create a child reference
+    const res = await listAll(listRef);
+    const requests = res.items.map((itemRef) =>
+      getDownloadURL(ref(storage, itemRef))
+    );
+    const urls = await Promise.all(requests);
+    console.log(urls);
     var toShow = "<div id = 'myimg'>";
     let index = 1;
-    listAll(listRef)
-      .then((res) => {
-        res.prefixes.forEach((folderRef) => {});
-        res.items.forEach((itemRef) => {
-          // console.log(itemRef._location.path_);
-          getUrl(itemRef._location.path_);
-          // console.log(url);
-          // toShow += "File" + index + " " + url + "<br/>";
-          // index += 1;
-        });
-      })
-      .catch((error) => {
-        // Uh-oh, an error occurred!
-      });
-    for (let i = 0; i < Links.length; i++) {
+    let flag = 0;
+    urls.forEach((url) => {
+      flag = 1;
       toShow +=
         " קובץ " +
         index +
         " " +
         "<a id='under' href='" +
-        Links[i] +
+        url +
         "'>" +
         "לחץ להורדה" +
         "<a>" +
         "<br/><br/>";
       index += 1;
-    }
-    if (Links.length > 0) {
+    });
+    if (flag === 1) {
       Swal.fire({
         html: toShow,
       });
+    } else {
+      Swal.fire("לא נמצאו קבצים");
     }
-    Links = [];
   }
-  function getUrl(itemRef) {
-    getDownloadURL(ref(storage, itemRef))
-      .then((url) => {
-        // const img = document.getElementById("myimg");
-        // img.setAttribute("src", url);
-        Links.push(url);
-      })
-      .catch((error) => {
-        // Handle any errors
-      });
-  }
-  // function getUrl(url) {
-  //   const xhr = new XMLHttpRequest();
-  //   xhr.responseType = "blob";
-  //   xhr.onload = (event) => {
-  //     const blob = xhr.response;
-  //   };
-  //   xhr.open("GET", url);
-  //   xhr.send();
-  // }
   const deleteHabUser = async (id) => {
     await deleteDoc(doc(db, "Candidates for assistance project", id));
   };
@@ -213,6 +189,7 @@ const Admin = () => {
           )
       );
       $("body").on("click", "#down" + [i], function () {
+        setFlagTwo(1);
         downloadData(habitantData[i]["email"]);
       });
       $("body").on("click", "#download" + [i], function () {
@@ -317,12 +294,20 @@ const Admin = () => {
 
   function tohabExcel(id, data) {
     let x = $("#data");
+    let medical = "";
+    let drugs = "";
+    let violence = "";
+    let eating = "";
+    let suicidal = "";
+    let criminal = "";
+    let learn = "";
     x.html("");
     let src = "<div>";
     src +=
       "<ReactHTMLTableToExcel id='test-table-xls-button' className='download-table-xls-button' table='table-to-xls' filename='test' sheet='tablexls' buttonText='Download as XLS'/>" +
       "<table class='content-table' style='width:100%' id='table-to-xls'>" +
       "<tr>" +
+      "<th>תאריך הגשת בקשה</th>" +
       "<th>שם ושם משפחה</th>" +
       "<th>תעודת זהות</th>" +
       "<th>תאריך לידה</th>" +
@@ -334,15 +319,15 @@ const Admin = () => {
       "<th>מסגרת נוכחית</th>" +
       "<th>שם המסגרת</th>" +
       "<th>כתובת המסגרת</th>" +
-      "<th>מספר טלפון</th>" +
-      "<th>אימייל</th>" +
-      "<th>שם ושם משפחה של גורם מפנה</th>" +
       "</tr>";
     x.append(src);
     for (let i = 0; i < data.length; i++) {
+      let date = data[i]["timestamp"].toDate();
+      date = dateFormat(date, "dd/mm/yyyy");
       if (data[i]["ID"] == id) {
         $("#table-to-xls").append(
           $("<tr>")
+            .append($("<td>").append(date))
             .append($("<td>").append(data[i]["fname"] + " " + data[i]["lname"]))
             .append($("<td>").append(data[i]["ID"]))
             .append($("<td>").append(data[i]["date_of_birth"]))
@@ -354,12 +339,12 @@ const Admin = () => {
             .append($("<td>").append(data[i]["current_framework"]))
             .append($("<td>").append(data[i]["framework_name"]))
             .append($("<td>").append(data[i]["framework_address"]))
-            .append($("<td>").append(data[i]["phone_number"]))
-            .append($("<td>").append(data[i]["email"]))
-            .append($("<td>").append(data[i]["referrer_name"]))
         );
         $("#table-to-xls").append(
           $("<tr>")
+            .append($("<th>").append("מספר טלפון"))
+            .append($("<th>").append("אימייל"))
+            .append($("<th>").append("שם ושם משפחה של גורם מפנה"))
             .append($("<th>").append("תפקיד של גורם מפנה"))
             .append($("<th>").append("טלפון של גורם מפנה"))
             .append($("<th>").append("אימייל של גורם מפנה"))
@@ -369,14 +354,12 @@ const Admin = () => {
             .append($("<th>").append("טלפון של העוס"))
             .append($("<th>").append("רקע משפחתי"))
             .append($("<th>").append("מצב ההורים"))
-            .append($("<th>").append("מצב משפחתי"))
-            .append($("<th>").append("שם האם"))
-            .append($("<th>").append("כתובת האם"))
-            .append($("<th>").append("שם האב"))
-            .append($("<th>").append("כתובת האב"))
         );
         $("#table-to-xls").append(
           $("<tr>")
+            .append($("<td>").append(data[i]["phone_number"]))
+            .append($("<td>").append(data[i]["email"]))
+            .append($("<td>").append(data[i]["referrer_name"]))
             .append($("<td>").append(data[i]["referrer_proffesion"]))
             .append($("<td>").append(data[i]["referrer_phone"]))
             .append($("<td>").append(data[i]["referrer_email"]))
@@ -386,11 +369,77 @@ const Admin = () => {
             .append($("<td>").append(data[i]["social_worker_phone"]))
             .append($("<td>").append(data[i]["family_background"]))
             .append($("<td>").append(data[i]["parents_status"]))
+        );
+        $("#table-to-xls").append(
+          $("<tr>")
+            .append($("<th>").append("מצב משפחתי"))
+            .append($("<th>").append("שם האם"))
+            .append($("<th>").append("כתובת האם"))
+            .append($("<th>").append("שם האב"))
+            .append($("<th>").append("כתובת האב"))
+            .append($("<th>").append("בעיות רפואיות"))
+            .append($("<th>").append("סמים ואלכוהול"))
+            .append($("<th>").append("אירועים אלימים"))
+            .append($("<th>").append("הפרעות אכילה"))
+            .append($("<th>").append("נסיונות אובדניים"))
+            .append($("<th>").append("רישום פלילי"))
+            .append($("<th>").append("לקויות למידה"))
+        );
+        if (data[i]["medical_problem"]) {
+          medical = "כן";
+        } else {
+          medical = "לא";
+        }
+        if (data[i]["drugs_and_alcohol"]) {
+          drugs = "כן";
+        } else {
+          drugs = "לא";
+        }
+        if (data[i]["violent_incidents"]) {
+          violence = "כן";
+        } else {
+          violence = "לא";
+        }
+        if (data[i]["eating_disorders"]) {
+          eating = "כן";
+        } else {
+          eating = "לא";
+        }
+        if (data[i]["suicidal_attempts"]) {
+          suicidal = "כן";
+        } else {
+          suicidal = "לא";
+        }
+        if (data[i]["criminal_record"]) {
+          criminal = "כן";
+        } else {
+          criminal = "לא";
+        }
+        if (data[i]["criminal_record"]) {
+          criminal = "כן";
+        } else {
+          criminal = "לא";
+        }
+        if (data[i]["learning_disabilities"]) {
+          learn = "כן";
+        } else {
+          learn = "לא";
+        }
+        $("#table-to-xls").append(
+          $("<tr>")
             .append($("<td>").append(data[i]["family_status"]))
             .append($("<td>").append(data[i]["mother_name"]))
             .append($("<td>").append(data[i]["mother_address"]))
             .append($("<td>").append(data[i]["father_name"]))
             .append($("<td>").append(data[i]["father_address"]))
+            .append($("<td>").append(medical))
+            .append($("<td>").append(drugs))
+            .append($("<td>").append(violence))
+            .append($("<td>").append(eating))
+            .append($("<td>").append(suicidal))
+            .append($("<td>").append(criminal))
+            .append($("<td>").append(learn))
+            .append($("<td>").append(data[i]["allowances"]))
         );
       }
     }
@@ -457,6 +506,7 @@ const Admin = () => {
       "<th>תאריך לידה</th>" +
       "<th>אימייל</th>" +
       "<th>הצג מידע מלא</th>" +
+      "<th>הורד קבצים</th>" +
       "</tr>";
     x.append(src);
     for (let i = 0; i < search.length; i++) {
@@ -476,16 +526,18 @@ const Admin = () => {
                   "'>לחץ כאן</button>"
               )
             )
+            .append(
+              $("<td>").append(
+                "<button class='button-13' id='down" +
+                  [i] +
+                  "'>לחץ כאן</button>"
+              )
+            )
         );
         found = true;
       }
-      $("body").on("click", "#show" + [i], function () {
-        if (type === 1) {
-          showAssistData(search[i]["ID"], search);
-        }
-        if (type === 0) {
-          showHabData(search[i]["ID"], search);
-        }
+      $("body").on("click", "#down" + [i], function () {
+        downloadData(search[i]["email"]);
       });
       $("body").on("click", "#download" + [i], function () {
         if (type === 1) {
@@ -614,7 +666,7 @@ const Admin = () => {
   }
   return (
     <div className="Admin">
-      <section class="banner">
+      <section className="banner">
         <h1 id="difh1">ניהול מידע</h1>
         {/* <p>Company Mission Statement goes here</p> */}
       </section>

@@ -54,7 +54,7 @@ export function HabitantProjectDoc() {
         <div className="generalDocuments">
           <h3>מסמכים כלליים:</h3>
           <br></br>
-          <label for="file"> צילום ת"ז וספח </label>
+          <label htmlFor="file"> צילום ת"ז וספח </label>
           <div>
             <input
               type="file"
@@ -65,7 +65,7 @@ export function HabitantProjectDoc() {
             />
           </div>
           <br />
-          <label for="file"> מכתב הפנייה מהמועמדת </label>
+          <label htmlFor="file"> מכתב הפנייה מהמועמדת </label>
           <div>
             <input
               type="file"
@@ -76,7 +76,7 @@ export function HabitantProjectDoc() {
             />
           </div>
           <br />
-          <label for="file"> חו"ד הורי בית/אומנה/פנימייה </label>
+          <label htmlFor="file"> חו"ד הורי בית/אומנה/פנימייה </label>
           <div>
             <input
               type="file"
@@ -87,7 +87,7 @@ export function HabitantProjectDoc() {
             />
           </div>
           <br />
-          <label for="file"> טופס ויתור סודיות </label>
+          <label htmlFor="file"> טופס ויתור סודיות </label>
           <div>
             <input
               type="file"
@@ -109,7 +109,7 @@ export function HabitantProjectDoc() {
         <div className="medicalDocuments">
           <h3>מסמכים רפואיים:</h3>
           <br></br>
-          <label for="file"> אבחון דיאגנוסטי </label>
+          <label htmlFor="file"> אבחון דיאגנוסטי </label>
           <div>
             <input
               type="file"
@@ -120,7 +120,7 @@ export function HabitantProjectDoc() {
             />
           </div>
           <br />
-          <label for="file"> סיכום מידע רפואי </label>
+          <label htmlFor="file"> סיכום מידע רפואי </label>
           <div>
             <input
               type="file"
@@ -131,7 +131,7 @@ export function HabitantProjectDoc() {
             />
           </div>
           <br />
-          <label for="file"> הערכה פסיכולוגית </label>
+          <label htmlFor="file"> הערכה פסיכולוגית </label>
           <div>
             <input
               type="file"
@@ -142,7 +142,7 @@ export function HabitantProjectDoc() {
             />
           </div>
           <br />
-          <label for="file"> אבחון פסיכו סוציאלי </label>
+          <label htmlFor="file"> אבחון פסיכו סוציאלי </label>
           <div>
             <input
               type="file"
@@ -153,7 +153,7 @@ export function HabitantProjectDoc() {
             />
           </div>
           <br />
-          <label for="file"> אבחון לקויות למידה </label>
+          <label htmlFor="file"> אבחון לקויות למידה </label>
           <div>
             <input
               type="file"
@@ -164,7 +164,7 @@ export function HabitantProjectDoc() {
             />
           </div>
           <br />
-          <label for="file"> סיכום טיפול שנה וחו"ד מטפל </label>
+          <label htmlFor="file"> סיכום טיפול שנה וחו"ד מטפל </label>
           <div>
             <input
               type="file"
@@ -178,7 +178,7 @@ export function HabitantProjectDoc() {
         <div className="bankDocuments">
           <h3>טפסי בנק:</h3>
           <br></br>
-          <label for="file"> אישור ניהול חשבון בנק </label>
+          <label htmlFor="file"> אישור ניהול חשבון בנק </label>
           <div>
             <input
               type="file"
@@ -189,7 +189,7 @@ export function HabitantProjectDoc() {
             />
           </div>
           <br />
-          <label for="file"> הצהרה על אי קיום חובות </label>
+          <label htmlFor="file"> הצהרה על אי קיום חובות </label>
           <div>
             <input
               type="file"
@@ -200,7 +200,7 @@ export function HabitantProjectDoc() {
             />
           </div>
           <br />
-          <label for="file"> תדפיסי חשבון בנק (3 חודשים) </label>
+          <label htmlFor="file"> תדפיסי חשבון בנק (3 חודשים) </label>
           <div>
             <input
               type="file"

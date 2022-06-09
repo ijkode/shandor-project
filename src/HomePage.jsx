@@ -46,7 +46,7 @@ const HomePage = () => {
           למידע על הפרויקטים
         </a>
       </section> */}
-      <ul id="scr2" class="tilesWrap1">
+      <ul id="scr2" className="tilesWrap1">
         <li>
           <h2>פרויקט דיור</h2>
           {/* <h3>פרויקט דיור</h3> */}
@@ -81,7 +81,7 @@ const HomePage = () => {
           <button onClick={assistancePage}>הרשמה לפרויקט</button>
         </li>
       </ul>
-      <section class="banner1">
+      <section className="banner1">
         <h1 id="difh1">מי אנחנו?</h1>
         <p id="pbold">
           עמותה ע"ש אהרון שנדור נוסדה בשנת 2009 ומציעה שירותי רווחה לאוכלוסיות

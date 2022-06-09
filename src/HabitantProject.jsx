@@ -62,8 +62,18 @@ export function HabitantProject() {
     graduation_details: "",
     teenage_status_details: "",
     timestamp: "",
-    medical_problem: "",
+    medical_problem: false,
+    drugs_and_alcohol: false,
+    violent_incidents: false,
+    eating_disorders: false,
+    suicidal_attempts: false,
+    criminal_record: false,
+    learning_disabilities: false,
+    allowances: false,
   });
+  const handlecheckBoxChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: true });
+  };
   const handleChange = (e) => {
     // if (e.target.value === false) {
     //   e.target.value = true;
@@ -124,6 +134,13 @@ export function HabitantProject() {
         teenage_status_details: formData.teenage_status_details,
         timestamp: serverTimestamp(),
         medical_problem: formData.medical_problem,
+        drugs_and_alcohol: formData.drugs_and_alcohol,
+        violent_incidents: formData.violent_incidents,
+        eating_disorders: formData.eating_disorders,
+        suicidal_attempts: formData.suicidal_attempts,
+        criminal_record: formData.criminal_record,
+        learning_disabilities: formData.learning_disabilities,
+        allowances: formData.allowances,
       })
         .then(() => {
           // alert("success");
@@ -147,7 +164,7 @@ export function HabitantProject() {
           </section>
           <div className="Details">
             <div className="regImg">
-              <ul class="tilesWrap">
+              <ul className="tilesWrap">
                 <li>
                   <h2>01</h2>
                   <p>סיוע והכוון כלכלי לצעירות</p>
@@ -194,7 +211,7 @@ export function HabitantProject() {
         </section>
         <br />
       </div>
-      <ul class="tilesWrap">
+      <ul className="tilesWrap">
         <li>
           <h2>01</h2>
           <p>סיוע והכוון כלכלי לצעירות</p>
@@ -248,7 +265,7 @@ export function HabitantProject() {
             פרטים אישיים
           </legend>
           <form>
-            <label for="fname">שם פרטי : </label>
+            <label htmlFor="fname">שם פרטי : </label>
             <input
               className="input1"
               type="text"
@@ -258,7 +275,7 @@ export function HabitantProject() {
               value={formData.fname}
               onChange={(e) => handleChange(e)}
             />
-            <label for="lname">שם משפחה : </label>
+            <label htmlFor="lname">שם משפחה : </label>
             <input
               className="input1"
               type="text"
@@ -268,7 +285,7 @@ export function HabitantProject() {
               value={formData.lname}
               onChange={(e) => handleChange(e)}
             />
-            <label for="ID">תעודת זהות : </label>
+            <label htmlFor="ID">תעודת זהות : </label>
             <input
               className="input1"
               type="number"
@@ -278,7 +295,7 @@ export function HabitantProject() {
               value={formData.ID}
               onChange={(e) => handleChange(e)}
             />
-            <label for="date_of_birth">תאריך לידה:</label>
+            <label htmlFor="date_of_birth">תאריך לידה:</label>
             <input
               className="input1"
               type="text"
@@ -291,7 +308,7 @@ export function HabitantProject() {
             />
             <br />
             <br />
-            <label for="born_country">ארץ לידה : </label>
+            <label htmlFor="born_country">ארץ לידה : </label>
             <input
               className="input1"
               type="text"
@@ -301,7 +318,7 @@ export function HabitantProject() {
               value={formData.born_country}
               onChange={(e) => handleChange(e)}
             />
-            <label for="hmo">קופת חולים : </label>
+            <label htmlFor="hmo">קופת חולים : </label>
             <input
               className="input1"
               type="text"
@@ -311,7 +328,7 @@ export function HabitantProject() {
               value={formData.hmo}
               onChange={(e) => handleChange(e)}
             />
-            <label for="doctor">רופא מטפל : </label>
+            <label htmlFor="doctor">רופא מטפל : </label>
             <input
               className="input1"
               type="text"
@@ -321,7 +338,7 @@ export function HabitantProject() {
               value={formData.doctor}
               onChange={(e) => handleChange(e)}
             />
-            <label for="hmo_branch">סניף קופ"ח : </label>
+            <label htmlFor="hmo_branch">סניף קופ"ח : </label>
             <input
               className="input1"
               type="text"
@@ -334,7 +351,7 @@ export function HabitantProject() {
             <br />
             <br />
 
-            <label for="hmo_phone">טלפון קופ"ח : </label>
+            <label htmlFor="hmo_phone">טלפון קופ"ח : </label>
             <input
               className="input1"
               type="tel"
@@ -351,17 +368,17 @@ export function HabitantProject() {
         <br />
 
         <fieldset>
-          <legend id="general" class="legendTitle">
+          <legend id="general" className="legendTitle">
             פרטים כלליים
           </legend>
           <form>
-            <label for="current_framework">מסגרת נוכחית : </label>
+            <label htmlFor="current_framework">מסגרת נוכחית : </label>
             <select id="current_framework" className="select1">
               <option id="boardingSchool">פנימייה</option>
               <option id="custody">אומנה</option>
               <option id="nursery">משפחתון</option>
             </select>
-            <label for="framework_name">שם המסגרת : </label>
+            <label htmlFor="framework_name">שם המסגרת : </label>
             <input
               className="input1"
               type="text"
@@ -371,7 +388,7 @@ export function HabitantProject() {
               value={formData.framework_name}
               onChange={(e) => handleChange(e)}
             />
-            <label for="framework_address">כתובת המסגרת : </label>
+            <label htmlFor="framework_address">כתובת המסגרת : </label>
             <input
               className="input1"
               type="text"
@@ -383,7 +400,9 @@ export function HabitantProject() {
             />
             <br />
             <br />
-            <label for="framework_after_school">מסגרת אחרי לימודים : </label>
+            <label htmlFor="framework_after_school">
+              מסגרת אחרי לימודים :{" "}
+            </label>
             <select id="framework_after_school" className="select1">
               <option id="militaryService">שירות צבאי</option>
               <option id="nationalService">שירות לאומי</option>
@@ -398,10 +417,10 @@ export function HabitantProject() {
         <br />
 
         <fieldset>
-          <legend id="phone" class="legendTitle">
+          <legend id="phone" className="legendTitle">
             פרטי הקשר (של הצעירה)
           </legend>
-          <label for="phone_number"> נייד: </label>
+          <label htmlFor="phone_number"> נייד: </label>
           <input
             className="input1"
             type="number"
@@ -411,7 +430,7 @@ export function HabitantProject() {
             value={formData.phone_number}
             onChange={(e) => handleChange(e)}
           />
-          <label for="email"> מייל : </label>
+          <label htmlFor="email"> מייל : </label>
           <input
             className="input1"
             type="email"
@@ -429,11 +448,11 @@ export function HabitantProject() {
         <br />
 
         <fieldset>
-          <legend id="social" class="legendTitle">
+          <legend id="social" className="legendTitle">
             גורם מפנה
           </legend>
 
-          <label for="referrer_name"> שם : </label>
+          <label htmlFor="referrer_name"> שם : </label>
           <input
             className="input1"
             type="text"
@@ -443,7 +462,7 @@ export function HabitantProject() {
             value={formData.referrer_name}
             onChange={(e) => handleChange(e)}
           />
-          <label for="referrer_proffesion"> תפקיד : </label>
+          <label htmlFor="referrer_proffesion"> תפקיד : </label>
           <input
             className="input1"
             type="text"
@@ -453,7 +472,7 @@ export function HabitantProject() {
             value={formData.referrer_proffesion}
             onChange={(e) => handleChange(e)}
           />
-          <label for="referrer_phone"> טלפון : </label>
+          <label htmlFor="referrer_phone"> טלפון : </label>
           <input
             className="input1"
             type="number"
@@ -463,7 +482,7 @@ export function HabitantProject() {
             value={formData.referrer_phone}
             onChange={(e) => handleChange(e)}
           />
-          <label for="referrer_email"> מייל : </label>
+          <label htmlFor="referrer_email"> מייל : </label>
           <input
             className="input1"
             type="email"
@@ -481,11 +500,11 @@ export function HabitantProject() {
         <br />
 
         <fieldset>
-          <legend id="beauru" class="legendTitle">
+          <legend id="beauru" className="legendTitle">
             שיוך ללשכה
           </legend>
 
-          <label for="bureau_name"> שם הלשכה : </label>
+          <label htmlFor="bureau_name"> שם הלשכה : </label>
           <input
             className="input1"
             type="text"
@@ -494,7 +513,7 @@ export function HabitantProject() {
             value={formData.bureau_name}
             onChange={(e) => handleChange(e)}
           />
-          <label for="social_worker_name"> שם העו"ס : </label>
+          <label htmlFor="social_worker_name"> שם העו"ס : </label>
           <input
             className="input1"
             type="text"
@@ -503,7 +522,7 @@ export function HabitantProject() {
             value={formData.social_worker_name}
             onChange={(e) => handleChange(e)}
           />
-          <label for="social_worker_role"> תפקיד : </label>
+          <label htmlFor="social_worker_role"> תפקיד : </label>
           <input
             className="input1"
             type="text"
@@ -512,7 +531,7 @@ export function HabitantProject() {
             value={formData.social_worker_role}
             onChange={(e) => handleChange(e)}
           />
-          <label for="social_worker_phone"> טלפון : </label>
+          <label htmlFor="social_worker_phone"> טלפון : </label>
           <input
             className="input1"
             type="number"
@@ -523,7 +542,7 @@ export function HabitantProject() {
           />
           <br />
           <br />
-          <label for="social_worker_email"> מייל : </label>
+          <label htmlFor="social_worker_email"> מייל : </label>
           <input
             className="input1"
             type="email"
@@ -541,8 +560,8 @@ export function HabitantProject() {
         <br />
 
         <fieldset>
-          <legend class="legendTitle">רקע משפחתי</legend>
-          <label for="family_background"> רקע משפחתי קצר : </label>
+          <legend className="legendTitle">רקע משפחתי</legend>
+          <label htmlFor="family_background"> רקע משפחתי קצר : </label>
           <input
             className="input1"
             type="text"
@@ -551,13 +570,13 @@ export function HabitantProject() {
             value={formData.family_background}
             onChange={(e) => handleChange(e)}
           />
-          <label for="parents_status"> מצב הורים : </label>
+          <label htmlFor="parents_status"> מצב הורים : </label>
           <select id="framework_after_school" className="select1">
             <option id="married">נשואים </option>
             <option id="divorced">גרושים</option>
             <option id="separated">פרודים</option>
           </select>
-          <label for="family_status"> מצב משפחתי : </label>
+          <label htmlFor="family_status"> מצב משפחתי : </label>
           <select id="framework_after_school" className="select1">
             <option id="orphan_from_mother">יתום מאם </option>
             <option id="orphan_from_father">יתום מאב</option>
@@ -566,7 +585,7 @@ export function HabitantProject() {
           <br />
           <br />
 
-          <label for="mother_name"> שם האם : </label>
+          <label htmlFor="mother_name"> שם האם : </label>
           <input
             className="input1"
             type="text"
@@ -575,7 +594,7 @@ export function HabitantProject() {
             value={formData.mother_name}
             onChange={(e) => handleChange(e)}
           />
-          <label for="mother_address"> כתובת האם : </label>
+          <label htmlFor="mother_address"> כתובת האם : </label>
           <input
             className="input1"
             type="text"
@@ -584,7 +603,7 @@ export function HabitantProject() {
             value={formData.mother_address}
             onChange={(e) => handleChange(e)}
           />
-          <label for="connection_with_mother"> קשר עם האם : </label>
+          <label htmlFor="connection_with_mother"> קשר עם האם : </label>
           <select id="connection_with_mother" className="select1">
             <option id="have_connection_with_mother">כן </option>
             <option id="not_connection_with_mother">לא</option>
@@ -593,7 +612,7 @@ export function HabitantProject() {
           <br />
           <br />
 
-          <label for="father_name"> שם האב : </label>
+          <label htmlFor="father_name"> שם האב : </label>
           <input
             className="input1"
             type="text"
@@ -602,7 +621,7 @@ export function HabitantProject() {
             value={formData.father_name}
             onChange={(e) => handleChange(e)}
           />
-          <label for="father_address"> כתובת האב : </label>
+          <label htmlFor="father_address"> כתובת האב : </label>
           <input
             className="input1"
             type="text"
@@ -611,7 +630,7 @@ export function HabitantProject() {
             value={formData.father_address}
             onChange={(e) => handleChange(e)}
           />
-          <label for="connection_with_father"> קשר עם האב : </label>
+          <label htmlFor="connection_with_father"> קשר עם האב : </label>
           <select id="connection_with_father" className="select1">
             <option id="have_connection_with_father">כן </option>
             <option id="not_connection_with_father">לא</option>
@@ -620,9 +639,9 @@ export function HabitantProject() {
           <br />
           <br />
 
-          <label for="connection_with_relatives">
+          <label htmlFor="connection_with_relatives">
             {" "}
-            קרובי משפחה נוספים עימם יש קשר :{" "}
+            קרוב משפחה נוסף עימו יש קשר :{" "}
           </label>
           <input
             className="input1"
@@ -632,7 +651,7 @@ export function HabitantProject() {
             value={formData.connection_with_relatives}
             onChange={(e) => handleChange(e)}
           />
-          <label for="relative_first name"> שם פרטי: </label>
+          <label htmlFor="relative_first name"> שם פרטי: </label>
           <input
             className="input1"
             type="text"
@@ -641,7 +660,7 @@ export function HabitantProject() {
             value={formData.relative_first_name}
             onChange={(e) => handleChange(e)}
           />
-          <label for="relative_last_name"> שם משפחה : </label>
+          <label htmlFor="relative_last_name"> שם משפחה : </label>
           <input
             className="input1"
             type="text"
@@ -652,7 +671,7 @@ export function HabitantProject() {
           />
           <br />
           <br />
-          <label for="relative_address"> כתובת : </label>
+          <label htmlFor="relative_address"> כתובת : </label>
           <input
             className="input1"
             type="text"
@@ -661,7 +680,7 @@ export function HabitantProject() {
             value={formData.relative_address}
             onChange={(e) => handleChange(e)}
           />
-          <label for="relative_phone"> טלפון : </label>
+          <label htmlFor="relative_phone"> טלפון : </label>
           <input
             className="input1"
             type="number"
@@ -678,10 +697,10 @@ export function HabitantProject() {
         <br />
 
         <fieldset>
-          <legend id="family" class="legendTitle">
+          <legend id="family" className="legendTitle">
             שאלון כללי
           </legend>
-          <label for="graduation"> סיום לימודים : </label>
+          <label htmlFor="graduation"> סיום לימודים : </label>
           <select id="graduation" className="select1">
             <option
               id="full"
@@ -705,7 +724,7 @@ export function HabitantProject() {
               אחר{" "}
             </option>
           </select>
-          <label for="graduation_details"> פירוט אודות הלימודים : </label>
+          <label htmlFor="graduation_details"> פירוט אודות הלימודים : </label>
           <input
             className="input1"
             type="text"
@@ -715,64 +734,64 @@ export function HabitantProject() {
             onChange={(e) => handleChange(e)}
           />
           <br /> <br />
-          <label for="teenage_status">
+          <label htmlFor="teenage_status">
             {" "}
             נא לסמן מה מהבאים מתאים לצעירה המופנה :{" "}
           </label>
           <br />
           <input
             type="checkbox"
-            id="medical_problems"
-            name="medical_problems"
+            id="medical_problem"
+            name="medical_problem"
             value={formData.medical_problem}
-            onChange={(e) => {
-              e.target.name =
-                e.target.type === "checkbox"
-                  ? e.target.checked
-                  : e.target.value;
-            }}
+            onChange={(e) => handlecheckBoxChange(e)}
           />
-          <label for="medical_problems"> בעיות רפואיות</label>
+          <label htmlFor="medical_problems"> בעיות רפואיות</label>
           <br />
           <input
             type="checkbox"
             id="drugs_and_alcohol"
             name="drugs_and_alcohol"
-            value="drugs_and_alcohol"
+            value={formData.drugs_and_alcohol}
+            onChange={(e) => handlecheckBoxChange(e)}
           />
-          <label for="drugs_and_alcohol"> סמים ואלכוהול</label>
+          <label htmlFor="drugs_and_alcohol"> סמים ואלכוהול</label>
           <br />
           <input
             type="checkbox"
             id="violent_incidents"
             name="violent_incidents"
-            value="violent_incidents"
+            value={formData.violent_incidents}
+            onChange={(e) => handlecheckBoxChange(e)}
           />
-          <label for="violent_incidents"> אירועים אלימים</label>
+          <label htmlFor="violent_incidents"> אירועים אלימים</label>
           <br />
           <input
             type="checkbox"
-            id="eatind_disorders"
-            name="eatind_disorders"
-            value="eatind_disorders"
+            id="eating_disorders"
+            name="eating_disorders"
+            value={formData.eating_disorders}
+            onChange={(e) => handlecheckBoxChange(e)}
           />
-          <label for="eatind_disorders"> הפרעות אכילה</label>
+          <label htmlFor="eatind_disorders"> הפרעות אכילה</label>
           <br />
           <input
             type="checkbox"
             id="suicidal_attempts"
             name="suicidal_attempts"
-            value="suicidal_attempts"
+            value={formData.suicidal_attempts}
+            onChange={(e) => handlecheckBoxChange(e)}
           />
-          <label for="suicidal_attempts"> נסיונות אובדניים</label>
+          <label htmlFor="suicidal_attempts"> נסיונות אובדניים</label>
           <br />
           <input
             type="checkbox"
             id="criminal_record"
             name="criminal_record"
-            value="criminal_record"
+            value={formData.criminal_record}
+            onChange={(e) => handlecheckBoxChange(e)}
           />
-          <label for="criminal_record">
+          <label htmlFor="criminal_record">
             רישום פלילי/עבירות שנסגרו ללא רישום פלילי
           </label>
           <br />
@@ -780,20 +799,22 @@ export function HabitantProject() {
             type="checkbox"
             id="learning_disabilities"
             name="learning_disabilities"
-            value="learning_disabilities"
+            value={formData.learning_disabilities}
+            onChange={(e) => handlecheckBoxChange(e)}
           />
-          <label for="learning_disabilities"> לקויות למידה</label>
+          <label htmlFor="learning_disabilities"> לקויות למידה</label>
           <br />
           <input
             type="checkbox"
             id="allowances"
             name="allowances"
-            value="allowances"
+            value={formData.allowances}
+            onChange={(e) => handlecheckBoxChange(e)}
           />
-          <label for="allowances"> קצבאה מביטוח לאומי </label>
+          <label htmlFor="allowances"> קצבאה מביטוח לאומי </label>
           <br />
           <br />
-          <label for="teenage_status_details"> הרחבה : </label>
+          <label htmlFor="teenage_status_details"> הרחבה : </label>
           <input
             className="input1"
             type="text"
@@ -807,7 +828,7 @@ export function HabitantProject() {
         <br />
         <br />
 
-        <button class="button-55" onClick={habitantDocPage}>
+        <button className="button-55" onClick={habitantDocPage}>
           {" "}
           הבא
         </button>

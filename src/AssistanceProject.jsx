@@ -50,6 +50,7 @@ export function AssistanceProject() {
   function nav() {
     navigate("/Login");
   }
+
   const docPage = () => {
     const formRef = collection(db, "Candidates for habitant project");
     const uid = auth.currentUser.uid;
@@ -92,8 +93,8 @@ export function AssistanceProject() {
   if (!user) {
     return (
       <div className="loggedIn">
-        <div class="allThePage">
-          <div class="AllDetails">
+        <div className="allThePage">
+          <div className="AllDetails">
             <section className="banner">
               <h1 id="difh1">פרויקט דיור בוגרות</h1>
               {/* <p>Company Mission Statement goes here</p> */}
@@ -102,7 +103,7 @@ export function AssistanceProject() {
               </a>
             </section>
             <br />
-            <ul class="tilesWrap">
+            <ul className="tilesWrap">
               <li>
                 <h2>01</h2>
                 <p>פריסה ארצית ללא הגבלה גיאוגרפית</p>
@@ -125,16 +126,16 @@ export function AssistanceProject() {
             </ul>
           </div>
           <br />
-          <div class="SubmitRequest"></div>
+          <div className="SubmitRequest"></div>
         </div>
       </div>
     );
   }
 
   return (
-    <div class="allThePage">
-      <div class="AllDetails">
-        <section class="banner">
+    <div className="allThePage">
+      <div className="AllDetails">
+        <section className="banner">
           <h1 id="difh1">פרויקט הכוון</h1>
           {/* <p>Company Mission Statement goes here</p> */}
           <a href="#scr1" className="btn-bgstroke">
@@ -142,7 +143,7 @@ export function AssistanceProject() {
           </a>
         </section>
         <br />
-        <ul class="tilesWrap">
+        <ul className="tilesWrap">
           <li>
             <h2>01</h2>
             <p>פריסה ארצית ללא הגבלה גיאוגרפית</p>
@@ -178,15 +179,16 @@ export function AssistanceProject() {
           כללי
         </a>
       </section>
-      <div id="scr1" class="SubmitRequest">
+      <div id="scr1" className="SubmitRequest">
         <br />
         <br />
+
         <fieldset>
-          <legend id="private" class="legendTitle">
+          <legend id="private" className="legendTitle">
             פרטים אישיים
           </legend>
           <form>
-            <label for="fname">שם פרטי : </label>
+            <label htmlFor="fname">שם פרטי : </label>
             <input
               className="input1"
               type="text"
@@ -196,7 +198,7 @@ export function AssistanceProject() {
               value={formData.fname}
               onChange={(e) => handleChange(e)}
             />
-            <label for="lname">שם משפחה : </label>
+            <label htmlFor="lname">שם משפחה : </label>
             <input
               className="input1"
               type="text"
@@ -206,7 +208,7 @@ export function AssistanceProject() {
               value={formData.lname}
               onChange={(e) => handleChange(e)}
             />
-            <label for="ID">תעודת זהות : </label>
+            <label htmlFor="ID">תעודת זהות : </label>
             <input
               className="input1"
               type="number"
@@ -216,7 +218,7 @@ export function AssistanceProject() {
               value={formData.ID}
               onChange={(e) => handleChange(e)}
             />
-            <label for="date_of_birth">תאריך לידה:</label>
+            <label htmlFor="date_of_birth">תאריך לידה:</label>
             <input
               className="input1"
               type="text"
@@ -230,7 +232,7 @@ export function AssistanceProject() {
             <br />
             <br />
 
-            <label for="address"> כתובת: </label>
+            <label htmlFor="address"> כתובת: </label>
             <input
               type="text"
               id="address"
@@ -238,7 +240,7 @@ export function AssistanceProject() {
               required
               className="input1"
             />
-            <label for="phone_number"> נייד: </label>
+            <label htmlFor="phone_number"> נייד: </label>
             <input
               className="input1"
               type="number"
@@ -248,7 +250,7 @@ export function AssistanceProject() {
               value={formData.phone_number}
               onChange={(e) => handleChange(e)}
             />
-            <label for="email"> מייל : </label>
+            <label htmlFor="email"> מייל : </label>
             <input
               className="input1"
               type="email"
@@ -266,47 +268,47 @@ export function AssistanceProject() {
         <br />
 
         <fieldset>
-          <legend id="social" class="legendTitle">
+          <legend id="social" className="legendTitle">
             גורם מפנה
           </legend>
           <form>
-            <label for="referrer_name"> שם : </label>
+            <label htmlFor="referrer_name"> שם : </label>
             <input
               className="input1"
               type="text"
               id="referrer_name"
               name="referrer_name"
-              required
+              required={true}
               value={formData.referrer_name}
               onChange={(e) => handleChange(e)}
             />
-            <label for="referrer_proffesion"> תפקיד : </label>
+            <label htmlFor="referrer_proffesion"> תפקיד : </label>
             <input
               className="input1"
               type="text"
               id="referrer_proffesion"
               name="referrer_proffesion"
-              required
+              required={true}
               value={formData.referrer_proffesion}
               onChange={(e) => handleChange(e)}
             />
-            <label for="referrer_phone"> טלפון : </label>
+            <label htmlFor="referrer_phone"> טלפון : </label>
             <input
               className="input1"
               type="number"
               id="referrer_phone"
               name="referrer_phone"
-              required
+              required={true}
               value={formData.referrer_phone}
               onChange={(e) => handleChange(e)}
             />
-            <label for="referrer_email"> מייל : </label>
+            <label htmlFor="referrer_email"> מייל : </label>
             <input
               className="input1"
               type="email"
               id="referrer_email"
               name="referrer_email"
-              required
+              required={true}
               value={formData.referrer_email}
               onChange={(e) => handleChange(e)}
             />
@@ -318,59 +320,59 @@ export function AssistanceProject() {
         <br />
 
         <fieldset>
-          <legend id="study" class="legendTitle">
+          <legend id="study" className="legendTitle">
             לימודים
           </legend>
-          <label for="framework_name"> מוסד לימודים : </label>
+          <label htmlFor="framework_name"> מוסד לימודים : </label>
           <input
             className="input1"
             type="text"
             id="framework_name"
             name="framework_name"
-            required
+            required={true}
             value={formData.framework_name}
             onChange={(e) => handleChange(e)}
           />
-          <label for="framework_field"> תחום לימודים : </label>
+          <label htmlFor="framework_field"> תחום לימודים : </label>
           <input
             className="input1"
             type="text"
             id="framework_field"
             name="framework_field"
-            required
+            required={true}
             value={formData.framework_field}
             onChange={(e) => handleChange(e)}
           />
-          <label for="framework_years"> מספר שנות לימודים : </label>
+          <label htmlFor="framework_years"> מספר שנות לימודים : </label>
           <input
             className="input1"
             type="text"
             id="framework_years"
             name="framework_years"
-            required
+            required={true}
             value={formData.framework_years}
             onChange={(e) => handleChange(e)}
           />
           <br />
           <br />
-          <label for="tuition"> היקף שכר לימוד : </label>
+          <label htmlFor="tuition"> היקף שכר לימוד : </label>
           <input
             className="input1"
             type="text"
             id="tuition"
             name="tuition"
-            required
+            required={true}
             value={formData.tuition}
             onChange={(e) => handleChange(e)}
           />
           <br />
           <br />
-          <label for="graduation"> סיום לימודים : </label>
+          <label htmlFor="graduation"> סיום לימודים : </label>
           <select id="graduation" required className="select1">
             <option id="full">בגרות מלאה </option>
             <option id="partial">בגרות חלקית </option>
           </select>
-          <label for="graduation_details"> פירוט אודות הלימודים : </label>
+          <label htmlFor="graduation_details"> פירוט אודות הלימודים : </label>
           <input
             className="input1"
             type="text"
@@ -387,10 +389,10 @@ export function AssistanceProject() {
         <br />
 
         <fieldset>
-          <legend id="general" class="legendTitle">
+          <legend id="general" className="legendTitle">
             כללי
           </legend>
-          <label for="other_schilarships">
+          <label htmlFor="other_schilarships">
             {" "}
             האם הוגשו בקשות למלגות נוספות :{" "}
           </label>
@@ -398,7 +400,7 @@ export function AssistanceProject() {
             <option id="other_schilarships">כן </option>
             <option id="not_other_schilarships">לא</option>
           </select>
-          <label for="scholarships_details"> פירוט אודות המלגות : </label>
+          <label htmlFor="scholarships_details"> פירוט אודות המלגות : </label>
           <input
             className="input1"
             type="text"
@@ -409,7 +411,7 @@ export function AssistanceProject() {
           />
           <br />
           <br />
-          <label for="insurance_institute_allowance">
+          <label htmlFor="insurance_institute_allowance">
             האם מקבל/ת קצבאות מביטוח לאומי/משרד הביטחון? :{" "}
           </label>
           <select id="insurance_institute_allowance" className="select1">
@@ -417,7 +419,7 @@ export function AssistanceProject() {
             <option id="not_insurance_institute_allowance">לא</option>
             <option id="other">אחר</option>
           </select>
-          <label for="insurance_institute_allowance_details">
+          <label htmlFor="insurance_institute_allowance_details">
             {" "}
             פירוט אודות הקצבאות המתקבלות מביטוח לאומי :{" "}
           </label>
@@ -436,7 +438,7 @@ export function AssistanceProject() {
         <br />
         <br />
 
-        <button class="button-55" onClick={docPage}>
+        <button className="button-55" onClick={docPage}>
           {" "}
           הבא
         </button>
