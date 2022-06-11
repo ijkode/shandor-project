@@ -303,6 +303,11 @@ li a:hover {
   margin: auto;
 }
 
+::placeholder {
+  color: red;
+  font-size: 1em;
+}
+
 h3 {
   text-align: center;
 }

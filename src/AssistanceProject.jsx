@@ -23,25 +23,25 @@ export function AssistanceProject() {
     lname: "",
     ID: "",
     date_of_birth: "",
+    address: "",
     phone_number: "",
     email: "",
-    address: "",
-    framework_field: "",
+    referrer_name: "",
+    referrer_proffesion: "",
+    referrer_phone: "",
+    referrer_email: "",
     framework_name: "",
+    framework_field: "",
     framework_years: "",
+    tuition: "",
+    graduation_details: "",
     full: "",
     partial: "",
     graduation: "",
-    graduation_details: "",
     insurance_institute_allowance: "",
     insurance_institute_allowance_details: "",
     other: "",
-    referrer_email: "",
-    referrer_name: "",
-    referrer_phone: "",
-    referrer_proffesion: "",
     scholarship_details: "",
-    tuition: "",
     timestamp: "",
   });
   const handleChange = (e) => {
@@ -65,43 +65,64 @@ export function AssistanceProject() {
   }
 
   const docPage = () => {
-    const formRef = collection(db, "Candidates for habitant project");
-    const uid = auth.currentUser.uid;
-    if (uid != null)
-      setDoc(doc(formRef, uid), {
-        fname: formData.fname,
-        lname: formData.lname,
-        ID: formData.ID,
-        date_of_birth: formData.date_of_birth,
-        framework_name: formData.framework_name,
-        framework_field: formData.framework_field,
-        framework_years: formData.framework_years,
-        phone_number: formData.phone_number,
-        email: formData.email,
-        address: formData.address,
-        full: formData.full,
-        partial: formData.partial,
-        referrer_name: formData.referrer_name,
-        referrer_proffesion: formData.referrer_proffesion,
-        referrer_phone: formData.referrer_phone,
-        referrer_email: formData.referrer_email,
-        graduation: formData.graduation,
-        insurance_institute_allowance: formData.insurance_institute_allowance,
-        insurance_institute_allowance_details:
-          formData.insurance_institute_allowance_details,
-        graduation_details: formData.graduation_details,
-        other: formData.other,
-        scholarship_details: formData.scholarship_details,
-        tuition: formData.tuition,
-        timestamp: serverTimestamp(),
-      })
-        .then(() => {
-          // alert("success");
+    let flag = 0;
+    for (const [key, value] of Object.entries(formData)) {
+      if (`${value}` === "") {
+        console.log(key);
+        let newid = key + "1";
+        let html = document.getElementById(newid).innerHTML;
+        let error = "הזן " + html;
+        const editedError = error.slice(0, -2);
+        let id = "#" + key;
+        $(id).attr("placeholder", editedError);
+        var element = document.getElementById(key);
+        element.scrollIntoView();
+        flag = 1;
+        break;
+      }
+      if (key === "graduation_details") {
+        break;
+      }
+    }
+    if (flag === 0) {
+      const formRef = collection(db, "Candidates for habitant project");
+      const uid = auth.currentUser.uid;
+      if (uid != null)
+        setDoc(doc(formRef, uid), {
+          fname: formData.fname,
+          lname: formData.lname,
+          ID: formData.ID,
+          date_of_birth: formData.date_of_birth,
+          address: formData.address,
+          framework_name: formData.framework_name,
+          framework_field: formData.framework_field,
+          framework_years: formData.framework_years,
+          phone_number: formData.phone_number,
+          email: formData.email,
+          full: formData.full,
+          partial: formData.partial,
+          referrer_name: formData.referrer_name,
+          referrer_proffesion: formData.referrer_proffesion,
+          referrer_phone: formData.referrer_phone,
+          referrer_email: formData.referrer_email,
+          graduation: formData.graduation,
+          insurance_institute_allowance: formData.insurance_institute_allowance,
+          insurance_institute_allowance_details:
+            formData.insurance_institute_allowance_details,
+          graduation_details: formData.graduation_details,
+          other: formData.other,
+          scholarship_details: formData.scholarship_details,
+          tuition: formData.tuition,
+          timestamp: serverTimestamp(),
         })
-        .catch((err) => {
-          // alert("error");
-        });
-    navigate("/AssistanceProject/documents");
+          .then(() => {
+            // alert("success");
+          })
+          .catch((err) => {
+            // alert("error");
+          });
+      navigate("/AssistanceProject/documents");
+    }
   };
   if (!user) {
     return (
@@ -201,7 +222,9 @@ export function AssistanceProject() {
               פרטים אישיים
             </legend>
 
-            <label htmlFor="fname">שם פרטי : </label>
+            <label id="fname1" htmlFor="fname">
+              שם פרטי :{" "}
+            </label>
             <input
               className="input1"
               type="text"
@@ -211,7 +234,9 @@ export function AssistanceProject() {
               value={formData.fname}
               onChange={(e) => handleChange(e)}
             />
-            <label htmlFor="lname">שם משפחה : </label>
+            <label id="lname1" htmlFor="lname">
+              שם משפחה :{" "}
+            </label>
             <input
               className="input1"
               type="text"
@@ -221,7 +246,9 @@ export function AssistanceProject() {
               value={formData.lname}
               onChange={(e) => handleChange(e)}
             />
-            <label htmlFor="ID">תעודת זהות : </label>
+            <label id="ID1" htmlFor="ID">
+              תעודת זהות :{" "}
+            </label>
             <input
               className="input1"
               type="number"
@@ -231,7 +258,9 @@ export function AssistanceProject() {
               value={formData.ID}
               onChange={(e) => handleChange(e)}
             />
-            <label htmlFor="date_of_birth">תאריך לידה:</label>
+            <label id="date_of_birth1" htmlFor="date_of_birth">
+              תאריך לידה:
+            </label>
             <input
               className="input1"
               type="date"
@@ -244,15 +273,23 @@ export function AssistanceProject() {
             <br />
             <br />
 
-            <label htmlFor="address"> כתובת: </label>
+            <label id="address1" htmlFor="address">
+              {" "}
+              כתובת:{" "}
+            </label>
             <input
               type="text"
               id="address"
               name="address"
               required
               className="input1"
+              value={formData.address}
+              onChange={(e) => handleChange(e)}
             />
-            <label htmlFor="phone_number"> נייד: </label>
+            <label id="phone_number1" htmlFor="phone_number">
+              {" "}
+              נייד:{" "}
+            </label>
             <input
               className="input1"
               type="number"
@@ -262,7 +299,10 @@ export function AssistanceProject() {
               value={formData.phone_number}
               onChange={(e) => handleChange(e)}
             />
-            <label htmlFor="email"> מייל : </label>
+            <label id="email1" htmlFor="email">
+              {" "}
+              מייל :{" "}
+            </label>
             <input
               className="input1"
               type="email"
@@ -283,7 +323,10 @@ export function AssistanceProject() {
               גורם מפנה
             </legend>
 
-            <label htmlFor="referrer_name"> שם : </label>
+            <label id="referrer_name1" htmlFor="referrer_name">
+              {" "}
+              שם :{" "}
+            </label>
             <input
               className="input1"
               type="text"
@@ -293,7 +336,10 @@ export function AssistanceProject() {
               value={formData.referrer_name}
               onChange={(e) => handleChange(e)}
             />
-            <label htmlFor="referrer_proffesion"> תפקיד : </label>
+            <label id="referrer_proffesion1" htmlFor="referrer_proffesion">
+              {" "}
+              תפקיד :{" "}
+            </label>
             <input
               className="input1"
               type="text"
@@ -303,7 +349,10 @@ export function AssistanceProject() {
               value={formData.referrer_proffesion}
               onChange={(e) => handleChange(e)}
             />
-            <label htmlFor="referrer_phone"> טלפון : </label>
+            <label id="referrer_phone1" htmlFor="referrer_phone">
+              {" "}
+              טלפון :{" "}
+            </label>
             <input
               className="input1"
               type="number"
@@ -313,7 +362,10 @@ export function AssistanceProject() {
               value={formData.referrer_phone}
               onChange={(e) => handleChange(e)}
             />
-            <label htmlFor="referrer_email"> מייל : </label>
+            <label id="referrer_email1" htmlFor="referrer_email">
+              {" "}
+              מייל :{" "}
+            </label>
             <input
               className="input1"
               type="email"
@@ -333,7 +385,10 @@ export function AssistanceProject() {
             <legend id="study" className="legendTitle">
               לימודים
             </legend>
-            <label htmlFor="framework_name"> מוסד לימודים : </label>
+            <label id="framework_name1" htmlFor="framework_name">
+              {" "}
+              מוסד לימודים :{" "}
+            </label>
             <input
               className="input1"
               type="text"
@@ -343,7 +398,10 @@ export function AssistanceProject() {
               value={formData.framework_name}
               onChange={(e) => handleChange(e)}
             />
-            <label htmlFor="framework_field"> תחום לימודים : </label>
+            <label id="framework_field1" htmlFor="framework_field">
+              {" "}
+              תחום לימודים :{" "}
+            </label>
             <input
               className="input1"
               type="text"
@@ -353,7 +411,10 @@ export function AssistanceProject() {
               value={formData.framework_field}
               onChange={(e) => handleChange(e)}
             />
-            <label htmlFor="framework_years"> מספר שנות לימודים : </label>
+            <label id="framework_years1" htmlFor="framework_years">
+              {" "}
+              מספר שנות לימודים :{" "}
+            </label>
             <input
               className="input1"
               type="text"
@@ -365,7 +426,10 @@ export function AssistanceProject() {
             />
             <br />
             <br />
-            <label htmlFor="tuition"> היקף שכר לימוד : </label>
+            <label id="tuition1" htmlFor="tuition">
+              {" "}
+              היקף שכר לימוד :{" "}
+            </label>
             <input
               className="input1"
               type="text"
@@ -397,7 +461,10 @@ export function AssistanceProject() {
                 אחר{" "}
               </option>
             </select>
-            <label htmlFor="graduation_details"> פירוט אודות הלימודים : </label>
+            <label id="graduation_details1" htmlFor="graduation_details">
+              {" "}
+              פירוט אודות הלימודים :{" "}
+            </label>
             <input
               className="input1"
               type="text"
@@ -436,7 +503,10 @@ export function AssistanceProject() {
                 לא
               </option>
             </select>
-            <label htmlFor="scholarships_details"> פירוט אודות המלגות : </label>
+            <label id="scholarships_details1" htmlFor="scholarships_details">
+              {" "}
+              פירוט אודות המלגות :{" "}
+            </label>
             <input
               className="input1"
               type="text"
@@ -466,7 +536,10 @@ export function AssistanceProject() {
               </option>
               <option id="other">אחר</option>
             </select>
-            <label htmlFor="insurance_institute_allowance_details">
+            <label
+              id="insurance_institute_allowance_details1"
+              htmlFor="insurance_institute_allowance_details"
+            >
               {" "}
               פירוט אודות הקצבאות המתקבלות מביטוח לאומי :{" "}
             </label>
