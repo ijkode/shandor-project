@@ -25,27 +25,6 @@ const HomePage = () => {
   };
   return (
     <div>
-      {/* <Slide {...properties}>
-        <div className="each-slide">
-          <div style={{ backgroundImage: `url(${slide2})` }}></div>
-        </div>
-        <div className="each-slide">
-          <div style={{ backgroundImage: `url(${slide3})` }}></div>
-        </div>
-        <div className="each-slide">
-          <div style={{ backgroundImage: `url(${slide4})` }}></div>
-        </div>
-      </Slide> */}
-      {/* <section class="banner">
-        <h1 id="difh1">עמותת שנדור</h1>
-        <br />
-        סיוע והכוון לצעירים בסיכון מגורים ומעטפת טיפולית בצעירות בסיכון חסרי
-        עורף משפחתי
-        <br />
-        <a href="#scr2" className="btn-bgstroke">
-          למידע על הפרויקטים
-        </a>
-      </section> */}
       <ul id="scr2" className="tilesWrap1">
         <li>
           <h2>פרויקט דיור</h2>
