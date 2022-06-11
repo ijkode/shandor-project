@@ -35,6 +35,7 @@ export function AssistanceProject() {
     framework_years: "",
     tuition: "",
     graduation_details: "",
+    scholarships_details: "",
     full: "",
     partial: "",
     graduation: "",
@@ -45,6 +46,7 @@ export function AssistanceProject() {
     timestamp: "",
   });
   const handleChange = (e) => {
+    console.log(e.target.name);
     if (e.target.name === "date_of_birth") {
       let date = dateFormat(e.target.value, "dd/mm/yyyy");
       setFormData({ ...formData, [e.target.name]: date });
@@ -68,7 +70,6 @@ export function AssistanceProject() {
     let flag = 0;
     for (const [key, value] of Object.entries(formData)) {
       if (`${value}` === "") {
-        console.log(key);
         let newid = key + "1";
         let html = document.getElementById(newid).innerHTML;
         let error = "הזן " + html;
@@ -80,7 +81,7 @@ export function AssistanceProject() {
         flag = 1;
         break;
       }
-      if (key === "graduation_details") {
+      if (key === "scholarships_details") {
         break;
       }
     }
@@ -105,6 +106,7 @@ export function AssistanceProject() {
           referrer_proffesion: formData.referrer_proffesion,
           referrer_phone: formData.referrer_phone,
           referrer_email: formData.referrer_email,
+          scholarships_details: formData.scholarships_details,
           graduation: formData.graduation,
           insurance_institute_allowance: formData.insurance_institute_allowance,
           insurance_institute_allowance_details:
@@ -512,7 +514,7 @@ export function AssistanceProject() {
               type="text"
               id="scholarships_details"
               name="scholarships_details"
-              value={formData.scholarship_details}
+              value={formData.scholarships_details}
               onChange={(e) => handleChange(e)}
             />
             <br />

@@ -99,6 +99,7 @@ export function HabitantProject() {
   };
   const navigate = useNavigate();
   function nav() {
+    console.log("here");
     navigate("/Login");
   }
   const habitantDocPage = () => {
