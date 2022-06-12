@@ -20,11 +20,6 @@ function Register() {
   const [loginPassword, setLoginPassword] = useState("");
 
   const [user, setUser] = useState({});
-  // useEffect(() => {
-  //   app.auth().onAuthStateChanged((user) => {
-  //     setUser(user);
-  //   });
-  // }, []);
   const register = async () => {
     try {
       const user = await createUserWithEmailAndPassword(

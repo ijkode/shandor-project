@@ -374,15 +374,15 @@ h3 {
   background: #feac5e; /* fallback for old browsers */
   background: -webkit-linear-gradient(
     to right,
-    #5ec9fe,
+    #392bff,
     #5ec7ff,
-    #4bc0c8
+    #2c5696
   ); /* Chrome 10-25, Safari 5.1-6 */
   background: linear-gradient(
     to right,
-    #5ec9fe,
-    #5ec7ff,
-    #4bc0c8
+    #392bff,
+    #4089b0,
+    #2c5696
   ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
   color: white;
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;

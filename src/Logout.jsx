@@ -34,21 +34,6 @@ function Logout() {
       });
   };
 
-  // const database = () => {
-  //   const formRef = collection(db, "users");
-  //   setDoc(doc(formRef, ){
-  //     fname: formData.fname,
-  //     lname: formData.lname,
-  //     gender: formData.gender,
-  //     email: formData.email,
-  //     password: formData.password,
-  //     phone_number: formData.phone_number,
-  //     proffesion: formData.proffesion,
-  //     approval: formData.approval,
-  //   });
-  //   navigate("/");
-  // };
-
   const login = async () => {
     try {
       const user = await signInWithEmailAndPassword(

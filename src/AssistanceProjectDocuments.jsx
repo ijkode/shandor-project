@@ -39,7 +39,7 @@ export function AssistanceProjectDocuments() {
   return (
     <div className="allDocPage">
       <section className="banner">
-        <h1 id="difh1">העלאת קבצים בפורמט JPG או PDF</h1>
+        <h1 id="difh1">העלאת קבצים</h1>
         <br />
         <p>
           לאחר לחיצה על כפתור הגש יש להמתין מספר רגעים עד לקבלת הודעה שהקבצים
