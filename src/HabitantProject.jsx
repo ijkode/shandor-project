@@ -100,7 +100,6 @@ export function HabitantProject() {
   };
   const navigate = useNavigate();
   function nav() {
-    console.log("here");
     navigate("/Login");
   }
   const validateEmail = (email) => {
@@ -115,7 +114,6 @@ export function HabitantProject() {
     let flag = 0;
     for (const [key, value] of Object.entries(formData)) {
       if (`${value}` === "") {
-        console.log(key);
         let newid = key + "1";
         let html = document.getElementById(newid).innerHTML;
         let error = "הזן " + html;

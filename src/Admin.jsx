@@ -106,11 +106,8 @@ const Admin = () => {
     }
   }
   async function downloadData(email) {
-    console.log(email);
     var listRef = ref(storage, email);
     // Create a child reference
-    console.log("here");
-    console.log(listRef);
     var toShow = "<div id = 'myimg'>";
     let index = 1;
     let flag = 0;
@@ -118,30 +115,32 @@ const Admin = () => {
     const requests = res.items.map((itemRef) =>
       getDownloadURL(ref(storage, itemRef))
     );
-    await Promise.all(requests).then((urls) => {
-      urls.forEach((url) => {
-        flag = 1;
-        toShow +=
-          " קובץ " +
-          index +
-          " " +
-          "<a id='under' href='" +
-          url +
-          "'>" +
-          "לחץ להורדה" +
-          "<a>" +
-          "<br/><br/>";
-        index += 1;
+    await Promise.all(requests)
+      .then((urls) => {
+        urls.forEach((url) => {
+          flag = 1;
+          toShow +=
+            " קובץ " +
+            index +
+            " " +
+            "<a id='under' href='" +
+            url +
+            "'>" +
+            "לחץ להורדה" +
+            "<a>" +
+            "<br/><br/>";
+          index += 1;
+        });
+      })
+      .then(() => {
+        if (flag === 1) {
+          Swal.fire({
+            html: toShow,
+          });
+        } else {
+          Swal.fire("לא נמצאו קבצים");
+        }
       });
-    });
-
-    if (flag === 1) {
-      Swal.fire({
-        html: toShow,
-      });
-    } else {
-      Swal.fire("לא נמצאו קבצים");
-    }
   }
   function deleteHabUser(id) {
     deleteDoc(doc(db, "Candidates for assistance project", id));
