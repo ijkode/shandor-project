@@ -140,10 +140,16 @@ const Admin = () => {
     }
   }
   const deleteHabUser = async (id) => {
-    await deleteDoc(doc(db, "Candidates for assistance project", id));
+    await deleteDoc(doc(db, "Candidates for assistance project", id)).then(
+      () => {
+        Swal.fire("המשתמש נמחק בהצלחה");
+      }
+    );
   };
   const deleteAssistUser = async (id) => {
-    await deleteDoc(doc(db, "Candidates for habitant project", id));
+    await deleteDoc(doc(db, "Candidates for habitant project", id)).then(() => {
+      Swal.fire("המשתמש נמחק בהצלחה");
+    });
   };
   async function getHabitantData() {
     setBtn(1);
