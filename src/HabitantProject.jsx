@@ -103,6 +103,13 @@ export function HabitantProject() {
     console.log("here");
     navigate("/Login");
   }
+  const validateEmail = (email) => {
+    return String(email)
+      .toLowerCase()
+      .match(
+        /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+      );
+  };
   const habitantDocPage = () => {
     const uid = auth.currentUser.uid;
     let flag = 0;
@@ -122,6 +129,29 @@ export function HabitantProject() {
       }
       if (key === "graduation_details") {
         break;
+      }
+    }
+    if (flag === 0) {
+      for (const [key, value] of Object.entries(formData)) {
+        if (`${key}` === "ID" && value.length != 9) {
+          Swal.fire("הכנס תעודת זהות תקינה");
+          flag = 1;
+        }
+        if (`${key}` === "email" && !validateEmail(value)) {
+          Swal.fire("הכנס אימייל תקין (פרטי הקשר)");
+          flag = 1;
+          break;
+        }
+        if (`${key}` === "referrer_email" && !validateEmail(value)) {
+          Swal.fire("הכנס אימייל תקין (גורם מפנה)");
+          flag = 1;
+          break;
+        }
+        if (`${key}` === "social_worker_email" && !validateEmail(value)) {
+          Swal.fire("הכנס אימייל תקין (שיוך ללשכה)");
+          flag = 1;
+          break;
+        }
       }
     }
     if (flag === 0) {

@@ -13,6 +13,7 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "./firebase";
 import $ from "jquery";
 import dateFormat, { masks } from "dateformat";
+import Swal from "sweetalert2";
 export function AssistanceProject() {
   $("body").on("click", "#scr3", function () {
     navigate("/Login");
@@ -47,7 +48,6 @@ export function AssistanceProject() {
     uid: "",
   });
   const handleChange = (e) => {
-    console.log(e.target.name);
     if (e.target.name === "date_of_birth") {
       let date = dateFormat(e.target.value, "dd/mm/yyyy");
       setFormData({ ...formData, [e.target.name]: date });
@@ -66,7 +66,13 @@ export function AssistanceProject() {
   function nav() {
     navigate("/Login");
   }
-
+  const validateEmail = (email) => {
+    return String(email)
+      .toLowerCase()
+      .match(
+        /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+      );
+  };
   const docPage = () => {
     let flag = 0;
     for (const [key, value] of Object.entries(formData)) {
@@ -84,6 +90,25 @@ export function AssistanceProject() {
       }
       if (key === "scholarships_details") {
         break;
+      }
+    }
+    if (flag === 0) {
+      for (const [key, value] of Object.entries(formData)) {
+        if (`${key}` === "ID" && value.length != 9) {
+          Swal.fire("הכנס תעודת זהות תקינה");
+          flag = 1;
+          break;
+        }
+        if (`${key}` === "email" && !validateEmail(value)) {
+          Swal.fire("הכנס אימייל תקין (פרטים אישיים)");
+          flag = 1;
+          break;
+        }
+        if (`${key}` === "referrer_email" && !validateEmail(value)) {
+          Swal.fire("הכנס אימייל תקין (גורם מפנה)");
+          flag = 1;
+          break;
+        }
       }
     }
     if (flag === 0) {
