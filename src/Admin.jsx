@@ -536,6 +536,7 @@ const Admin = () => {
       "<th>אימייל</th>" +
       "<th>הצג מידע מלא</th>" +
       "<th>הורד קבצים</th>" +
+      "<th>מחק בקשה</th>" +
       "</tr>";
     x.append(src);
     for (let i = 0; i < search.length; i++) {
@@ -562,6 +563,13 @@ const Admin = () => {
                   "'>לחץ כאן</button>"
               )
             )
+            .append(
+              $("<td>").append(
+                "<button class='button-131' id='delete" +
+                  [i] +
+                  "'>לחץ כאן</button>"
+              )
+            )
         );
         found = true;
       }
@@ -576,6 +584,14 @@ const Admin = () => {
         if (type === 0) {
           setClick(1);
           toExcel(search[i]["ID"], search);
+        }
+      });
+      $("body").on("click", "#download" + [i], function () {
+        if (type === 1) {
+          deleteHabUser(search[i]["uid"], search);
+        }
+        if (type === 0) {
+          deleteAssistUser(search[i]["uid"], search);
         }
       });
     }
