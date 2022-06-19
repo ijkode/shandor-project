@@ -139,18 +139,14 @@ const Admin = () => {
       Swal.fire("לא נמצאו קבצים");
     }
   }
-  const deleteHabUser = async (id) => {
-    await deleteDoc(doc(db, "Candidates for assistance project", id)).then(
-      () => {
-        Swal.fire("המשתמש נמחק בהצלחה");
-      }
-    );
-  };
-  const deleteAssistUser = async (id) => {
-    await deleteDoc(doc(db, "Candidates for habitant project", id)).then(() => {
-      Swal.fire("המשתמש נמחק בהצלחה");
-    });
-  };
+  function deleteHabUser(id) {
+    deleteDoc(doc(db, "Candidates for assistance project", id));
+    Swal.fire("המשתמש נמחק בהצלחה");
+  }
+  function deleteAssistUser(id) {
+    deleteDoc(doc(db, "Candidates for habitant project", id));
+    Swal.fire("המשתמש נמחק בהצלחה");
+  }
   async function getHabitantData() {
     setBtn(1);
     var habitantData = [];

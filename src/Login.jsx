@@ -9,8 +9,9 @@ import "./App.css";
 import { app, auth } from "./firebase";
 import { useNavigate } from "react-router-dom";
 import swal from "sweetalert";
-import { getAuth } from "firebase/auth";
+import { getAuth, sendPasswordResetEmail } from "firebase/auth";
 import { useAuthState } from "react-firebase-hooks/auth";
+import Swal from "sweetalert2";
 function Register() {
   const [user1, loggedIn] = useAuthState(auth);
   const navigate = useNavigate();
@@ -45,7 +46,16 @@ function Register() {
       swal("משתמש לא קיים");
     }
   };
-
+  // const forgot = async () => {
+  //   sendPasswordResetEmail(auth, loginEmail)
+  //     .then(() => {
+  //       Swal.fire("איפוס נשלח לאימייל");
+  //     })
+  //     .catch((error) => {
+  //       const errorCode = error.code;
+  //       const errorMessage = error.message;
+  //     });
+  // };
   const logout = async () => {
     try {
       await signOut(auth);
@@ -84,6 +94,10 @@ function Register() {
             </button>
             <br />
             <br />
+            {/* <button onClick={forgot()} class="button-55">
+              {" "}
+              שכחתי סיסמא
+            </button> */}
           </div>
           <a href="/Registration">הרשמה</a>
         </div>
