@@ -81,7 +81,7 @@ const Admin = () => {
           )
           .append(
             $("<td>").append(
-              "<button class='button-13' id='down" + [i] + "'>לחץ כאן</button>"
+              "<button class='button-13' id='down1" + [i] + "'>לחץ כאן</button>"
             )
           )
           .append(
@@ -92,7 +92,7 @@ const Admin = () => {
             )
           )
       );
-      $("body").on("click", "#down" + [i], function () {
+      $("body").on("click", "#down1" + [i], function () {
         setFlagTwo(1);
         downloadData(assistanceData[i]["email"]);
       });
@@ -106,31 +106,35 @@ const Admin = () => {
     }
   }
   async function downloadData(email) {
-    const listRef = ref(storage, email);
+    console.log(email);
+    var listRef = ref(storage, email);
     // Create a child reference
+    console.log("here");
+    console.log(listRef);
+    var toShow = "<div id = 'myimg'>";
+    let index = 1;
+    let flag = 0;
     const res = await listAll(listRef);
     const requests = res.items.map((itemRef) =>
       getDownloadURL(ref(storage, itemRef))
     );
-    const urls = await Promise.all(requests);
-    console.log(urls);
-    var toShow = "<div id = 'myimg'>";
-    let index = 1;
-    let flag = 0;
-    urls.forEach((url) => {
-      flag = 1;
-      toShow +=
-        " קובץ " +
-        index +
-        " " +
-        "<a id='under' href='" +
-        url +
-        "'>" +
-        "לחץ להורדה" +
-        "<a>" +
-        "<br/><br/>";
-      index += 1;
+    await Promise.all(requests).then((urls) => {
+      urls.forEach((url) => {
+        flag = 1;
+        toShow +=
+          " קובץ " +
+          index +
+          " " +
+          "<a id='under' href='" +
+          url +
+          "'>" +
+          "לחץ להורדה" +
+          "<a>" +
+          "<br/><br/>";
+        index += 1;
+      });
     });
+
     if (flag === 1) {
       Swal.fire({
         html: toShow,
