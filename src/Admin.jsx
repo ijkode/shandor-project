@@ -14,6 +14,7 @@ import $ from "jquery";
 import Swal from "sweetalert2";
 import ReactHTMLTableToExcel from "react-html-table-to-excel";
 import dateFormat, { masks } from "dateformat";
+import { useNavigate } from "react-router-dom";
 const Admin = () => {
   const [data, setData] = useState([]);
   const [flagTwo, setFlagTwo] = useState(0);
@@ -54,6 +55,7 @@ const Admin = () => {
       "<th>אימייל</th>" +
       "<th>הצג מידע מלא</th>" +
       "<th>הורד קבצים</th>" +
+      "<th>מחק בקשה</th>" +
       "</tr>";
     x.append(src);
     for (let i = 0; i < assistanceData.length; i++) {
@@ -82,6 +84,13 @@ const Admin = () => {
               "<button class='button-13' id='down" + [i] + "'>לחץ כאן</button>"
             )
           )
+          .append(
+            $("<td>").append(
+              "<button class='button-131' id='delete" +
+                [i] +
+                "'>לחץ כאן</button>"
+            )
+          )
       );
       $("body").on("click", "#down" + [i], function () {
         setFlagTwo(1);
@@ -90,6 +99,9 @@ const Admin = () => {
       $("body").on("click", "#download" + [i], function () {
         setClick(1);
         tohabExcel(assistanceData[i]["ID"], assistanceData);
+      });
+      $("body").on("click", "#delete" + [i], function () {
+        deleteHabUser(assistanceData[i]["uid"]);
       });
     }
   }
@@ -130,9 +142,9 @@ const Admin = () => {
   const deleteHabUser = async (id) => {
     await deleteDoc(doc(db, "Candidates for assistance project", id));
   };
-  function deleteAssistUser(id) {
-    deleteDoc(doc(db, "Candidates for habitant project", id));
-  }
+  const deleteAssistUser = async (id) => {
+    await deleteDoc(doc(db, "Candidates for habitant project", id));
+  };
   async function getHabitantData() {
     setBtn(1);
     var habitantData = [];
@@ -159,6 +171,7 @@ const Admin = () => {
       "<th>אימייל</th>" +
       "<th>הצג מידע מלא</th>" +
       "<th>הורד קבצים</th>" +
+      "<th>מחק בקשה</th>" +
       "</tr>";
     x.append(src);
     for (let i = 0; i < habitantData.length; i++) {
@@ -187,6 +200,13 @@ const Admin = () => {
               "<button class='button-13' id='down" + [i] + "'>לחץ כאן</button>"
             )
           )
+          .append(
+            $("<td>").append(
+              "<button class='button-131' id='delete" +
+                [i] +
+                "'>לחץ כאן</button>"
+            )
+          )
       );
       $("body").on("click", "#down" + [i], function () {
         setFlagTwo(1);
@@ -195,6 +215,9 @@ const Admin = () => {
       $("body").on("click", "#download" + [i], function () {
         setClick(1);
         toExcel(habitantData[i]["ID"], habitantData);
+      });
+      $("body").on("click", "#delete" + [i], function () {
+        deleteAssistUser(habitantData[i]["uid"]);
       });
     }
   }

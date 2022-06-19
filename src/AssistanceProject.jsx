@@ -44,6 +44,7 @@ export function AssistanceProject() {
     other: "",
     scholarship_details: "",
     timestamp: "",
+    uid: "",
   });
   const handleChange = (e) => {
     console.log(e.target.name);
@@ -116,6 +117,7 @@ export function AssistanceProject() {
           scholarship_details: formData.scholarship_details,
           tuition: formData.tuition,
           timestamp: serverTimestamp(),
+          uid: auth.currentUser.uid,
         })
           .then(() => {
             // alert("success");
